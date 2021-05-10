@@ -1,102 +1,66 @@
-import Phaser from 'phaser'
-import KeyTutorial from '../prefabs/KeyTutorial'
-
-export default class MenuScene extends Phaser.Scene {
-  constructor() {
-    super({ key: 'menuScene' });
+class menu extends Phaser.Scene {
+  constructor () {
+    super('menu');
   }
 
-  create() {
-    this.gameSize = this.game.scale.gameSize;
+  preload() {
+    this.load.image('box', 'assets/grey_box.png');
+    this.load.image('checkedBox', 'assets/blue_boxCheckmark.png');
+    this.load.image('blueButton1', 'assets/blue_button02.png');
+    this.load.image('blueButton2', 'assets/blue_button03.png');
+  }
 
-    let bg_image = this.add.image(this.gameSize.width / 2, this.gameSize.height / 2, 'menu_bg').setOrigin(0.5, 0.5)
-    let scaleFactor = this.gameSize.width / bg_image.width;
-    bg_image.setScale(scaleFactor);
+  create () {
+    this.gameButton = this.add.sprite(100, 200, 'blueButton1').setInteractive();
+    this.centerButton(this.gameButton, 1);
 
-    this.add.text(this.gameSize.width * (5 / 8), this.gameSize.height * 0.3, 'Surf Fast. Die Rad.', {
-      align: 'center',
-      fill: 'white',
-      fontFamily: 'sans-serif',
-      fontSize: 48
-    }).setOrigin(0.5, 0.5);
+    this.gameText = this.add.text(0, 0, 'Play', { fontSize: '32px', fill: '#fff' });
+    this.centerButtonText(this.gameText, this.gameButton);
 
-    let keyX = this.gameSize.width * (5 / 8);
-    let keyY = this.gameSize.height * (2 / 3);
+    this.gameButton.on('pointerdown', function (pointer) {
+      this.scene.start('Game');
+    }.bind(this));
 
-    let move_mouse_tut = this.add.image(this.gameSize.width * (1 / 8), keyY, 'move_mouse_tutorial').setOrigin(0.5, 0.5).setScale(0.8);
-    this.add.text(this.gameSize.width * (2 / 8), keyY, '+', {
-      align: 'center',
-      fill: 'white',
-      fontFamily: 'sans-serif',
-      fontSize: 48
-    }).setOrigin(0.5, 0.5);
-    let click_mouse_tut = this.add.image(this.gameSize.width * (3 / 8), keyY, 'click_mouse_tutorial').setOrigin(0.5, 0.5).setScale(2.5)
+    this.optionsButton = this.add.sprite(300, 200, 'blueButton1').setInteractive();
+    this.centerButton(this.optionsButton);
 
-    this.add.text(this.gameSize.width * (4 / 8), keyY, 'or', {
-      align: 'center',
-      fill: 'white',
-      fontFamily: 'sans-serif',
-      fontSize: 48
-    }).setOrigin(0.5, 0.5);
+    this.optionsText = this.add.text(0, 0, 'Options', { fontSize: '32px', fill: '#fff' });
+    this.centerButtonText(this.optionsText, this.optionsButton);
 
-    let keyWidth = 30;
-    new KeyTutorial(this, keyX + (keyWidth * 2), keyY + keyWidth, '→')
-    new KeyTutorial(this, keyX - (keyWidth * 2), keyY + keyWidth, '←')
-    new KeyTutorial(this, keyX, keyY - keyWidth, '↑')
-    new KeyTutorial(this, keyX, keyY + keyWidth, '↓')
+    this.optionsButton.on('pointerdown', function (pointer) {
+      this.scene.start('Options');
+    }.bind(this));
 
-    this.add.text(this.gameSize.width * (6 / 8), keyY, '+', {
-      align: 'center',
-      fill: 'white',
-      fontFamily: 'sans-serif',
-      fontSize: 48
-    }).setOrigin(0.5, 0.5);
+    this.controlsButton = this.add.sprite(300, 200, 'blueButton1').setInteractive();
+    this.centerButton(this.controlsButton, -1);
 
-    new KeyTutorial(this, this.gameSize.width * (7 / 8), keyY, '').setScale(2, 0.5)
+    this.controlsText = this.add.text(0, 0, 'Controls', { fontSize: '32px', fill: '#fff' });
+    this.centerButtonText(this.controlsText, this.controlsButton);
 
-    this.add.text(this.gameSize.width / 2, this.gameSize.height * (6 / 8), '(play)', {
-      align: 'center',
-      fill: 'white',
-      fontFamily: 'sans-serif',
-      fontSize: 48
-    }).setOrigin(0.5, 0.5);
+    this.controlsButton.on('pointerdown', function (pointer) {
+      this.scene.start('Controls');
+    }.bind(this));
 
-    this.add.text(this.gameSize.width / 2, this.gameSize.height * (6 / 8) + 50, 'Click to Start!', { fontSize: '30px', fill: '#ffffff' }).setOrigin(0.5, 0.5);
-
-
-    this.input.on('pointerup', () => {
-      this.startGame()
+    this.input.on('pointerover', function (event, gameObjects) {
+      gameObjects[0].setTexture('blueButton2');
     });
 
-    // define keys
-    window.keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-    window.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-    window.keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-    window.keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-    window.keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
-    window.keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+    this.input.on('pointerout', function (event, gameObjects) {
+      gameObjects[0].setTexture('blueButton1');
+    });
   }
 
-  startGame() {
-    this.scene.stop('menuScene')
-    this.scene.start('playScene')
+  centerButton (gameObject, offset = 0) {
+    Phaser.Display.Align.In.Center(
+      gameObject,
+      this.add.zone(config.width/2, config.height/2 - offset * 100, config.width, config.height)
+    );
   }
 
-  update() {
-    if (keySPACE.isDown) {
-      this.startGame()
-    }
-    if (keyLEFT.isDown) {
-      this.startGame()
-    }
-    if (keyRIGHT.isDown) {
-      this.startGame()
-    }
-    if (keyUP.isDown) {
-      this.startGame()
-    }
-    if (keyDOWN.isDown) {
-      this.startGame()
-    }
+  centerButtonText (gameText, gameButton) {
+    Phaser.Display.Align.In.Center(
+      gameText,
+      gameButton
+    );
   }
-}
+};
