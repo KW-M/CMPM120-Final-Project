@@ -1,4 +1,4 @@
-# Tsurfnami
+# Unnamed Apocalypse Game
 
 A small game made by Ascher Lac, Kelly, Yukai Liu, and Kyle Worcester-Moore for the CMPM 120 series at UCSC:
 
