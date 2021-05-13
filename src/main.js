@@ -1,69 +1,12 @@
-/*
-Tsurfnami
-A game by Asher Lachoff, Yukai Liu, Kelly Leung & Kyle Worcester-Moore
-May 2nd, 2021
-Multiple input methods + tilt on mobile.
-Realistic shark symulation(TM).
-Layered audio gives an imersive experience.
-*/
-
-
-import Phaser from 'phaser';
-import LoadingScene from "/src/scenes/loadingScene"
-import MenuScene from "/src/scenes/MenuScene"
-import PlayScene from "/src/scenes/PlayScene"
-
-// reserve vars
-let game, keySPACE, keyR, keyLEFT, keyRIGHT, keyUP, keyDOWN;
-
-const targetFPS = 20;
-
-let gameConfig = {
-  type: Phaser.AUTO,
-  autoRound: true,
-  fps: {
-    target: targetFPS,
-    forceSetTimeOut: true,
-  },
-  scale: {
-    // zoom: 2,
-    mode: Phaser.Scale.RESIZE,// Phaser.Scale.NONE, // we scale the game manually in resize()
-    // width: window.innerWidth,
-    // height: window.innerHeight
-  },
-  physics: {
-    default: 'matter',
-    matter: {
-      enableSleeping: true,
-      gravity: { y: 0 },
-      // debug: {
-      //   // showBody: true,
-      //   // showStaticBody: true
-      // }
-    }
-  },
-  scene: [LoadingScene, MenuScene, PlayScene]// EndScene
+let config = {
+    type: Phaser.CANVAS,
+    width: 640,
+    height: 480,
+    scene: [ menu, controls]
 }
 
-function newGame() {
-  if (game) return;
-  game = new Phaser.Game(gameConfig);
-}
+let game = new Phaser.Game(config);
 
-// When the window has loaded fully, make the phaser game:
-window.onload = () => {
-  if (!game) newGame();
-}
-
-// This is for Parcel shenannagans that make reloading the website faster durring development.
-function destroyGame() {
-  if (!game) return;
-  game.destroy(true);
-  game.runDestroy();
-  game = null;
-}
-if (module.hot) {
-  module.hot.dispose(destroyGame);
-  module.hot.accept(newGame);
-}
+let borderUISize = game.config.height / 15;
+let borderPadding = borderUISize / 3;
 
