@@ -23,9 +23,7 @@ export default class Car extends Phaser.Physics.Matter.Image {
 
         this.scene = scene;
 
-        const kind = Phaser.Math.RND.pick(['car1', 'car2']);
-
-        this.body.setFrictionAir(0.15)
+        this.setFrictionAir(0.15)
             .setMass(30)
             .setScale(0.9)
             .setFixedRotation()
