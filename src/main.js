@@ -12,7 +12,7 @@ import Phaser from 'phaser';
 import LoadingScene from "/src/scenes/loadingScene"
 import MenuScene from "/src/scenes/MenuScene"
 import PlayScene from "/src/scenes/PlayScene"
-import ControlsScene from "/scr/scenes/controls"
+import ControlsScene from "/src/scenes/controls"
 
 // reserve vars
 let game, keySPACE, keyR, keyLEFT, keyRIGHT, keyUP, keyDOWN;
