@@ -32,6 +32,7 @@ let gameConfig = {
     // width: window.innerWidth,
     // height: window.innerHeight
   },
+  pixelArt: true,
   physics: {
     default: 'matter',
     matter: {
@@ -49,6 +50,8 @@ let gameConfig = {
 function newGame() {
   if (game) return;
   game = new Phaser.Game(gameConfig);
+  game.renderer.renderSession.roundPixels = true;
+  Phaser.Canvas.setImageRenderingCrisp(game.canvas);
 }
 
 // When the window has loaded fully, make the phaser game:

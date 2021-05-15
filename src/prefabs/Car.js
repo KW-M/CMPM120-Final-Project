@@ -31,14 +31,13 @@ export default class Car extends Phaser.Physics.Matter.Image {
             .setVelocity(0, 0);
 
         this.body.label = 'car';
-
     }
 
     update() {
         // Adapted from:
         if (keyUP.isDown && this.velocity <= 400) {
             this.velocity += 3;
-            console.log("this.velocity", this.velocity);
+            // console.log("this.velocity", this.velocity);
         } else {
             if (this.velocity >= 3)
                 this.velocity -= 3;

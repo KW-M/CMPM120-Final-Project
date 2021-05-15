@@ -2,6 +2,8 @@ import Phaser from 'phaser'
 // import ScoreOverlay from "/src/prefabs/scoreOverlay"
 // import Obstacle from "/src/prefabs/obstacle"
 import Car from "/src/prefabs/Car"
+import CameraController from "/src/prefabs/CameraController"
+import BackgroundLoader from "/src/prefabs/BackgroundLoader"
 // import Wave from "/src/prefabs/Wave"
 import CornerButton from "/src/prefabs/CornerButton"
 
@@ -9,11 +11,18 @@ export default class PlayScene extends Phaser.Scene {
     constructor() {
         super({ key: "playScene" });
     }
+    preload() {
+        this.load.setCORS('anonymous')
+        this.load.image('tile', "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/4/6/6");
+    }
 
     create() {
         this.gameOver = false;
         this.gameSize = this.game.scale.gameSize;
         this.matter.set30Hz();
+
+        this.BackgroundLoader = new BackgroundLoader(this);
+        this.BackgroundLoader.create();
 
         // setup variables
 
@@ -28,13 +37,17 @@ export default class PlayScene extends Phaser.Scene {
         // An array to hold all the obstacle instances in play.
         this.obstacleGameObjects = []
 
-        this.add.sprite(0,0,"desert_bg").setOrigin(0,0).setScale(2,2)
+        // this.add.sprite(0, 0, "desert_bg").setOrigin(0.5, 0.5).setScale(2, 2)
 
+        this.add.sprite(0, 0, "tile").setOrigin(0.5, 0.5).setScale(.1, .1)
         // place background tile sprite
 
         // add car (player)
-        this.car = new Car(this, this.gameSize.width / 2, this.gameSize.height / 2);
-
+        this.car = new Car(this, 0, 0);
+        // this.CameraUpdater = new CameraController(this.cameras.main, this.car.x, this.car.y)
+        this.cameras.main.startFollow(this.car);
+        this.cameras.main.setDeadzone(40, 40);
+        this.cameras.main.setLerp(0.8, 0.8)
         // high score is saved across games played
         this.hScore = localStorage.getItem("score") || 0;
 
@@ -82,7 +95,10 @@ export default class PlayScene extends Phaser.Scene {
         }
 
         // update wave and player sprites
-        this.car.update();  // update surfer sprite
+        this.car.update();  // update car sprite
+        if (this.game.getFrame() % 10 == 0) this.BackgroundLoader.update(this.cameras.main)
+        // this.CameraUpdater.update(this.car.x, this.car.y, 0, 0)
+
     }
 
 }
