@@ -23,7 +23,8 @@
   "homepage": "https://github.com/KW-M/Rocket-Patrol#readme",
   "dependencies": {
     "lockr": "^0.8.5",
-    "phaser": "^3.54.0"
+    "phaser": "^3.54.0",
+    "phaser3-rex-plugins": "^1.1.47"
   },
   "devDependencies": {
     "@parcel/transformer-image": "^2.0.0-nightly.2267",
