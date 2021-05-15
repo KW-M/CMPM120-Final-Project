@@ -17,14 +17,12 @@ export default class PlayScene extends Phaser.Scene {
             sceneKey: 'rexUI'
         });
         this.load.script('rexdialogquest', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexdialogquest.min.js');
+        this.load.setCORS('anonymous')
+        this.load.image('tile', "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/4/6/6");
     }
 
     constructor() {
         super({ key: "playScene" });
-    }
-    preload() {
-        this.load.setCORS('anonymous')
-        this.load.image('tile', "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/4/6/6");
     }
 
     create() {
