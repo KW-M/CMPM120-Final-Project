@@ -8,7 +8,7 @@ import CornerButton from "/src/prefabs/CornerButton"
 
 export default class PlayScene extends Phaser.Scene {
 
-    preload() { 
+    preload() {
         this.load.scenePlugin({
             key: 'rexuiplugin',
             url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js',
@@ -39,7 +39,7 @@ export default class PlayScene extends Phaser.Scene {
         // An array to hold all the obstacle instances in play.
         this.obstacleGameObjects = []
 
-        this.add.sprite(0,0,"desert_bg").setOrigin(0,0).setScale(2,2)
+        // this.add.sprite(0,0,"desert_bg").setOrigin(0,0).setScale(2,2)
 
         // place background tile sprite
 

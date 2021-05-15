@@ -1,13 +1,20 @@
-class menu extends Phaser.Scene {
+import images_box from 'url:/assets/grey_box.png';
+import images_checkbox from 'url:/assets/desert_bg.png';
+import button02 from 'url:/assets/blue_button02.png'
+import button03 from 'url:/assets/blue_button02.png'
+
+
+export default class MenuScene extends Phaser.Scene {
   constructor () {
-    super('menu');
+    super('menuScene');
   }
 
   preload() {
-    this.load.image('box', 'assets/grey_box.png');
-    this.load.image('checkedBox', 'assets/blue_boxCheckmark.png');
-    this.load.image('blueButton1', 'assets/blue_button02.png');
-    this.load.image('blueButton2', 'assets/blue_button03.png');
+    this.load.image('box', images_box);
+    this.load.image('checkedBox', images_checkbox);
+    this.load.image('blueButton1', button02);
+    this.load.image('blueButton2', button03);
+    console.log("heree")
   }
 
   create () {
@@ -18,7 +25,7 @@ class menu extends Phaser.Scene {
     this.centerButtonText(this.gameText, this.gameButton);
 
     this.gameButton.on('pointerdown', function (pointer) {
-      this.scene.start('PlayScene');
+      this.scene.start('playScene');
     }.bind(this));
 
     this.optionsButton = this.add.sprite(300, 200, 'blueButton1').setInteractive();
@@ -53,7 +60,7 @@ class menu extends Phaser.Scene {
   centerButton (gameObject, offset = 0) {
     Phaser.Display.Align.In.Center(
       gameObject,
-      this.add.zone(config.width/2, config.height/2 - offset * 100, config.width, config.height)
+      this.add.zone(this.game.config.width / 2, this.game.config.height / 2 - offset * 100, this.game.config.width, this.game.config.height)
     );
   }
 
