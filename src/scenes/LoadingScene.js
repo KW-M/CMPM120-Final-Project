@@ -63,7 +63,7 @@ export default class LoadingScene extends Phaser.Scene {
       //   { frameWidth: 160, frameHeight: 120, startFrame: 0, endFrame: 3 });
 
       // load spritesheets
-      this.load.audio('accelerate', audio_accelerate);
+      this.load.audio('accelerateSound', audio_accelerate);
       // this.load.audio('death_sound_1', sounds_death_sound_1)
       // this.load.audio('death_sound_2', sounds_death_sound_2)
       // this.load.audio('idle_sound_1', sounds_idle_sound_1)
