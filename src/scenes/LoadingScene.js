@@ -18,6 +18,7 @@ import images_desert_bg from 'url:/assets/desert_bg.png';
 // import images_surfer from 'url:/assets/surfer_sm.png'
 // import images_ocean_tile from 'url:/assets/ocean_tile.png';
 
+import audio_accelerate from 'url:/assets/accelerate.wav';
 // import sounds_hit_sound from 'url:/assets/collision.wav';
 // import sounds_death_sound_1 from 'url:/assets/deathsound1.wav';
 // import sounds_death_sound_2 from 'url:/assets/deathsound2.wav';
@@ -62,6 +63,7 @@ export default class LoadingScene extends Phaser.Scene {
       //   { frameWidth: 160, frameHeight: 120, startFrame: 0, endFrame: 3 });
 
       // load spritesheets
+      this.load.audio('accelerateSound', audio_accelerate);
       // this.load.audio('death_sound_1', sounds_death_sound_1)
       // this.load.audio('death_sound_2', sounds_death_sound_2)
       // this.load.audio('idle_sound_1', sounds_idle_sound_1)
