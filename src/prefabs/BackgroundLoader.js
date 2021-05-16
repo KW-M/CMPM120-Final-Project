@@ -7,7 +7,7 @@ export default class BackgroundLoader extends Phaser.GameObjects.GameObject {
 
 
         this.tileSize = 256;
-        this.tileScaleFactor = 6;
+        this.tileScaleFactor = 8;
         //16/25537/11844
         // 18/104297/47802
         this.tileZoomLevel = 18;
