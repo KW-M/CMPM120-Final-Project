@@ -16,6 +16,7 @@ export default class Car extends Phaser.Physics.Matter.Image {
         this.isJumping = false;
         this.depth = 4; // z-depth in the rendering layers
         this.velocity = 0;
+        this.accelSound = this.scene.sound.add('accelSound')
 
         this.ANGLE_DELTA = 0.1;
 
@@ -33,15 +34,11 @@ export default class Car extends Phaser.Physics.Matter.Image {
         this.body.label = 'car';
     }
 
-    create() {
-        const accelSound = this.sound.add('accelSound');
-    }
-
     update() {
         // Adapted from:
         if (keyUP.isDown && this.velocity <= 400) {
             this.velocity += 3;
-            accelSound.play();
+            this.accelSound.play();
             // console.log("this.velocity", this.velocity);
         } else {
             if (this.velocity >= 3)
