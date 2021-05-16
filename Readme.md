@@ -2,7 +2,7 @@
 
 A small game made by Ascher Lac, Kelly, Yukai Liu, and Kyle Worcester-Moore for the CMPM 120 series at UCSC:
 
-Play the [live game](https://kw-m.github.io/Tsurfnami) online!
+Play the [live game](https://kw-m.github.io/CMPM120-Final-Project/) online!
 
 ## Building the game in development:
 1. Get Node.JS from: https://nodejs.org/en/download
