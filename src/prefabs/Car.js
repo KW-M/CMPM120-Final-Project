@@ -33,10 +33,15 @@ export default class Car extends Phaser.Physics.Matter.Image {
         this.body.label = 'car';
     }
 
+    create() {
+        const accelSound = this.sound.add('accelSound');
+    }
+
     update() {
         // Adapted from:
         if (keyUP.isDown && this.velocity <= 400) {
             this.velocity += 3;
+            accelSound.play();
             // console.log("this.velocity", this.velocity);
         } else {
             if (this.velocity >= 3)
