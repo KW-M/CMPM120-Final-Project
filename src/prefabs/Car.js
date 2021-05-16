@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 
+// includes driving code from: https://gitlab.com/grigoriytretyakov/phaser3-racing-car/-/blob/master/src/Game.js
 export default class Car extends Phaser.Physics.Matter.Image {
     constructor(scene, x, y) {
         super(scene.matter.world, x, y, "car", null,
@@ -32,31 +33,61 @@ export default class Car extends Phaser.Physics.Matter.Image {
             .setVelocity(0, 0);
 
         this.body.label = 'car';
+
+        this.cursors = this.scene.input.keyboard.createCursorKeys();
+
+        this.counterclockwise = this.scene.input.keyboard.addKey(
+            Phaser.Input.Keyboard.KeyCodes.A);
+
+        this.clockwise = this.scene.input.keyboard.addKey(
+            Phaser.Input.Keyboard.KeyCodes.D);
+
+        this.forward = this.scene.input.keyboard.addKey(
+            Phaser.Input.Keyboard.KeyCodes.W);
+
+        this.backward = this.scene.input.keyboard.addKey(
+            Phaser.Input.Keyboard.KeyCodes.S);
+
+
     }
 
+    rotate(delta) {
+        this.setAngularVelocity(delta);
+    }
+
+    rotateClockwise() {
+        this.rotate(this.ANGLE_DELTA);
+    }
+
+    rotateCounterclockwise() {
+        this.rotate(-this.ANGLE_DELTA);
+    }
+
+    goForward() {
+        this.thrust(this.SPEED);
+    }
+
+    goBackward() {
+        this.thrust(-this.SPEED);
+    }
+
+
     update() {
-        // Adapted from:
-        if (keyUP.isDown && this.velocity <= 400) {
-            this.velocity += 3;
-            // console.log("this.velocity", this.velocity);
-        } else {
-            if (this.velocity >= 3)
-                this.velocity -= 3;
+
+        if (this.clockwise.isDown || this.cursors.right.isDown) {
+            this.rotateClockwise();
+        }
+        else if (this.counterclockwise.isDown || this.cursors.left.isDown) {
+            this.rotateCounterclockwise();
         }
 
-        if (Phaser.Input.Keyboard.JustDown(keyUP)) {
-            this.accelSound.play();
+        if (this.forward.isDown || this.cursors.up.isDown) {
+            this.goForward();
+        }
+        else if (this.backward.isDown || this.cursors.down.isDown) {
+            this.goBackward();
         }
 
-        this.setVelocityX(this.velocity * Math.cos((this.angle - 90) * 0.01345));
-        this.setVelocityY(this.velocity * Math.sin((this.angle - 90) * 0.01345));
-
-        if (keyLEFT.isDown)
-            this.setAngularVelocity(-5 * (this.velocity / 1000));
-        else if (keyRIGHT.isDown)
-            this.setAngularVelocity(5 * (this.velocity / 1000));
-        else
-            this.setAngularVelocity(0);
     }
 
     reset() {
