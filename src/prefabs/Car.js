@@ -74,6 +74,10 @@ export default class Car extends Phaser.Physics.Matter.Image {
 
     update() {
 
+        if (Phaser.Input.Keyboard.JustDown(keyUP) || Phaser.Input.Keyboard.JustDown(this.forward)) {
+            this.accelSound.play();
+        }
+
         if (this.clockwise.isDown || this.cursors.right.isDown) {
             this.rotateClockwise();
         }
