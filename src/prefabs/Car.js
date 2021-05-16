@@ -38,11 +38,14 @@ export default class Car extends Phaser.Physics.Matter.Image {
         // Adapted from:
         if (keyUP.isDown && this.velocity <= 400) {
             this.velocity += 3;
-            this.accelSound.play();
             // console.log("this.velocity", this.velocity);
         } else {
             if (this.velocity >= 3)
                 this.velocity -= 3;
+        }
+
+        if (Phaser.Input.Keyboard.JustDown(keyUP)) {
+            this.accelSound.play();
         }
 
         this.setVelocityX(this.velocity * Math.cos((this.angle - 90) * 0.01345));
