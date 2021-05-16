@@ -24,7 +24,8 @@
   "dependencies": {
     "lockr": "^0.8.5",
     "phaser": "^3.54.0",
-    "phaser3-rex-plugins": "^1.1.47"
+    "phaser3-rex-plugins": "^1.1.47",
+    "push-dir": "^0.4.1"
   },
   "devDependencies": {
     "@parcel/transformer-image": "^2.0.0-nightly.2267",
