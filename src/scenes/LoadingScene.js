@@ -18,8 +18,11 @@ import images_desert_bg from 'url:/assets/desert_bg.png';
 // import images_surfer from 'url:/assets/surfer_sm.png'
 // import images_ocean_tile from 'url:/assets/ocean_tile.png';
 
-import audio_accelerate from 'url:/assets/audio/accelerate.wav';
-// import audio_brake from 'url:/assets/audio/brake.wav';
+import audioAccelerate from 'url:/assets/audio/accelerate.wav';
+import audioBrake from 'url:/assets/audio/brake.wav';
+import audioReverse from 'url:/assets/audio/reverse.wav';
+import audioHonk from 'url:/assets/audio/honk.wav';
+import audioCrash from 'url:/assets/audio/crash.wav';
 
 export default class LoadingScene extends Phaser.Scene {
     constructor() {
@@ -55,15 +58,11 @@ export default class LoadingScene extends Phaser.Scene {
       //   { frameWidth: 160, frameHeight: 120, startFrame: 0, endFrame: 3 });
 
       // load spritesheets
-      this.load.audio('accelSound', audio_accelerate);
-      // this.load.audio('death_sound_1', sounds_death_sound_1)
-      // this.load.audio('death_sound_2', sounds_death_sound_2)
-      // this.load.audio('idle_sound_1', sounds_idle_sound_1)
-      // this.load.audio('idle_sound_2', sounds_idle_sound_2)
-      // this.load.audio('idle_sound_3', sounds_idle_sound_3)
-      // this.load.audio('idle_sound_4', sounds_idle_sound_4)
-      // this.load.audio('hit_sound', sounds_hit_sound)
-      // this.load.audio('wave_sound', sounds_waves);
+      this.load.audio('accelSound', audioAccelerate);
+      this.load.audio('brakeSound', audioBrake);
+      this.load.audio('reverseSound', audioReverse);
+      this.load.audio('honkSound', audioHonk);
+      this.load.audio('crashSound', audioCrash);
 
       // this.load.audio('soundtrack', sounds_soundtrack);
 
