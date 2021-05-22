@@ -44,7 +44,7 @@ let gameConfig = {
       // }
     }
   },
-  scene: [LoadingScene, MenuScene, ControlsScene, PlayScene]// EndScene
+  scene: [LoadingScene, MenuScene, controls, options, PlayScene]// EndScene
 }
 
 function newGame() {
