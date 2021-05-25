@@ -1,6 +1,6 @@
 class ControlsScene extends Phaser.Scene {
   constructor () {
-    super('controls');
+    super('controlsScene');
   }
 
   create () {

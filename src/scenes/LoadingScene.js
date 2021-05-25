@@ -19,10 +19,10 @@ import images_desert_bg from 'url:/assets/desert_bg.png';
 // import images_ocean_tile from 'url:/assets/ocean_tile.png';
 
 import audioAccelerate from 'url:/assets/audio/accelerate.wav';
-import audioBrake from 'url:/assets/audio/brake.wav';
-import audioReverse from 'url:/assets/audio/reverse.wav';
-import audioHonk from 'url:/assets/audio/honk.wav';
-import audioCrash from 'url:/assets/audio/crash.wav';
+// import audioBrake from 'url:/assets/audio/brake.wav';
+// import audioReverse from 'url:/assets/audio/reverse.wav';
+// import audioHonk from 'url:/assets/audio/honk.wav';
+import audioCrash from 'url:/assets/audio/collision.wav';
 
 export default class LoadingScene extends Phaser.Scene {
     constructor() {
@@ -59,10 +59,10 @@ export default class LoadingScene extends Phaser.Scene {
 
       // load spritesheets
       this.load.audio('accelSound', audioAccelerate);
-      this.load.audio('brakeSound', audioBrake);
-      this.load.audio('reverseSound', audioReverse);
-      this.load.audio('honkSound', audioHonk);
-      this.load.audio('crashSound', audioCrash);
+      // this.load.audio('brakeSound', audioBrake);
+      // this.load.audio('reverseSound', audioReverse);
+      // this.load.audio('honkSound', audioHonk);
+      // this.load.audio('crashSound', audioCrash);
 
       // this.load.audio('soundtrack', sounds_soundtrack);
 

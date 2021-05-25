@@ -4,3 +4,4 @@ package-lock.json
 /dist
 /.parcel-cache
 /dist_prod
+/static

@@ -35,7 +35,7 @@ export default class MenuScene extends Phaser.Scene {
     this.centerButtonText(this.optionsText, this.optionsButton);
 
     this.optionsButton.on('pointerdown', function (pointer) {
-      this.scene.start('Options');
+      this.scene.start('optionsScene');
     }.bind(this));
 
     this.controlsButton = this.add.sprite(300, 200, 'blueButton1').setInteractive();
@@ -45,7 +45,7 @@ export default class MenuScene extends Phaser.Scene {
     this.centerButtonText(this.controlsText, this.controlsButton);
 
     this.controlsButton.on('pointerdown', function (pointer) {
-      this.scene.start('controls');
+      this.scene.start('controlsScene');
     }.bind(this));
 
     this.input.on('pointerover', function (event, gameObjects) {

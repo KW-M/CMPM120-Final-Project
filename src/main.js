@@ -12,7 +12,8 @@ import Phaser from 'phaser';
 import LoadingScene from "/src/scenes/loadingScene"
 import MenuScene from "/src/scenes/MenuScene"
 import PlayScene from "/src/scenes/PlayScene"
-import ControlsScene from "/src/scenes/controls"
+import ControlsScene from "/src/scenes/controlsScene"
+import OptionsScene from "/src/scenes/optionsScene"
 
 // reserve vars
 let game, keySPACE, keyR, keyLEFT, keyRIGHT, keyUP, keyDOWN;
@@ -44,7 +45,7 @@ let gameConfig = {
       // }
     }
   },
-  scene: [LoadingScene, MenuScene, controls, options, PlayScene]// EndScene
+  scene: [LoadingScene, MenuScene, ControlsScene, OptionsScene, PlayScene]// EndScene
 }
 
 function newGame() {

@@ -1,9 +1,9 @@
-class options extends Phaser.Scene {
-  constructor () {
-    super('options');
+class OptionsScene extends Phaser.Scene {
+  constructor() {
+    super('optionsScene');
   }
 
-  create () {
+  create() {
     this.musicOn = true;
     this.soundOn = true;
 
