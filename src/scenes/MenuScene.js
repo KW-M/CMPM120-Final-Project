@@ -35,7 +35,7 @@ export default class MenuScene extends Phaser.Scene {
     this.centerButtonText(this.optionsText, this.optionsButton);
 
     this.optionsButton.on('pointerdown', function (pointer) {
-      this.scene.start('optionsScene');
+      this.scene.start('dialogscene');
     }.bind(this));
 
     this.controlsButton = this.add.sprite(300, 200, 'blueButton1').setInteractive();
