@@ -10,6 +10,8 @@ import Phaser from 'phaser'
 
 import images_car from 'url:/assets/car.png';
 import images_desert_bg from 'url:/assets/desert_bg.png';
+import image_dialogue from 'url:/assets/dialogue background.png';
+
 // import images_coconut_crash from 'url:/assets/coconut_crash.png';
 // import images_wood_crash from 'url:/assets/wood_crash.png';
 // import images_boat from 'url:/assets/boat_anim.png';
@@ -41,21 +43,8 @@ export default class LoadingScene extends Phaser.Scene {
 
       this.load.image('car', images_car);
       this.load.image('desert_bg', images_desert_bg);
-
-      // Obstacle Images:
-      // this.load.spritesheet('shark', images_shark,
-      //   { frameWidth: 128, frameHeight: 71, startFrame: 0, endFrame: 2 });
-      // this.load.spritesheet('wood_crash', images_wood_crash,
-      //   { frameWidth: 120, frameHeight: 120, startFrame: 0, endFrame: 5 });
-      // this.load.spritesheet('coconut_crash', images_coconut_crash,
-      //   { frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5 });
-      // this.load.spritesheet('stone_crash', images_stone_crash,
-      //   { frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 5 });
-      // this.load.spritesheet('boat', images_boat,
-      //   { frameWidth: 64, frameHeight: 48, startFrame: 0, endFrame: 9 });
-
-      // this.load.spritesheet('surfer', images_surfer,
-      //   { frameWidth: 160, frameHeight: 120, startFrame: 0, endFrame: 3 });
+      this.load.image('dialogue background', image_dialogue);
+ 
 
       // load spritesheets
       this.load.audio('accelSound', audioAccelerate);

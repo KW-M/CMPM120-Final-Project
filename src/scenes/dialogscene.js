@@ -10,10 +10,16 @@ export default class Dialogscene extends Phaser.Scene {
             sceneKey: 'rexUI'
         });
         this.load.script('rexdialogquest', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexdialogquest.min.js');
+        
     }
 
     create() {
         var print = this.add.text(0, 0, '');
+
+        var image_dialogue = this.add.image(1, 1, 'dialogue background');
+        image_dialogue.setOrigin (0,0)
+        image_dialogue.setScale (3.5,3) 
+        // var image = scene.add.image(x, y, key, frame);
 
         var dialog = CreateDialog(this)
             .layout();
@@ -84,7 +90,7 @@ export default class Dialogscene extends Phaser.Scene {
 }
 
 const COLOR_PRIMARY = 0x00FFFF;
-const COLOR_LIGHT = 0x7b5e57;
+const COLOR_LIGHT = 0xF1C232;
 const COLOR_DARK = 0x260e04;
 
 var CreateDialog = function (scene) {
