@@ -3,9 +3,11 @@ import Phaser from 'phaser'
 // import Obstacle from "/src/prefabs/obstacle"
 import Car from "/src/prefabs/Car"
 import CameraController from "/src/prefabs/CameraController"
-import BackgroundLoader from "/src/prefabs/BackgroundLoader"
+import BackgroundTileLoader from "/src/prefabs/BackgroundTileLoader"
+import { TileLoader } from "../prefabs/TileLoader"
 // import Wave from "/src/prefabs/Wave"
 import CornerButton from "/src/prefabs/CornerButton"
+import levelMap from "/src/prefabs/levelMap"
 
 
 export default class PlayScene extends Phaser.Scene {
@@ -30,10 +32,32 @@ export default class PlayScene extends Phaser.Scene {
         this.gameSize = this.game.scale.gameSize;
         this.matter.set30Hz();
 
-        this.BackgroundLoader = new BackgroundLoader(this);
-        this.BackgroundLoader.create();
+        this.graphicsLayer = this.add.graphics(0, 0);
+        this.graphicsLayer.setDepth(5)
+
+        window.map_scaling = 2;
+        // this.tileURLGenerator(this.tileZoomLevel, tileNumX, tileNumY, this.tilePxSize, this.tileWorldSize)
+        // this.BackgroundTileLoader = new TileLoader(this, "background", 256, 1, 1, 18, 46089, 102621,
+        //     (tileZoomLevel, tileNumX, tileNumY, tilePxSize, tileWorldUnitSize) => {
+        //         return `./ImageMapTiles/${tileZoomLevel}/${tileNumX}/${tileNumY}.png`; // For use in production.
+        //     }
+        // );
+        this.BackgroundTileLoader = new TileLoader(this, "background", 768, 459, 1, 18, -12926439, 4236816, 1, -1,
+            (tileZoomLevel, tileNumX, tileNumY, tilePxSize, tileWorldUnitSize) => {
+                // return `./ImageMapTiles/${tileZoomLevel}/${tileNumX}/${tileNumY}.png`; // For use in production.
+                return `https://services.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/MapServer/export?bbox=${tileNumX},${tileNumY},${tileNumX + tileWorldUnitSize},${tileNumY + tileWorldUnitSize}&size=${tilePxSize},${tilePxSize}&dpi=96&transparent=true&format=png32&layers=show:0,4,8,12,16,20,24,28,32&bboxSR=102100&imageSR=102100&f=image`
+            },
+        );
+        // this.RoadTileLoader = new TileLoader(this, "roads", 256, 1, 1, 18, this.BackgroundTileLoader.tileNumStartX, this.BackgroundTileLoader.tileNumStartY,
+        //     (tileZoomLevel, tileNumX, tileNumY, tilePxSize, tileWorldSize) => {
+        //         return `./RoadMapTiles/${tileZoomLevel}/${tileNumX}/${tileNumY}.png`; // For use in production.
+        //     }
+        // );
+
+        //`./RoadMapTiles/${this.tileZoomLevel}/${tileNumX}/${tileNumY}.png`
 
         // setup variables
+        levelMap.setupLevel(this, "lvl1")
 
         // define keys
         window.keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -51,12 +75,16 @@ export default class PlayScene extends Phaser.Scene {
         this.add.sprite(0, 0, "tile").setOrigin(0.5, 0.5).setScale(.1, .1)
         // place background tile sprite
 
+
+
         // add car (player)
         this.car = new Car(this, 0, 0);
+
         // this.CameraUpdater = new CameraController(this.cameras.main, this.car.x, this.car.y)
         this.cameras.main.startFollow(this.car);
         this.cameras.main.setDeadzone(40, 40);
         this.cameras.main.setLerp(0.8, 0.8)
+        this.cameras.main.roundPixels = true;
         // high score is saved across games played
         this.hScore = localStorage.getItem("score") || 0;
 
@@ -77,74 +105,6 @@ export default class PlayScene extends Phaser.Scene {
             // this.oceanBackground.height = this.gameSize.height
             // this.oceanBackground.width = this.gameSize.width;
         })
-
-        var print = this.add.text(0, 0, '');
-
-        var dialog = CreateDialog(this)
-            .layout();
-        dialog.clearChoices = function () {
-            dialog.forEachChoice(function (choice) {
-                choice.getElement('background').setStrokeStyle();
-            });
-            return dialog;
-        }
-
-        var quest = new rexdialogquest({
-            dialog: dialog,
-            questions: Questions,
-            quest: {
-                shuffleQuestions: true,
-                shuffleOptions: true,
-            },
-        })
-            .on('update-choice', function (choice, option, quest) {
-                choice
-                    .setText(option.key)
-                    .setData('option', option);
-            })
-            .on('update-dialog', function (dialog, question, quest) {
-                dialog.getElement('title').setText(question.key);
-                quest
-                    .setData('question', question)
-                    .setData('option', undefined);
-                dialog
-                    .clearChoices()
-                    .layout();
-
-                print.text += `${question.key}:`;
-            })
-            .on('click-choice', function (choice, dialog, quest) {
-                dialog.clearChoices();
-                choice.getElement('background').setStrokeStyle(1, 0xffffff);
-                quest.setData('option', choice.getData('option'));
-            })
-            .on('click-action', function (action, dialog, quest) {
-                var question = quest.getData('question');
-                var option = quest.getData('option');
-                if (option === undefined) {
-                    return;
-                }
-                var isCorrect = (question.answer === option.key);
-
-                // Clear option reference
-                quest
-                    .setData('question', undefined)
-                    .setData('option', undefined);
-                dialog.forEachChoice(function (choice) {
-                    choice.setData('option', undefined);
-                });
-                print.text += `${option.key} -> ${(isCorrect) ? 'O' : 'X'}\n`;
-
-                if (!quest.isLast()) {
-                    quest.next();
-                } else {
-                    print.text += 'Done\n';
-                    quest.emit('complelte', quest);
-                }
-            })
-            .start();
-
-
     }
 
     update() {
@@ -173,103 +133,15 @@ export default class PlayScene extends Phaser.Scene {
 
         // update wave and player sprites
         this.car.update();  // update car sprite
-        if (this.game.getFrame() % 10 == 0) this.BackgroundLoader.update(this.cameras.main)
+        if (this.game.getFrame() % 10 == 0) {
+            let worldView = this.cameras.main.worldView;
+            console.log(worldView.left, worldView.right)
+            this.BackgroundTileLoader.update(worldView.left, worldView.right, worldView.top, worldView.bottom)
+            // this.RoadTileLoader.update(this.car.x, this.car.y, this.car.x, this.car.y)
+        }
         // this.CameraUpdater.update(this.car.x, this.car.y, 0, 0)
-
+        let newLevelName = levelMap.checkTargetOverlap("lvl1", this.car.x, this.car.y)
+        if (newLevelName != null) console.count(newLevelName);
     }
 
 }
-const COLOR_PRIMARY = 0x4e342e;
-const COLOR_LIGHT = 0x7b5e57;
-const COLOR_DARK = 0x260e04;
-
-var CreateDialog = function (scene) {
-    return scene.rexUI.add.dialog({
-        x: scene.cameras.main.width / 2,
-        y: scene.cameras.main.height / 2,
-        width: 250,
-
-        background: scene.rexUI.add.roundRectangle(0, 0, 100, 100, 20, COLOR_PRIMARY),
-
-        title: CreateTitle(scene, ' ', COLOR_DARK),
-
-        content: scene.add.text(0, 0, ' ', {
-            fontSize: '24px'
-        }),
-
-        choices: [
-            CreateButton(scene, ' ', COLOR_LIGHT),
-            CreateButton(scene, ' ', COLOR_LIGHT),
-            CreateButton(scene, ' ', COLOR_LIGHT),
-            CreateButton(scene, ' ', COLOR_LIGHT),
-            CreateButton(scene, ' ', COLOR_LIGHT)
-        ], // Support 5 choices
-
-        actions: [
-            CreateButton(scene, 'Next', COLOR_DARK),
-        ],
-
-        space: {
-            title: 25,
-            content: 25,
-            choices: 20,
-            choice: 15,
-            action: 15,
-
-            left: 25,
-            right: 25,
-            top: 25,
-            bottom: 25,
-        },
-
-        expand: {
-            content: false,  // Content is a pure text object
-        }
-    });
-}
-
-var CreateTitle = function (scene, text, backgroundColor) {
-    return scene.rexUI.add.label({
-        background: scene.rexUI.add.roundRectangle(0, 0, 100, 40, 20, backgroundColor),
-        text: scene.add.text(0, 0, text, {
-            fontSize: '24px'
-        }),
-        space: {
-            left: 15,
-            right: 15,
-            top: 10,
-            bottom: 10
-        }
-    });
-};
-
-var CreateButton = function (scene, text, backgroundColor) {
-    return scene.rexUI.add.label({
-        background: scene.rexUI.add.roundRectangle(0, 0, 100, 40, 20, backgroundColor),
-
-        text: scene.add.text(0, 0, text, {
-            fontSize: '24px'
-        }),
-
-        space: {
-            left: 10,
-            right: 10,
-            top: 10,
-            bottom: 10
-        }
-    });
-}
-
-const Questions = `type,key,answer
-q,Q0,A0
-,A0,
-,A1,
-,A2,
-q,Q1,A0
-,A0,
-,A1,
-,A2,
-q,Q2,A0
-,A0,
-,A1,
-,A2,`;

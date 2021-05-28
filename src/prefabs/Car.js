@@ -23,7 +23,7 @@ export default class Car extends Phaser.Physics.Matter.Image {
         this.stearingAngle = 0;
         this.STEARING_RATE_MULTIPLIER = 0.0002
         this.backupSteering = 1; // -1 when backing up
-        this.maxSteeringAngle = 3 // in degrees
+        this.maxSteeringAngle = 10 // in degrees
 
 
         this.MAX_SPEED_WHEN_DRIFTING = 0.00005;
@@ -100,6 +100,7 @@ export default class Car extends Phaser.Physics.Matter.Image {
 
         if (Phaser.Input.Keyboard.JustDown(keyUP) || Phaser.Input.Keyboard.JustDown(this.forward)) {
             // this.accelSound.play();
+            console.log("CarPosition (map scaled): ", this.x / window.map_scaling, this.y / window.map_scaling)
         }
 
         if (this.spaceBar.isDown) {

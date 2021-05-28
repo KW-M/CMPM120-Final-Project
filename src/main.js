@@ -52,8 +52,8 @@ let gameConfig = {
 function newGame() {
   if (game) return;
   game = new Phaser.Game(gameConfig);
-  game.renderer.renderSession.roundPixels = true;
-  Phaser.Canvas.setImageRenderingCrisp(game.canvas);
+  console.log(game)
+  Phaser.Display.Canvas.CanvasInterpolation.setCrisp(game.canvas);
 }
 
 // When the window has loaded fully, make the phaser game:
