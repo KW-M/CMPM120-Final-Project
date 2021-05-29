@@ -11,6 +11,7 @@ import Phaser from 'phaser'
 import images_car from 'url:/assets/car.png';
 import images_desert_bg from 'url:/assets/desert_bg.png';
 import image_dialogue from 'url:/assets/dialogue background.png';
+import image_dialoguebox from 'url:/assets/Dialogue box.png';
 
 // import images_coconut_crash from 'url:/assets/coconut_crash.png';
 // import images_wood_crash from 'url:/assets/wood_crash.png';
@@ -44,6 +45,7 @@ export default class LoadingScene extends Phaser.Scene {
       this.load.image('car', images_car);
       this.load.image('desert_bg', images_desert_bg);
       this.load.image('dialogue background', image_dialogue);
+      this.load.image('Dialogue box', image_dialoguebox);
  
 
       // load spritesheets

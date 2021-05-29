@@ -17,8 +17,14 @@ export default class Dialogscene extends Phaser.Scene {
         // var image = scene.add.image(x, y, key, frame);
         var image_dialogue = this.add.image(1, 1, 'dialogue background');
         image_dialogue.setOrigin (0,0)
-        image_dialogue.setScale (3.5,3) 
+        image_dialogue.setScale (3,3.2) 
         
+        var image_dialoguebox = this.add.image(1, 1, 'Dialogue box');
+        image_dialoguebox.setposition
+        image_dialoguebox.setOrigin (0,0)
+        image_dialoguebox.setScale (1.5,1.5)
+
+
         //rectangle
         //this.add.rectangle(1, 1, 1000, 1000, 0x000000)
         
@@ -124,7 +130,7 @@ var SetAlertDialog = function (dialog, title, content) {
 var AlertDialog;
 var Alert = function (scene, title, content, x, y) {
     if (x === undefined) {
-        x = 800;
+        x = 750;
     }
     if (y === undefined) {
         y = 400;
@@ -139,12 +145,12 @@ var Alert = function (scene, title, content, x, y) {
         .layout();
 
     return AlertDialog
-        .moveFromPromise(1000, undefined, '-=200', 'Bounce')
+        .moveFromPromise(1000, undefined, '-=800', 'Bounce')
         .then(function () {
             return scene.rexUI.waitEvent(AlertDialog, 'button.click');
         })
         .then(function () {
-            return AlertDialog.moveToPromise(1000, undefined, '-=400', 'Back');
+            return AlertDialog.moveToPromise(1000, undefined, '-=600', 'Back');
         })
         .then(function () {
             AlertDialog.setVisible(false);
