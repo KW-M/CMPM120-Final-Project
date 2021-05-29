@@ -15,11 +15,13 @@ export default class Dialogscene extends Phaser.Scene {
 
     create() {
         var print = this.add.text(0, 0, '');
-
+        
         var image_dialogue = this.add.image(1, 1, 'dialogue background');
         image_dialogue.setOrigin (0,0)
         image_dialogue.setScale (3.5,3) 
         // var image = scene.add.image(x, y, key, frame);
+
+        this.add.rectangle(1, 1, 500, 500, 0xCCCCCC)
 
         var dialog = CreateDialog(this)
             .layout();
