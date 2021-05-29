@@ -5,8 +5,8 @@ let levelMaps = {
         carStart: { x: 0 * window.map_scaling, y: 0 * window.map_scaling },
         gameBounds: { top: -5000 * window.map_scaling, left: -5000 * window.map_scaling, width: 10000 * window.map_scaling, height: 10000 * window.map_scaling },
         intersection: {
-            x: -265.5967792042944 * window.map_scaling,
-            y: -170.4765104327641 * window.map_scaling,
+            x: -5.5967792042944 * window.map_scaling,
+            y: -10.4765104327641 * window.map_scaling,
             angle: -30,
             scaling: .5 * window.map_scaling,
             spriteUrl: images_intersection_1,
@@ -15,7 +15,7 @@ let levelMaps = {
             ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)
         },
         sceneTransitionTargets: [
-            { x: -90 * window.map_scaling, y: -50 * window.map_scaling, radius: 10 * window.map_scaling, lvlName: "G1" },
+            { x: -2 * window.map_scaling, y: -5 * window.map_scaling, radius: 10 * window.map_scaling, lvlName: "G1" },
             { x: -800 * window.map_scaling, y: -50 * window.map_scaling, radius: 20 * window.map_scaling, lvlName: "G2" },
         ] // uses global position in map-scaled pixels
     }
@@ -33,7 +33,7 @@ export default {
             intersectionImage.setOrigin(0.5, 1)
             intersectionImage.setAngle(lvl.intersection.angle)
             intersectionImage.setPosition(lvl.intersection.x, lvl.intersection.y)
-            intersectionImage.depth = 1;
+            intersectionImage.depth = 10;
             intersectionImage.setScale(lvl.intersection.scaling)
 
             let spriteName = levelName + "_intersection"

@@ -35,19 +35,35 @@ export default class PlayScene extends Phaser.Scene {
         this.graphicsLayer = this.add.graphics(0, 0);
         this.graphicsLayer.setDepth(5)
 
-        window.map_scaling = 2;
+        window.map_scaling = 1;
         // this.tileURLGenerator(this.tileZoomLevel, tileNumX, tileNumY, this.tilePxSize, this.tileWorldSize)
         // this.BackgroundTileLoader = new TileLoader(this, "background", 256, 1, 1, 18, 46089, 102621,
         //     (tileZoomLevel, tileNumX, tileNumY, tilePxSize, tileWorldUnitSize) => {
         //         return `./ImageMapTiles/${tileZoomLevel}/${tileNumX}/${tileNumY}.png`; // For use in production.
         //     }
         // );
-        this.BackgroundTileLoader = new TileLoader(this, "background", 768, 459, 1, 18, -12926439, 4236816, 1, -1,
+        this.BackgroundTileLoader = new TileLoader(this, "background", 256, 153, 1, 18, -12998684.5, 4326425.7, 1, -1,
             (tileZoomLevel, tileNumX, tileNumY, tilePxSize, tileWorldUnitSize) => {
                 // return `./ImageMapTiles/${tileZoomLevel}/${tileNumX}/${tileNumY}.png`; // For use in production.
-                return `https://services.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/MapServer/export?bbox=${tileNumX},${tileNumY},${tileNumX + tileWorldUnitSize},${tileNumY + tileWorldUnitSize}&size=${tilePxSize},${tilePxSize}&dpi=96&transparent=true&format=png32&layers=show:0,4,8,12,16,20,24,28,32&bboxSR=102100&imageSR=102100&f=image`
+                return `./mapTiles/background/[${tileWorldUnitSize}=${tilePxSize}]${tileNumX},${tileNumY}.png`
+            },
+            (tileZoomLevel, tileNumX, tileNumY, tilePxSize, tileWorldUnitSize) => {
+                // return `./ImageMapTiles/${tileZoomLevel}/${tileNumX}/${tileNumY}.png`; // For use in production.
+                let tileImageUrl = `https://services.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/MapServer/export?bbox=${tileNumX},${tileNumY},${tileNumX + tileWorldUnitSize},${tileNumY + tileWorldUnitSize}&size=${tilePxSize},${tilePxSize}&dpi=96&transparent=true&format=png32&layers=show:0,4,8,12,16,20,24,28,32&bboxSR=102100&imageSR=102100&f=image`
+                let filePath = `./dist/mapTiles/background/[${tileWorldUnitSize}=${tilePxSize}]${tileNumX},${tileNumY}.png`
+                fetch(`http://127.0.0.1:3000?url=${window.encodeURIComponent(tileImageUrl)}&filePath=${filePath}`).then()
+                return tileImageUrl;
             },
         );
+        // this.load.image().once('')
+
+        // this.RoadTileLoader = new TileLoader(this, "roads", 256 * 3, 153 * 3, 3, 18, -12998684.5, 4326425.7, 1, -1,
+        //     (tileZoomLevel, tileNumX, tileNumY, tilePxSize, tileWorldUnitSize) => {
+        //         // return `./ImageMapTiles/${tileZoomLevel}/${tileNumX}/${tileNumY}.png`; // For use in production.
+        //         //      https://carto.nationalmap.gov/arcgis/rest/services/transportation/MapServer/export?dpi=96&transparent=true&format=png32&layers=show:2,3,4,7,8,9,13,14,15,16,25,26,27,28,29&bbox=-13440162.299691577,4469437.195388993,-13117598.040328287,4687741.3481713515&bboxSR=102100&imageSR=102100&size=1055,714&f=image
+        //         return `https://carto.nationalmap.gov/arcgis/rest/services/transportation/MapServer/export?bbox=${tileNumX},${tileNumY},${tileNumX + tileWorldUnitSize},${tileNumY + tileWorldUnitSize}&size=${tilePxSize},${tilePxSize}&dpi=96&transparent=true&format=png32&layers=show:2,3,4,7,8,9,13,14,15,16,25,26,27,28,29&bboxSR=102100&imageSR=102100&f=image`
+        //     },
+        // );
         // this.RoadTileLoader = new TileLoader(this, "roads", 256, 1, 1, 18, this.BackgroundTileLoader.tileNumStartX, this.BackgroundTileLoader.tileNumStartY,
         //     (tileZoomLevel, tileNumX, tileNumY, tilePxSize, tileWorldSize) => {
         //         return `./RoadMapTiles/${tileZoomLevel}/${tileNumX}/${tileNumY}.png`; // For use in production.
