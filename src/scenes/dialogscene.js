@@ -14,173 +14,149 @@ export default class Dialogscene extends Phaser.Scene {
     }
 
     create() {
-        var print = this.add.text(0, 0, '');
 
+        //Background
+        // var image = scene.add.image(x, y, key, frame);
         var image_dialogue = this.add.image(1, 1, 'dialogue background');
         image_dialogue.setOrigin (0,0)
-        image_dialogue.setScale(3.5, 3)
-        // var image = scene.add.image(x, y, key, frame);
-        this.add.rectangle(0, 0, 200, 200, 0xff00ff)
-        var dialog = CreateDialog(this)
-            .layout();
-        dialog.clearChoices = function () {
-            dialog.forEachChoice(function (choice) {
-                choice.getElement('background').setStrokeStyle();
-            });
-            return dialog;
-        }
+        image_dialogue.setScale(3, 3.2)
 
-        var quest = new rexdialogquest({
-            dialog: dialog,
-            questions: Questions,
-            quest: {
-                shuffleQuestions: true,
-                shuffleOptions: true,
-            },
-        })
-            .on('update-choice', function (choice, option, quest) {
-                choice
-                    .setText(option.key)
-                    .setData('option', option);
-            })
-            .on('update-dialog', function (dialog, question, quest) {
-                dialog.getElement('title').setText(question.key);
-                quest
-                    .setData('question', question)
-                    .setData('option', undefined);
-                dialog
-                    .clearChoices()
-                    .layout();
+        var image_dialoguebox = this.add.image(1, 1, 'Dialogue box');
+        image_dialoguebox.setposition
+        image_dialoguebox.setOrigin (0,0)
+        image_dialoguebox.setScale (1.5,1.5)
 
-                print.text += `${question.key}:`;
-            })
-            .on('click-choice', function (choice, dialog, quest) {
-                dialog.clearChoices();
-                choice.getElement('background').setStrokeStyle(1, 0xffffff);
-                quest.setData('option', choice.getData('option'));
-            })
-            .on('click-action', function (action, dialog, quest) {
-                var question = quest.getData('question');
-                var option = quest.getData('option');
-                if (option === undefined) {
-                    return;
-                }
-                var isCorrect = (question.answer === option.key);
+        //rectangle
+        //this.add.rectangle(1, 1, 1000, 1000, 0x000000)
 
-                // Clear option reference
-                quest
-                    .setData('question', undefined)
-                    .setData('option', undefined);
-                dialog.forEachChoice(function (choice) {
-                    choice.setData('option', undefined);
-                });
-                print.text += `${option.key} -> ${(isCorrect) ? 'O' : 'X'}\n`;
 
-                if (!quest.isLast()) {
-                    quest.next();
-                } else {
-                    print.text += 'Done\n';
-                    quest.emit('complelte', quest);
-                }
+
+        var scene = this;
+        Alert(scene, '11', 'Alien: Hello')
+            .then(function () {
+                return Alert(scene, '22', 'Hello again');
             })
-            .start();
+            .then(function () {
+                return Alert(scene, '33', 'OKKKKK');
+            })
+            .then(function () {
+                return Alert(scene, '44', 'Goodbye');
+
+            })
     }
 
     update() { }
 }
 
-const COLOR_PRIMARY = 0x00FFFF;
-const COLOR_LIGHT = 0xF1C232;
-const COLOR_DARK = 0x260e04;
+var CreateAlertDialog = function (scene) {
+    var dialog = scene.rexUI.add.dialog({
+        width: 300,
+        background: scene.rexUI.add.roundRectangle(1, 1, 100, 100, 20, 0x1565c0),
 
-var CreateDialog = function (scene) {
-    scene.add.rec
-    return scene.rexUI.add.dialog({
-        x: scene.cameras.main.width / 2,
+        title: scene.rexUI.add.label({
+            background: scene.rexUI.add.roundRectangle(0, 0, 100, 40, 20, 0x003c8f),
+            text: scene.add.text(0, 0, '', {
+                fontSize: '50px'
+            }),
+            space: {
+                left: 15,
+                right: 15,
+                top: 10,
+                bottom: 10
+            }
+
+        }),
+x: scene.cameras.main.width / 2,
         y: scene.cameras.main.height / 2,
-        width: 360,
-
-        background: scene.rexUI.add.roundRectangle(0, 0, 100, 100, 20, COLOR_PRIMARY),
-
-        title: CreateTitle(scene, ' ', COLOR_DARK),
-
-        content: scene.add.text(0, 0, ' ', {
-            fontSize: '24px'
+        content: scene.add.text(0, 0, '', {
+            fontSize: '50px'
         }),
 
-        choices: [
-            CreateButton(scene, ' ', COLOR_LIGHT),
-            CreateButton(scene, ' ', COLOR_LIGHT),
-            CreateButton(scene, ' ', COLOR_LIGHT),
-            CreateButton(scene, ' ', COLOR_LIGHT),
-            CreateButton(scene, ' ', COLOR_LIGHT)
-        ], // Support 5 choices
-
         actions: [
-            CreateButton(scene, 'Next', COLOR_DARK),
+            scene.rexUI.add.label({
+                background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x5e92f3),
+
+                text: scene.add.text(0, 0, 'OK', {
+                    fontSize: '50px'
+                }),
+
+                space: {
+                    left: 10,
+                    right: 10,
+                    top: 10,
+                    bottom: 10
+                }
+            })
         ],
 
         space: {
             title: 25,
             content: 25,
-            choices: 20,
-            choice: 15,
             action: 15,
 
-            left: 25,
-            right: 25,
-            top: 25,
-            bottom: 25,
+            left: 20,
+            right: 20,
+            top: 20,
+            bottom: 20,
+        },
+
+        align: {
+            actions: 'center', // 'center'|'left'|'right'
         },
 
         expand: {
             content: false,  // Content is a pure text object
         }
-    });
+    })
+        .on('button.over', function (button, groupName, index, pointer, event) {
+            button.getElement('background').setStrokeStyle(1, 0xffffff);
+        })
+        .on('button.out', function (button, groupName, index, pointer, event) {
+            button.getElement('background').setStrokeStyle();
+        });
+
+    return dialog;
 }
 
-var CreateTitle = function (scene, text, backgroundColor) {
-    return scene.rexUI.add.label({
-        background: scene.rexUI.add.roundRectangle(0, 0, 100, 40, 20, backgroundColor),
-        text: scene.add.text(0, 0, text, {
-            fontSize: '24px'
-        }),
-        space: {
-            left: 15,
-            right: 15,
-            top: 10,
-            bottom: 10
-        }
-    });
-};
-
-var CreateButton = function (scene, text, backgroundColor) {
-    return scene.rexUI.add.label({
-        background: scene.rexUI.add.roundRectangle(0, 0, 100, 40, 20, backgroundColor),
-
-        text: scene.add.text(0, 0, text, {
-            fontSize: '24px'
-        }),
-
-        space: {
-            left: 10,
-            right: 10,
-            top: 10,
-            bottom: 10
-        }
-    });
+var SetAlertDialog = function (dialog, title, content) {
+    if (title === undefined) {
+        title = '';
+    }
+    if (content === undefined) {
+        content = '';
+    }
+    dialog.getElement('title').text = title;
+    dialog.getElement('content').text = content;
+    return dialog;
 }
 
-const Questions = `type,key,answer
-q,Q0,A0
-,A0,
-,A1,
-,A2,
-q,Q1,A0
-,A0,
-,A1,
-,A2,
-q,Q2,A0
-,A0,
-,A1,
-,A2,`;
+var AlertDialog;
+var Alert = function (scene, title, content, x, y) {
+    if (x === undefined) {
+        x = 750;
+    }
+    if (y === undefined) {
+        y = 400;
+    }
+    if (!AlertDialog) {
+        AlertDialog = CreateAlertDialog(scene)
+    }
+    SetAlertDialog(AlertDialog, title, content);
+    AlertDialog
+        .setPosition(x, y)
+        .setVisible(true)
+        .layout();
+
+    return AlertDialog
+        .moveFromPromise(1000, undefined, '-=800', 'Bounce')
+        .then(function () {
+            return scene.rexUI.waitEvent(AlertDialog, 'button.click');
+        })
+        .then(function () {
+            return AlertDialog.moveToPromise(1000, undefined, '-=600', 'Back');
+        })
+        .then(function () {
+            AlertDialog.setVisible(false);
+            return Promise.resolve();
+        })
+}
