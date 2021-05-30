@@ -33,6 +33,7 @@ export default class Introscene extends Phaser.Scene {
     }
 
   create() {
+    console.log("in intro scene")
     var content = `[b][i][size=24][color=red]Phaser[/color] is a [color=yellow]fast[/color], [color=pink]free[/color], and [color=green]fun[/color] open source HTML5 game framework[/size][/b][/i] [size=18]that offers WebGL and Canvas rendering across desktop and mobile web browsers. Games can be compiled to iOS, Android and native apps by using 3rd party tools. You can use JavaScript or TypeScript for development.
 
     [color=red]Phaser[/color] is available in two versions: [color=yellow]Phaser 3[/color] and [color=blue]Phaser CE[/color] - The Community Edition. [color=blue]Phaser CE[/color] is a community-lead continuation of the [color=blue]Phaser 2[/color] codebase and is hosted on a separate repo. [color=yellow]Phaser 3[/color] is the next generation of [color=red]Phaser[/color].
@@ -51,7 +52,7 @@ export default class Introscene extends Phaser.Scene {
 
     Grab the source and join the fun!`;
 
-      var text = PageTypingText(this, 100, 100, '', {
+    var text = this.PageTypingText(this, 100, 100, '', {
         fontSize: '24px',
         wrap: {
           mode: 'word',

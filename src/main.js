@@ -53,7 +53,6 @@ let gameConfig = {
 function newGame() {
   if (game) return;
   game = new Phaser.Game(gameConfig);
-  console.log(game)
   Phaser.Display.Canvas.CanvasInterpolation.setCrisp(game.canvas);
 }
 
