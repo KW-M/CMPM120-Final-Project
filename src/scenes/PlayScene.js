@@ -5,22 +5,17 @@ import Car from "/src/prefabs/Car"
 import CameraController from "/src/prefabs/CameraController"
 import BackgroundTileLoader from "/src/prefabs/BackgroundTileLoader"
 import { TileLoader } from "../prefabs/TileLoader"
+import { RoadLoader } from "../prefabs/RoadLoader"
+import { ObstacleSpawner } from "../prefabs/ObstacleSpawner"
 // import Wave from "/src/prefabs/Wave"
 import CornerButton from "/src/prefabs/CornerButton"
 import levelMap from "/src/prefabs/levelMap"
+import highwayTileImage from "url:/assets/high_way_grunge.png"
 
 
 export default class PlayScene extends Phaser.Scene {
 
     preload() {
-        this.load.scenePlugin({
-            key: 'rexuiplugin',
-            url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js',
-            sceneKey: 'rexUI'
-        });
-        this.load.script('rexdialogquest', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexdialogquest.min.js');
-        this.load.setCORS('anonymous')
-        this.load.image('tile', "https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/4/6/6");
     }
 
     constructor() {
@@ -42,7 +37,7 @@ export default class PlayScene extends Phaser.Scene {
         //         return `./ImageMapTiles/${tileZoomLevel}/${tileNumX}/${tileNumY}.png`; // For use in production.
         //     }
         // );
-        this.BackgroundTileLoader = new TileLoader(this, "background", 256, 153, 1, 18, -12998684.5, 4326425.7, 1, -1,
+        this.BackgroundTileLoader = new TileLoader(this, "background", 256, 153, 2, 18, -13000061.5, 4326425.7, 1, -1, 0, 1,
             (tileZoomLevel, tileNumX, tileNumY, tilePxSize, tileWorldUnitSize) => {
                 // return `./ImageMapTiles/${tileZoomLevel}/${tileNumX}/${tileNumY}.png`; // For use in production.
                 return `./mapTiles/background/[${tileWorldUnitSize}=${tilePxSize}]${tileNumX},${tileNumY}.png`
@@ -53,8 +48,10 @@ export default class PlayScene extends Phaser.Scene {
                 let filePath = `./dist/mapTiles/background/[${tileWorldUnitSize}=${tilePxSize}]${tileNumX},${tileNumY}.png`
                 fetch(`http://127.0.0.1:3000?url=${window.encodeURIComponent(tileImageUrl)}&filePath=${filePath}`).then()
                 return tileImageUrl;
-            },
+            }
         );
+
+        this.HighwayTileLoader = new RoadLoader(this, "road", 116, 1, 3, 18, 0, 0, 1, -1, 1, .98);
         // this.load.image().once('')
 
         // this.RoadTileLoader = new TileLoader(this, "roads", 256 * 3, 153 * 3, 3, 18, -12998684.5, 4326425.7, 1, -1,
@@ -75,6 +72,8 @@ export default class PlayScene extends Phaser.Scene {
         // setup variables
         levelMap.setupLevel(this, "lvl1")
 
+        this.obstacleSpawner = new ObstacleSpawner(this)
+        // this.obstacleSpawner.update(0, 2000)
         // define keys
         window.keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         window.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
@@ -149,11 +148,13 @@ export default class PlayScene extends Phaser.Scene {
 
         // update wave and player sprites
         this.car.update();  // update car sprite
-        if (this.game.getFrame() % 10 == 0) {
+
+        if (this.game.getFrame() % 3 == 0) {
             let worldView = this.cameras.main.worldView;
-            console.log(worldView.left, worldView.right)
             this.BackgroundTileLoader.update(worldView.left, worldView.right, worldView.top, worldView.bottom)
+            this.HighwayTileLoader.update(worldView.left, worldView.right, worldView.top, worldView.bottom)
             // this.RoadTileLoader.update(this.car.x, this.car.y, this.car.x, this.car.y)
+            this.obstacleSpawner.update(worldView.top - 500, worldView.bottom + 500)
         }
         // this.CameraUpdater.update(this.car.x, this.car.y, 0, 0)
         let newLevelName = levelMap.checkTargetOverlap("lvl1", this.car.x, this.car.y)

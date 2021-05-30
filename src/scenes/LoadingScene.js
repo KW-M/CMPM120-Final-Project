@@ -6,16 +6,18 @@ import Phaser from 'phaser'
 // import move_mouse_img from 'url:/assets/cursor_graphicks1.png'
 // import click_mouse_img from 'url:/assets/cursor_graphicks2.png'
 
-
-
+import images_highway_tile from 'url:/assets/high_way_grunge1.png'
+import images_tile_loading_icon from 'url:/assets/tile_loading_icon.png'
 import images_car from 'url:/assets/car.png';
-import images_desert_bg from 'url:/assets/desert_bg.png';
 import image_dialogue from 'url:/assets/dialogue background.png';
 import image_dialoguebox from 'url:/assets/Dialogue box.png';
 
-// import images_coconut_crash from 'url:/assets/coconut_crash.png';
-// import images_wood_crash from 'url:/assets/wood_crash.png';
-// import images_boat from 'url:/assets/boat_anim.png';
+import images_left_crack_1 from 'url:/assets/left_crack_1.png';
+import images_right_crack_1 from 'url:/assets/right_crack_1.png';
+import images_crack_1 from 'url:/assets/crack1.png';
+import images_crack_2 from 'url:/assets/crack2.png';
+import images_crack_3 from 'url:/assets/crack3.png';
+import images_crack_4 from 'url:/assets/crack4.png';
 // import images_wave from 'url:/assets/wave_foreground.png';
 // import images_wave_bg from 'url:/assets/wave_bg.png';
 // import images_surfer from 'url:/assets/surfer_sm.png'
@@ -42,11 +44,18 @@ export default class LoadingScene extends Phaser.Scene {
       // this.load.image('move_mouse_tutorial', move_mouse_img)
       // this.load.image('click_mouse_tutorial', click_mouse_img)
 
+      this.load.image('highway_tile', images_highway_tile)
       this.load.image('car', images_car);
-      this.load.image('desert_bg', images_desert_bg);
+      this.load.image('tile_loading_icon', images_tile_loading_icon);
       this.load.image('dialogue background', image_dialogue);
       this.load.image('Dialogue box', image_dialoguebox);
 
+      this.load.image('left_crack_1', images_left_crack_1)
+      this.load.image('right_crack_1', images_right_crack_1)
+      this.load.image('crack_1', images_crack_1)
+      this.load.image('crack_2', images_crack_2)
+      this.load.image('crack_3', images_crack_3)
+      this.load.image('crack_4', images_crack_4)
 
       // load spritesheets
       this.load.audio('accelSound', audioAccelerate);

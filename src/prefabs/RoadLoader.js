@@ -1,4 +1,4 @@
-export class TileLoader {
+export class RoadLoader {
 
 
     constructor(scene, tileMapName, tilePxSize, tileWorldSize, tileScaleFactor, tileZoomLevel, tileNumStartX, tileNumStartY, xTilingDirection, yTilingDirection, tileDepth, tileOpacity, tileURLGenerator, backupTileURLGenerator) {
@@ -15,51 +15,22 @@ export class TileLoader {
         this.yTilingDirection = yTilingDirection;
         this.tileDepth = tileDepth;
         this.tileOpacity = tileOpacity;
-        this.tileURLGenerator = tileURLGenerator;
-        this.backupTileURLGenerator = backupTileURLGenerator;
 
         this.tileMapId = tileMapName;
         this.visibleMapTiles = {}
     }
 
     addTile(tileNumX, tileNumY, gameX, gameY) {
-        let tileName = `${this.tileMapId}|${tileNumX},${tileNumY}`
-        if (this.visibleMapTiles[tileName] != undefined) return false;
+        if (this.tileNumStartX != tileNumX || this.visibleMapTiles[tileNumY] != undefined) return false;
 
-        // console.log(`loadingTile (Map=${this.tileMapId}) x:${tileNumX} y:${tileNumY} worldx:${gameX} worldy:${gameY} |` + this.tilePxSize + " {}" + this.tileWorldSize)
         // texture needs to be loaded to create a placeholder card
-        const tile = this.scene.add.image(gameX, gameY, 'tile_loading_icon')
+        const tile = this.scene.add.image(gameX, gameY, 'highway_tile')
         tile.setScale(this.tileScaleFactor)
         tile.setAlpha(this.tileOpacity)
         tile.depth = this.tileDepth;
 
-        // ask the LoaderPlugin to load the texture
-        let tileImageUrl = this.tileURLGenerator(this.tileZoomLevel, tileNumX, tileNumY, this.tilePxSize, this.tileWorldSize)
-        if (tileImageUrl === null) return;
-
-        let loadBackupTile = () => {
-            let tileImageUrl = this.backupTileURLGenerator(this.tileZoomLevel, tileNumX, tileNumY, this.tilePxSize, this.tileWorldSize)
-            if (tileImageUrl === null) return;
-
-            this.scene.load.image(tileName, tileImageUrl) // For use in production.
-            this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
-                // texture loaded so use instead of the placeholder
-                tile.setTexture(tileName)
-            })
-        }
-
-        this.scene.load.image(tileName, tileImageUrl)
-        this.scene.load.once(Phaser.Loader.Events.FILE_LOAD_ERROR, (e) => { loadBackupTile() })
-        this.scene.load.once(Phaser.Loader.Events.COMPLETE, (e) => {
-            if (this.scene.textures.get(tileName).key !== "__MISSING") {
-                // texture loaded so use instead of the placeholder
-                tile.setTexture(tileName)
-            } else loadBackupTile()
-        })
-        this.scene.load.start()
-
         // add the tile to the list of known tiles
-        this.visibleMapTiles[tileName] = tile;
+        this.visibleMapTiles[tileNumY] = tile;
         return tile;
     }
 
