@@ -34,25 +34,16 @@ export default class Introscene extends Phaser.Scene {
 
   create() {
     console.log("in intro scene")
-    var content = `[b][i][size=24][color=red]Phaser[/color] is a [color=yellow]fast[/color], [color=pink]free[/color], and [color=green]fun[/color] open source HTML5 game framework[/size][/b][/i] [size=18]that offers WebGL and Canvas rendering across desktop and mobile web browsers. Games can be compiled to iOS, Android and native apps by using 3rd party tools. You can use JavaScript or TypeScript for development.
+    var content = `
+    In the year 20XX, Earth has become inhospitable to the human race. 
+    Aliens from Planet Nowhere have descended to intervene. The Nowherians have two heads, each making different claims and promising different things. 
+    
+    They say there's a space elevator down Highway 51, and something about eforts to terraform the Earth. [b] They say we don't have much time.[/b]
 
-    [color=red]Phaser[/color] is available in two versions: [color=yellow]Phaser 3[/color] and [color=blue]Phaser CE[/color] - The Community Edition. [color=blue]Phaser CE[/color] is a community-lead continuation of the [color=blue]Phaser 2[/color] codebase and is hosted on a separate repo. [color=yellow]Phaser 3[/color] is the next generation of [color=red]Phaser[/color].
 
-    Along with the fantastic open source community, [color=red]Phaser[/color] is actively developed and maintained by Photon Storm. As a result of rapid support, and a developer friendly API, [color=red]Phaser[/color] is currently one of the most starred game frameworks on GitHub.
+    You burst into the living room where the kids are playing JortFite and you tell them it's time to go. Everybody gets in the car and you drive off towards the highway. You'll get your answers the only way you know how: [color=red] you will speak to their manager. [/color]`;
 
-    Thousands of developers from indie and multi-national digital agencies, and universities worldwide use [color=red]Phaser[/color]. You can take a look at their incredible games.
-
-    Visit: The [color=red]Phaser[/color] website and follow on Twitter (#phaserjs)
-    Learn: API Docs, Support Forum and StackOverflow
-    Code: 700+ Examples (source available in this repo)
-    Read: Weekly [color=red]Phaser[/color] World Newsletter
-    Chat: Slack and Discord
-    Extend: With [color=red]Phaser[/color] Plugins
-    Be awesome: Support the future of [color=red]Phaser[/color]
-
-    Grab the source and join the fun!`;
-
-    var text = this.PageTypingText(this, 100, 100, '', {
+    var text = this.PageTypingText(this, this.game.config.width / 2 - 300, this.game.config.height / 2, '', {
         fontSize: '24px',
         wrap: {
           mode: 'word',
