@@ -72,8 +72,8 @@ export default class LoadingScene extends Phaser.Scene {
     }
 
     update() {
-      // this.scene.start('menuScene');
-      this.scene.start('playScene');
+      this.scene.start('menuScene');
+      // this.scene.start('playScene');
       this.scene.remove();
     }
   }

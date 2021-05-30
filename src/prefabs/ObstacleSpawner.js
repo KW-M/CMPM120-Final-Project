@@ -60,16 +60,16 @@ export class ObstacleSpawner {
         if (x < -(this.width / 2) + SideZonesWidth) {
             x = -this.width / 2;
             this.scene.graphicsLayer.lineStyle(2, 0xdd55FF, 1);
-            this.scene.graphicsLayer.fillCircle(x, y, 10);
+            // this.scene.graphicsLayer.fillCircle(x, y, 10);
             this.drawObstacle(x, y, "left_crack_1").setOrigin(0, 0.5).setScale(1.5 + Math.random())
         } else if (x > (this.width / 2) - SideZonesWidth) {
             x = this.width / 2;
             this.scene.graphicsLayer.lineStyle(2, 0xddFFdd, 1);
-            this.scene.graphicsLayer.fillCircle(x, y, 10);
+            // this.scene.graphicsLayer.fillCircle(x, y, 10);
             this.drawObstacle(x, y, "right_crack_1").setOrigin(1, 0.5).setScale(1.5 + Math.random())
         } else {
             this.scene.graphicsLayer.lineStyle(2, colors[this.colorIndex], 1);
-            this.scene.graphicsLayer.strokeCircle(x, y, 6);
+            // this.scene.graphicsLayer.strokeCircle(x, y, 6);
             let crackNum = Math.floor(Math.random() * 4) + 1;
             this.drawObstacle(x, y, "crack_" + crackNum).setOrigin(0.5, 0.5).setScale(.5 + Math.random())
         }
@@ -112,7 +112,6 @@ export class ObstacleSpawner {
         // top y bound is always the (small or negative) number.
         if (topYBound < this.currentlySpawedAreaTopBound) {
             for (let yPx = this.currentlySpawedAreaTopBound; yPx > topYBound; yPx--) {
-                console.log(yPx)
                 addObstacle(yPx);
             }
             this.currentlySpawedAreaTopBound = topYBound;

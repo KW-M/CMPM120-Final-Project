@@ -93,7 +93,7 @@ export default class PlayScene extends Phaser.Scene {
 
 
         // add car (player)
-        this.car = new Car(this, 0, 0);
+        this.car = new Car(this, 0, 0, 6);
 
         // this.CameraUpdater = new CameraController(this.cameras.main, this.car.x, this.car.y)
         this.cameras.main.startFollow(this.car);
@@ -146,8 +146,11 @@ export default class PlayScene extends Phaser.Scene {
             return; // return here just ends the update function early.
         }
 
+        let mouseCoords = this.cameras.main.getWorldPoint(this.game.input.activePointer.x, this.game.input.activePointer.y)
         // update wave and player sprites
-        this.car.update();  // update car sprite
+        if (this.game.input.activePointer.isDown) {
+            this.car.update(mouseCoords);  // update car sprite
+        }
 
         if (this.game.getFrame() % 3 == 0) {
             let worldView = this.cameras.main.worldView;
@@ -155,6 +158,7 @@ export default class PlayScene extends Phaser.Scene {
             this.HighwayTileLoader.update(worldView.left, worldView.right, worldView.top, worldView.bottom)
             // this.RoadTileLoader.update(this.car.x, this.car.y, this.car.x, this.car.y)
             this.obstacleSpawner.update(worldView.top - 500, worldView.bottom + 500)
+            if (this.car.y < -10000) this.scene.start('dialogscene')
         }
         // this.CameraUpdater.update(this.car.x, this.car.y, 0, 0)
         let newLevelName = levelMap.checkTargetOverlap("lvl1", this.car.x, this.car.y)
