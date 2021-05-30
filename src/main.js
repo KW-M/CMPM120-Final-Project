@@ -41,10 +41,10 @@ let gameConfig = {
     matter: {
       enableSleeping: true,
       gravity: { y: 0 },
-      // debug: {
-      //   // showBody: true,
-      //   // showStaticBody: true
-      // }
+      debug: {
+        showBody: true,
+        showStaticBody: true
+      }
     }
   },
   scene: [LoadingScene, MenuScene, Introscene, ControlsScene, OptionsScene, PlayScene, dialogscene]// EndScene

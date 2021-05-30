@@ -11,6 +11,7 @@ export default class Introscene extends Phaser.Scene {
     text.page = scene.plugins.get('rextextpageplugin').add(text, GetValue(config, 'page', undefined));
     text.typing = scene.plugins.get('rextexttypingplugin').add(text, GetValue(config, 'type', undefined));
 
+    this.cameras.main.startFollow(text)
     text.start = function (text, speed) {
       this.page.setText(text);
       if (speed !== undefined) {
@@ -35,21 +36,26 @@ export default class Introscene extends Phaser.Scene {
   create() {
     console.log("in intro scene")
     var content = `
-    In the year 20XX, Earth has become inhospitable to the human race. 
-    Aliens from Planet Nowhere have descended to intervene. The Nowherians have two heads, each making different claims and promising different things. 
-    
+    In the year 20XX, Earth has become inhospitable to the human race.
+    Aliens from Planet Nowhere have descended to intervene. The Nowherians have two heads, each making different claims and promising different things.
+                                        .
     They say there's a space elevator down Highway 51, and something about eforts to terraform the Earth. [b] They say we don't have much time.[/b]
 
 
+
+                      .
     You burst into the living room where the kids are playing JortFite and you tell them it's time to go. Everybody gets in the car and you drive off towards the highway. You'll get your answers the only way you know how: [color=red] you will speak to their manager. [/color]`;
 
-    var text = this.PageTypingText(this, this.game.config.width / 2 - 300, this.game.config.height / 2, '', {
+    var text = this.PageTypingText(this, this.cameras.main.width / 2 - 300, this.cameras.main.height / 2 - 300, '', {
         fontSize: '24px',
         wrap: {
           mode: 'word',
           width: 600
         },
-        maxLines: 7
+      maxLines: 8,
+      type: {
+        speed: 0.9 * 1000, // found the speed setting
+      }
       });
       text.once('complete', function () {
         console.log('done');

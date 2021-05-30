@@ -1,159 +1,8 @@
-// import Phaser from 'phaser'
-
-// // includes driving code from: https://gitlab.com/grigoriytretyakov/phaser3-racing-car/-/blob/master/src/Game.js
-// export default class Car extends Phaser.Physics.Matter.Image {
-//     constructor(scene, x, y) {
-//         super(scene.matter.world, x, y, "car", null,
-//             {
-//                 // 'vertices': [{ "x": 60, "y": 6 }, { "x": 38, "y": 48 }, { "x": 60, "y": 106 }, { "x": 43, "y": 48 }]// An array, or an array of arrays, containing the vertex data in x/y object pairs
-//             }
-//         );
-
-//         scene.add.existing(this);   // add to existing scene
-//         this.setRectangle(35, 20);
-//         this.setOrigin(0.5, 0.3);
-//         this.setFriction(0.5);
-//         this.body.label = "car";
-//         this.isJumping = false;
-//         this.depth = 4; // z-depth in the rendering layers
-//         this.velocity = 0;
-//         this.accelSound = this.scene.sound.add('accelSound')
-
-//         this.lastPosition = new Phaser.Math.Vector2(x, y)
-//         this.stearingAngle = 0;
-//         this.STEARING_RATE_MULTIPLIER = 0.0002
-//         this.backupSteering = 1; // -1 when backing up
-//         this.maxSteeringAngle = 10 // in degrees
-
-
-//         this.MAX_SPEED_WHEN_DRIFTING = 0.00005;
-//         this.MAX_SPEED_WHEN_DRIVING = 0.65;
-//         this.currentSpeed = this.MAX_SPEED_WHEN_DRIVING;
-
-//         this.FRICTION_WHEN_DRIFTING = 0.1
-//         this.FRICTION_WHEN_DRIVING = 0.3
-//         this.currentFriction = this.FRICTION_WHEN_DRIVING;
-
-//         this.scene = scene;
-
-//         this.setFrictionAir(0.5)
-//             .setMass(100)
-
-//             .setScale(0.9)
-//             .setFixedRotation()
-//             .setAngularVelocity(0)
-//             .setVelocity(0, 0);
-
-//         this.body.label = 'car';
-
-//         this.cursors = this.scene.input.keyboard.createCursorKeys();
-
-//         this.counterclockwise = this.scene.input.keyboard.addKey(
-//             Phaser.Input.Keyboard.KeyCodes.A);
-
-//         this.spaceBar = this.scene.input.keyboard.addKey(
-//             Phaser.Input.Keyboard.KeyCodes.SPACE);
-
-//         this.clockwise = this.scene.input.keyboard.addKey(
-//             Phaser.Input.Keyboard.KeyCodes.D);
-
-//         this.forward = this.scene.input.keyboard.addKey(
-//             Phaser.Input.Keyboard.KeyCodes.W);
-
-//         this.backward = this.scene.input.keyboard.addKey(
-//             Phaser.Input.Keyboard.KeyCodes.S);
-
-
-//     }
-
-//     rotate(delta) {
-//         this.setAngularVelocity(delta);
-//     }
-
-//     rotateClockwise() {
-//         this.rotate(this.ANGLE_DELTA);
-//     }
-
-//     rotateCounterclockwise() {
-//         this.rotate(-this.ANGLE_DELTA);
-//     }
-
-//     applyStearingAdjustement() {
-//         let distanceTraveled = new Phaser.Math.Vector2(this).add(this.lastPosition.negate()).length()
-//         this.setAngularVelocity(distanceTraveled * (this.stearingAngle + this.stearingAngle / this.currentSpeed) * this.backupSteering * this.STEARING_RATE_MULTIPLIER)
-//         this.lastPosition = new Phaser.Math.Vector2(this);
-//     }
-
-//     goForward() {
-//         this.thrust(this.currentSpeed);
-//         let maxSpeed = this.spaceBar.isDown ? this.MAX_SPEED_WHEN_DRIFTING : this.MAX_SPEED_WHEN_DRIVING
-//         if (this.currentSpeed > maxSpeed) this.currentSpeed -= 0.001
-//         else if (this.currentSpeed < maxSpeed) this.currentSpeed += 0.000000001
-//     }
-
-//     goBackward() {
-//         this.thrust(-1);
-//     }
-
-
-//     update() {
-
-//         if (Phaser.Input.Keyboard.JustDown(keyUP) || Phaser.Input.Keyboard.JustDown(this.forward)) {
-//             // this.accelSound.play();
-//             console.log("CarPosition (map scaled): ", this.x / window.map_scaling, this.y / window.map_scaling)
-//         }
-
-//         if (this.spaceBar.isDown) {
-//             // this.maxSteeringAngle = 20;
-//             if (this.currentFriction > this.FRICTION_WHEN_DRIFTING) {
-//                 this.currentFriction -= 0.01
-//                 this.setFrictionAir(this.currentFriction)
-//             }
-//         } else {
-//             // this.maxSteeringAngle = 10;
-//             if (this.currentFriction < this.FRICTION_WHEN_DRIVING) {
-//                 this.currentFriction += 0.05
-//                 this.setFrictionAir(this.currentFriction)
-//             }
-//             if (this.currentSpeed < this.MAX_SPEED_WHEN_DRIVING) this.currentSpeed += 0.05
-//         }
-
-//         if (this.clockwise.isDown || this.cursors.right.isDown) {
-//             // this.rotateClockwise();
-//             if (this.stearingAngle < this.maxSteeringAngle)
-//                 this.stearingAngle += 3;
-//         } else if (this.counterclockwise.isDown || this.cursors.left.isDown) {
-//             // this.rotateCounterclockwise();
-//             if (this.stearingAngle > -this.maxSteeringAngle)
-//                 this.stearingAngle -= 3;
-//         } else {
-//             this.stearingAngle = 0;
-//         }
-
-//         if (this.forward.isDown || this.cursors.up.isDown) {
-//             this.goForward();
-//             this.backupSteering = 1;
-//         }
-//         else if (this.backward.isDown || this.cursors.down.isDown) {
-//             this.goBackward();
-//             this.backupSteering = -1;
-//         } else if (this.currentSpeed > 0) {
-//             this.currentSpeed -= 0.1;
-//         }
-//         this.applyStearingAdjustement()
-//     }
-
-//     reset() {
-//         this.y = 0;
-//         this.x = 0;
-//     }
-// }
-
-
 import Phaser from 'phaser'
 
+const ROAD_FRICTION = 0.5;
 const STEARING_RATE_MULTIPLIER = 0.1;
-const ACCELERATION_RATE_MULTIPLIER = 10;
+const ACCELERATION_RATE_MULTIPLIER = .5;
 const DEG_TO_RAD = Math.PI / 180;
 
 // includes driving code from: https://gitlab.com/grigoriytretyakov/phaser3-racing-car/-/blob/master/src/Game.js
@@ -176,14 +25,13 @@ export default class Car extends Phaser.Physics.Matter.Image {
         // Physics Settings
         this.body.label = "car";
         this.setRectangle(35, 20); // Physics Colider Rectangle;
-        this.setMass(100000)
-        this.body.inertia = 10000000
-        this.body.inverseInertia = 1 / this.body.inertia
+        this.setMass(10000)
 
-        this.setFrictionAir(0.5)
+        this.setFrictionAir(ROAD_FRICTION)
         this.setFixedRotation()
-        this.setAngularVelocity(3)
-        // this.setVelocity(5, 3)
+
+        //keep track of current acceleration for lerp
+        this.accelAmount = 0;
 
         this.debugRect1 = this.scene.add.rectangle(0, 0, 2, 2, 0xFF00FF).setDepth(100)
         this.debugRect0 = this.scene.add.rectangle(this.x, this.y, 2, 2, 0xFFFF00).setDepth(100)
@@ -192,34 +40,96 @@ export default class Car extends Phaser.Physics.Matter.Image {
         // this.backupSteering = 1; // -1 when backing up
         // this.maxSteeringAngle = 10 // in degrees
 
+        // particles
+        let dustConfig = {
+            x: 0,
+            y: 0,
+            particleFriction: 0.2,
+            quantitiy: 0,
+            alpha: { start: 0.5, end: 0 },
+            scale: { start: .3, end: 1 },
+            lifespan: { min: 600, max: 800 },
+        }
+        let dustParticles = this.scene.add.particles('dust_particle').setDepth(this.depth - 1)
+        this.offroadDust1 = dustParticles.createEmitter(dustConfig)
+        this.offroadDust2 = dustParticles.createEmitter(dustConfig)
+
+        let skidConfig = {
+            x: 0,
+            y: 0,
+            quantitiy: 1,
+            tint: 0x000000,
+            alpha: .5,
+            scale: .2,
+            lifespan: 10000,
+        }
+        let skidParticles = this.scene.add.particles('dust_particle').setDepth(this.depth - 2)
+        this.skidMarks1 = skidParticles.createEmitter(skidConfig)
+        this.skidMarks2 = skidParticles.createEmitter(skidConfig)
+
         // Sounds
         this.accelSound = this.scene.sound.add('accelSound')
     }
 
-    update(mouseWorldPositionVector) {
+    update(mouseWorldPositionVector, isOffroad) {
         const carToMouseVector = new Phaser.Math.Vector2(this).scale(-1).add(mouseWorldPositionVector);
         const carForwardVector = new Phaser.Math.Vector2(1, 0).setAngle(this.rotation);
         const carVelocityVector = new Phaser.Math.Vector2(this.body.velocity);
-
-        this.debugRect0.setPosition(this.x, this.y)
-        this.debugRect1.setPosition(carForwardVector.x * 100, carForwardVector.y * 100)
-        this.debugRect1.setPosition(carVelocityVector.x + this.x, carVelocityVector.y + this.y)
 
         const carToMouseCarForwardComponent = carToMouseVector.clone().rotate(0).dot(carForwardVector);
 
         let carForwardToMouseVectorAngle = (carForwardVector.angle() - carToMouseVector.angle()) * 1 / DEG_TO_RAD
         carForwardToMouseVectorAngle = (carForwardToMouseVectorAngle + 180) % 360 - 180
 
-        let AccelAmount;
-        if (Math.abs(carForwardToMouseVectorAngle) < 160) {
-            AccelAmount = ACCELERATION_RATE_MULTIPLIER * Phaser.Math.Clamp(carToMouseCarForwardComponent, 10, 200)
+        let offroadSpeedMultiplier = 1;
+        let backLeftWheelPosition = new Phaser.Math.Vector2(-20, -10).rotate(this.rotation).add(new Phaser.Math.Vector2(this))
+        let backRightWheelPosition = new Phaser.Math.Vector2(-20, 10).rotate(this.rotation).add(new Phaser.Math.Vector2(this))
+        this.skidMarks1.setPosition(backLeftWheelPosition.x, backLeftWheelPosition.y);
+        this.skidMarks2.setPosition(backRightWheelPosition.x, backRightWheelPosition.y);
+
+        if (isOffroad) {
+            let carAngle = carForwardVector.angle() / DEG_TO_RAD
+            let dustDirectionMin = (carAngle - 60) % 360
+            let dustDirectionMax = (carAngle + 60) % 360
+
+            let speed = carVelocityVector.length() * 5
+            this.offroadDust1.setPosition(backLeftWheelPosition.x, backLeftWheelPosition.y).setAngle({ min: dustDirectionMin, max: dustDirectionMax }).setSpeed(speed).setQuantity(10);
+            this.offroadDust2.setPosition(backRightWheelPosition.x, backRightWheelPosition.y).setAngle({ min: dustDirectionMin, max: dustDirectionMax }).setSpeed(speed).setQuantity(10);
+            this.skidMarks1.setTint(0x885500);
+            this.skidMarks2.setTint(0x885500);
+
+            offroadSpeedMultiplier = 1 / 4;
         } else {
-            AccelAmount = ACCELERATION_RATE_MULTIPLIER * Phaser.Math.Clamp(carToMouseCarForwardComponent * 0.2, -200, -5)
+            this.offroadDust1.setQuantity(0);
+            this.offroadDust2.setQuantity(0);
+            this.skidMarks1.setTint(0x000000);
+            this.skidMarks2.setTint(0x000000);
+        }
+
+
+
+        if (carVelocityVector.length() < 0.1) this.accelAmount = 0;
+        if (Math.abs(carForwardToMouseVectorAngle) < 160) {
+            this.accelAmount = Phaser.Math.Linear(
+                this.accelAmount,
+                ACCELERATION_RATE_MULTIPLIER * offroadSpeedMultiplier * Phaser.Math.Clamp(carToMouseCarForwardComponent, 10, 200),
+                0.1
+            )
+        } else {
+            this.accelAmount = Phaser.Math.Linear(
+                this.accelAmount,
+                ACCELERATION_RATE_MULTIPLIER * offroadSpeedMultiplier * Phaser.Math.Clamp(carToMouseCarForwardComponent * 0.2, -200, -5),
+                0.1
+            )
             carForwardToMouseVectorAngle = (carForwardToMouseVectorAngle + 180) % 360
         }
 
-        this.thrust(AccelAmount)
-        this.setAngularVelocity(STEARING_RATE_MULTIPLIER * -carForwardToMouseVectorAngle * DEG_TO_RAD / ((carVelocityVector.length() / 100) + 1) * Phaser.Math.Clamp(carVelocityVector.length(), 0, 5) / 5)
+
+        this.thrust(this.accelAmount)
+        this.setAngularVelocity(STEARING_RATE_MULTIPLIER * (1 / offroadSpeedMultiplier) * -carForwardToMouseVectorAngle * DEG_TO_RAD / ((carVelocityVector.length() / 100) + 1) * Phaser.Math.Clamp(carVelocityVector.length(), 0, 5) / 5)
+
+        this.debugRect0.setPosition(carForwardVector.x * this.accelAmount + this.x, carForwardVector.y * this.accelAmount + this.y)
+        this.debugRect1.setPosition(carVelocityVector.x + this.x, carVelocityVector.y + this.y)
 
         // console.log(a, carToMouseVector.angle() * 1 / DEG_TO_RAD, carForwardVector.angle() * 1 / DEG_TO_RAD);
         // console.log(carToMouseCarForwardComponent, carToMouseVector, carForwardVector, carVelocityVector)

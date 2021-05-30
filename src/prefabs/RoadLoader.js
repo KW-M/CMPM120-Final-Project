@@ -1,9 +1,6 @@
 export class RoadLoader {
-
-
     constructor(scene, tileMapName, tilePxSize, tileWorldSize, tileScaleFactor, tileZoomLevel, tileNumStartX, tileNumStartY, xTilingDirection, yTilingDirection, tileDepth, tileOpacity, tileURLGenerator, backupTileURLGenerator) {
         this.scene = scene
-        this.scene.load.setCORS('anonymous');
 
         this.tilePxSize = tilePxSize;
         this.tileWorldSize = tileWorldSize;
@@ -17,11 +14,13 @@ export class RoadLoader {
         this.tileOpacity = tileOpacity;
 
         this.tileMapId = tileMapName;
-        this.visibleMapTiles = {}
+        this.visibleTiles = {}
+        this.placedTiles = {}
     }
 
     addTile(tileNumX, tileNumY, gameX, gameY) {
-        if (this.tileNumStartX != tileNumX || this.visibleMapTiles[tileNumY] != undefined) return false;
+        this.visibleTiles[tileNumY] = true;
+        if (this.tileNumStartX != tileNumX || this.placedTiles[tileNumY] != undefined) return false;
 
         // texture needs to be loaded to create a placeholder card
         const tile = this.scene.add.image(gameX, gameY, 'highway_tile')
@@ -30,7 +29,7 @@ export class RoadLoader {
         tile.depth = this.tileDepth;
 
         // add the tile to the list of known tiles
-        this.visibleMapTiles[tileNumY] = tile;
+        this.placedTiles[tileNumY] = tile;
         return tile;
     }
 
@@ -46,6 +45,8 @@ export class RoadLoader {
         let rightBoundTileNumX = Math.floor(rightBound / tileScaledGameSize);
         let bottomBoundTileNumY = Math.floor(bottomBound / tileScaledGameSize);
 
+        this.visibleTiles = {}
+
         let xRange = range(leftBoundTileNumX, rightBoundTileNumX, 1);
         let yRange = range(topBoundTileNumY, bottomBoundTileNumY, 1);
         for (const xIndx of xRange) {
@@ -54,7 +55,15 @@ export class RoadLoader {
                 let gamePosY = yIndx * this.tilePxSize * this.tileScaleFactor;
                 let tileNumX = xIndx * this.tileWorldSize * this.xTilingDirection + this.tileNumStartX
                 let tileNumY = yIndx * this.tileWorldSize * this.yTilingDirection + this.tileNumStartY
-                if (this.addTile(tileNumX, tileNumY, gamePosX, gamePosY)) break;
+                this.addTile(tileNumX, tileNumY, gamePosX, gamePosY);
+            }
+        }
+
+        // delete tiles that have moved offscreen (not in visibleTiles object)
+        for (const tileName in this.placedTiles) {
+            if (this.visibleTiles[tileName] === undefined) {
+                this.placedTiles[tileName].destroy();
+                delete this.placedTiles[tileName];
             }
         }
     }

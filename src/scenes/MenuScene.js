@@ -26,7 +26,6 @@ export default class MenuScene extends Phaser.Scene {
 
     this.gameButton.on('pointerdown', function (pointer) {
       this.scene.start('playScene');
-      this.scene.start('playScene');
     }.bind(this));
 
     this.optionsButton = this.add.sprite(300, 200, 'blueButton1').setInteractive();
@@ -57,12 +56,13 @@ export default class MenuScene extends Phaser.Scene {
     this.input.on('pointerout', function (event, gameObjects) {
       gameObjects[0].setTexture('blueButton1');
     });
+    // this.cameras.main.centerOn(0, 0)
   }
 
   centerButton (gameObject, offset = 0) {
     Phaser.Display.Align.In.Center(
       gameObject,
-      this.add.zone(this.game.config.width / 2, this.game.config.height / 2 - offset * 100, this.game.config.width, this.game.config.height)
+      this.add.zone(this.cameras.main.width / 2, this.cameras.main.height / 2 - offset * 100, this.cameras.main.width, this.cameras.main.height)
     );
   }
 

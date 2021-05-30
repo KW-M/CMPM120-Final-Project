@@ -1,10 +1,33 @@
 import Phaser from 'phaser'
 
+const obstacleConfigs = {
+    'right_crack_1': {},
+    'left_crack_1': {
+        'vertices': [{ "x": 60, "y": 6 }, { "x": 38, "y": 48 }, { "x": 60, "y": 106 }, { "x": 43, "y": 48 }]// An array, or an array of arrays, containing the vertex data in x/y object pairs
+    },
+    'crack_1': {
+        shape: 'circle',
+        'circleRadius': 10
+    },
+    'crack_2': {
+        'shape': 'circle',
+        'circleRadius': 10
+    },
+    'crack_3': {
+        shape: 'circle',
+        'circleRadius': 10
+    },
+    'crack_4': {
+        shape: 'circle',
+        'circleRadius': 10
+    },
+}
+
 export class ObstacleSpawner {
     constructor(scene, graphics) {
         this.scene = scene
         this.obstacles = []
-        this.width = 90 * 3;
+        this.roadWidth = 90 * 3;
         this.colorIndex = 3;
 
         this.psudoRandomArraySize = 600;
@@ -37,18 +60,18 @@ export class ObstacleSpawner {
             this.obstacles[i].destory();
         }
         this.obstacles = []
-        this.currentlySpawedAreaTopBound = 0
-        this.currentlySpawedAreaBottomBound = 0
+        this.currentlySpawedAreaTopBound = -800
+        this.currentlySpawedAreaBottomBound = 400
         this.generateNewPsudoRandomArray()
     }
 
-    drawObstacle(x, y, texture) {
-        let sprite = this.scene.add.image(x, y, texture, null)
+    drawObstacle(x, y, textureName) {
+        let sprite = this.scene.matter.add.image(x, y, textureName, null, obstacleConfigs[textureName])
         sprite.setDepth(3);
+        sprite.setStatic(true)
         this.obstacles.push(sprite)
         return sprite;
     }
-
 
     addCorrectObstacle(x, y) {
         let SideZonesWidth = 60
@@ -57,13 +80,13 @@ export class ObstacleSpawner {
         this.colorIndex += Math.ceil(Math.random() * 3)
         this.colorIndex = this.colorIndex % colors.length;
 
-        if (x < -(this.width / 2) + SideZonesWidth) {
-            x = -this.width / 2;
+        if (x < -(this.roadWidth / 2) + SideZonesWidth) {
+            x = -this.roadWidth / 2;
             this.scene.graphicsLayer.lineStyle(2, 0xdd55FF, 1);
             // this.scene.graphicsLayer.fillCircle(x, y, 10);
             this.drawObstacle(x, y, "left_crack_1").setOrigin(0, 0.5).setScale(1.5 + Math.random())
-        } else if (x > (this.width / 2) - SideZonesWidth) {
-            x = this.width / 2;
+        } else if (x > (this.roadWidth / 2) - SideZonesWidth) {
+            x = this.roadWidth / 2;
             this.scene.graphicsLayer.lineStyle(2, 0xddFFdd, 1);
             // this.scene.graphicsLayer.fillCircle(x, y, 10);
             this.drawObstacle(x, y, "right_crack_1").setOrigin(1, 0.5).setScale(1.5 + Math.random())
@@ -95,7 +118,7 @@ export class ObstacleSpawner {
                 yNumber += 4;
                 yPx += 20;
 
-                let xPx = Math.floor((psudoRandomNumber - 0.5) * (this.width - 40))
+                let xPx = Math.floor((psudoRandomNumber - 0.5) * (this.roadWidth - 40))
                 this.addCorrectObstacle(xPx, yPx)
 
             } while (this.psudoRandomArray[yNumber] % 4 === 0);

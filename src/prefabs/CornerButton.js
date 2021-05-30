@@ -17,7 +17,8 @@ export default class CornerButton extends Phaser.GameObjects.Rectangle {
         this.txt = scene.add.text(0, 0, label, scoreConfig).setOrigin(0.5, 0.5);
         this.txt.scrollFactorX = 0;
         this.txt.scrollFactorY = 0;
-        this.depth = 101;
+        this.depth = 100;
+        this.txt.depth = 101;
         this.resize()
         this.scrollFactorX = 0;
         this.scrollFactorY = 0;

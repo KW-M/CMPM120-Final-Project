@@ -1,6 +1,4 @@
 export class TileLoader {
-
-
     constructor(scene, tileMapName, tilePxSize, tileWorldSize, tileScaleFactor, tileZoomLevel, tileNumStartX, tileNumStartY, xTilingDirection, yTilingDirection, tileDepth, tileOpacity, tileURLGenerator, backupTileURLGenerator) {
         this.scene = scene
         this.scene.load.setCORS('anonymous');
@@ -19,12 +17,25 @@ export class TileLoader {
         this.backupTileURLGenerator = backupTileURLGenerator;
 
         this.tileMapId = tileMapName;
-        this.visibleMapTiles = {}
+        this.visibleTiles = {}
+        this.placedTiles = {}
+    }
+
+    loadTile(tileName, tileImageUrl, callback, errorCallback) {
+        if (tileImageUrl === null) return;
+        this.scene.load.image(tileName, tileImageUrl)
+        this.scene.load.once(Phaser.Loader.Events.FILE_LOAD_ERROR, () => { errorCallback() })
+        this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
+            if (this.scene.textures.get(tileName).key !== "__MISSING") callback();
+            else errorCallback();
+        })
+        this.scene.load.start()
     }
 
     addTile(tileNumX, tileNumY, gameX, gameY) {
         let tileName = `${this.tileMapId}|${tileNumX},${tileNumY}`
-        if (this.visibleMapTiles[tileName] != undefined) return false;
+        this.visibleTiles[tileName] = true;
+        if (this.placedTiles[tileName] != undefined) return false;
 
         // console.log(`loadingTile (Map=${this.tileMapId}) x:${tileNumX} y:${tileNumY} worldx:${gameX} worldy:${gameY} |` + this.tilePxSize + " {}" + this.tileWorldSize)
         // texture needs to be loaded to create a placeholder card
@@ -33,33 +44,26 @@ export class TileLoader {
         tile.setAlpha(this.tileOpacity)
         tile.depth = this.tileDepth;
 
-        // ask the LoaderPlugin to load the texture
-        let tileImageUrl = this.tileURLGenerator(this.tileZoomLevel, tileNumX, tileNumY, this.tilePxSize, this.tileWorldSize)
-        if (tileImageUrl === null) return;
-
-        let loadBackupTile = () => {
-            let tileImageUrl = this.backupTileURLGenerator(this.tileZoomLevel, tileNumX, tileNumY, this.tilePxSize, this.tileWorldSize)
-            if (tileImageUrl === null) return;
-
-            this.scene.load.image(tileName, tileImageUrl) // For use in production.
-            this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
-                // texture loaded so use instead of the placeholder
-                tile.setTexture(tileName)
+        if (this.scene.textures.get(tileName).key !== "__MISSING") {
+            tile.setTexture(tileName)
+        } else {
+            // get the url for the texture
+            let tileImageUrl = this.tileURLGenerator(this.tileZoomLevel, tileNumX, tileNumY, this.tilePxSize, this.tileWorldSize)
+            this.loadTile(tileName, tileImageUrl, () => {
+                // texture loaded sucssfully so use instead of the placeholder
+                if (tile !== undefined && tile.scene !== undefined) tile.setTexture(tileName)
+            }, () => {
+                // Here means Tile Load Failed so try the backup url:
+                tileImageUrl = this.backupTileURLGenerator(this.tileZoomLevel, tileNumX, tileNumY, this.tilePxSize, this.tileWorldSize)
+                this.loadTile(tileName, tileImageUrl, () => {
+                    // backup texture loaded sucssfully so use instead of the placeholder
+                    if (tile !== undefined && tile.scene !== undefined) tile.setTexture(tileName)
+                })
             })
         }
 
-        this.scene.load.image(tileName, tileImageUrl)
-        this.scene.load.once(Phaser.Loader.Events.FILE_LOAD_ERROR, (e) => { loadBackupTile() })
-        this.scene.load.once(Phaser.Loader.Events.COMPLETE, (e) => {
-            if (this.scene.textures.get(tileName).key !== "__MISSING") {
-                // texture loaded so use instead of the placeholder
-                tile.setTexture(tileName)
-            } else loadBackupTile()
-        })
-        this.scene.load.start()
-
         // add the tile to the list of known tiles
-        this.visibleMapTiles[tileName] = tile;
+        this.placedTiles[tileName] = tile;
         return tile;
     }
 
@@ -75,6 +79,8 @@ export class TileLoader {
         let rightBoundTileNumX = Math.floor(rightBound / tileScaledGameSize);
         let bottomBoundTileNumY = Math.floor(bottomBound / tileScaledGameSize);
 
+        this.visibleTiles = {}
+
         let xRange = range(leftBoundTileNumX, rightBoundTileNumX, 1);
         let yRange = range(topBoundTileNumY, bottomBoundTileNumY, 1);
         for (const xIndx of xRange) {
@@ -83,7 +89,15 @@ export class TileLoader {
                 let gamePosY = yIndx * this.tilePxSize * this.tileScaleFactor;
                 let tileNumX = xIndx * this.tileWorldSize * this.xTilingDirection + this.tileNumStartX
                 let tileNumY = yIndx * this.tileWorldSize * this.yTilingDirection + this.tileNumStartY
-                if (this.addTile(tileNumX, tileNumY, gamePosX, gamePosY)) break;
+                if (this.addTile(tileNumX, tileNumY, gamePosX, gamePosY)) continue;
+            }
+        }
+
+        // delete tiles that have moved offscreen (not in visibleTiles object)
+        for (const tileName in this.placedTiles) {
+            if (this.visibleTiles[tileName] === undefined) {
+                this.placedTiles[tileName].destroy();
+                delete this.placedTiles[tileName];
             }
         }
     }

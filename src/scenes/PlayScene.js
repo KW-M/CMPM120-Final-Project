@@ -2,15 +2,12 @@ import Phaser from 'phaser'
 // import ScoreOverlay from "/src/prefabs/scoreOverlay"
 // import Obstacle from "/src/prefabs/obstacle"
 import Car from "/src/prefabs/Car"
-import CameraController from "/src/prefabs/CameraController"
-import BackgroundTileLoader from "/src/prefabs/BackgroundTileLoader"
+import { FadeInOutImage } from "../prefabs/FadeInOutImage"
 import { TileLoader } from "../prefabs/TileLoader"
 import { RoadLoader } from "../prefabs/RoadLoader"
 import { ObstacleSpawner } from "../prefabs/ObstacleSpawner"
-// import Wave from "/src/prefabs/Wave"
 import CornerButton from "/src/prefabs/CornerButton"
 import levelMap from "/src/prefabs/levelMap"
-import highwayTileImage from "url:/assets/high_way_grunge.png"
 
 
 export default class PlayScene extends Phaser.Scene {
@@ -37,7 +34,7 @@ export default class PlayScene extends Phaser.Scene {
         //         return `./ImageMapTiles/${tileZoomLevel}/${tileNumX}/${tileNumY}.png`; // For use in production.
         //     }
         // );
-        this.BackgroundTileLoader = new TileLoader(this, "background", 256, 153, 2, 18, -13000061.5, 4326425.7, 1, -1, 0, 1,
+        this.BackgroundTileLoader = new TileLoader(this, "background", 256, 153, 2, 18, -13000062, 4315715, 1, -1, 0, 1,
             (tileZoomLevel, tileNumX, tileNumY, tilePxSize, tileWorldUnitSize) => {
                 // return `./ImageMapTiles/${tileZoomLevel}/${tileNumX}/${tileNumY}.png`; // For use in production.
                 return `./mapTiles/background/[${tileWorldUnitSize}=${tilePxSize}]${tileNumX},${tileNumY}.png`
@@ -52,22 +49,6 @@ export default class PlayScene extends Phaser.Scene {
         );
 
         this.HighwayTileLoader = new RoadLoader(this, "road", 116, 1, 3, 18, 0, 0, 1, -1, 1, .98);
-        // this.load.image().once('')
-
-        // this.RoadTileLoader = new TileLoader(this, "roads", 256 * 3, 153 * 3, 3, 18, -12998684.5, 4326425.7, 1, -1,
-        //     (tileZoomLevel, tileNumX, tileNumY, tilePxSize, tileWorldUnitSize) => {
-        //         // return `./ImageMapTiles/${tileZoomLevel}/${tileNumX}/${tileNumY}.png`; // For use in production.
-        //         //      https://carto.nationalmap.gov/arcgis/rest/services/transportation/MapServer/export?dpi=96&transparent=true&format=png32&layers=show:2,3,4,7,8,9,13,14,15,16,25,26,27,28,29&bbox=-13440162.299691577,4469437.195388993,-13117598.040328287,4687741.3481713515&bboxSR=102100&imageSR=102100&size=1055,714&f=image
-        //         return `https://carto.nationalmap.gov/arcgis/rest/services/transportation/MapServer/export?bbox=${tileNumX},${tileNumY},${tileNumX + tileWorldUnitSize},${tileNumY + tileWorldUnitSize}&size=${tilePxSize},${tilePxSize}&dpi=96&transparent=true&format=png32&layers=show:2,3,4,7,8,9,13,14,15,16,25,26,27,28,29&bboxSR=102100&imageSR=102100&f=image`
-        //     },
-        // );
-        // this.RoadTileLoader = new TileLoader(this, "roads", 256, 1, 1, 18, this.BackgroundTileLoader.tileNumStartX, this.BackgroundTileLoader.tileNumStartY,
-        //     (tileZoomLevel, tileNumX, tileNumY, tilePxSize, tileWorldSize) => {
-        //         return `./RoadMapTiles/${tileZoomLevel}/${tileNumX}/${tileNumY}.png`; // For use in production.
-        //     }
-        // );
-
-        //`./RoadMapTiles/${this.tileZoomLevel}/${tileNumX}/${tileNumY}.png`
 
         // setup variables
         levelMap.setupLevel(this, "lvl1")
@@ -77,27 +58,18 @@ export default class PlayScene extends Phaser.Scene {
         // define keys
         window.keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         window.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        window.keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        window.keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         window.keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
-        window.keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-
-        // An array to hold all the obstacle instances in play.
-        this.obstacleGameObjects = []
-
-        // this.add.sprite(0,0,"desert_bg").setOrigin(0,0).setScale(2,2)
-
-        this.add.sprite(0, 0, "tile").setOrigin(0.5, 0.5).setScale(.1, .1)
-        // place background tile sprite
+        window.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
 
 
-
+        this.mouseTutorialImg = new FadeInOutImage(this, this.cameras.main.width / 2, this.cameras.main.height * (3 / 4), "move_mouse_tutorial", 0.01, console.log)
+        this.mouseTutorialImg.setDepth(500).setScrollFactor(0, 0).fadeIn()
         // add car (player)
         this.car = new Car(this, 0, 0, 6);
+        this.carCameraFollowOffsetVector = new Phaser.Math.Vector2(0, 0)
 
         // this.CameraUpdater = new CameraController(this.cameras.main, this.car.x, this.car.y)
         this.cameras.main.startFollow(this.car);
-        this.cameras.main.setDeadzone(40, 40);
         this.cameras.main.setLerp(0.8, 0.8)
         this.cameras.main.roundPixels = true;
         // high score is saved across games played
@@ -123,7 +95,6 @@ export default class PlayScene extends Phaser.Scene {
     }
 
     update() {
-
         // when game is over, don't do anything, just check for input.
         if (this.gameOver) {
             // check key input for restart
@@ -149,8 +120,15 @@ export default class PlayScene extends Phaser.Scene {
         let mouseCoords = this.cameras.main.getWorldPoint(this.game.input.activePointer.x, this.game.input.activePointer.y)
         // update wave and player sprites
         if (this.game.input.activePointer.isDown) {
-            this.car.update(mouseCoords);  // update car sprite
+            let isOffroad = this.car.x > this.obstacleSpawner.roadWidth / 2 || this.car.x < -this.obstacleSpawner.roadWidth / 2
+            this.car.update(mouseCoords, isOffroad);  // update car sprite
+        } else {
+            this.car.offroadDust1.setQuantity(0);
+            this.car.offroadDust2.setQuantity(0);
         }
+
+        if (this.mouseTutorialImg.currentAlpha > 0.8 && Math.abs(this.car.y) > 100) this.mouseTutorialImg.fadeOut()
+        else if (window.keyUP.isDown || window.keyW.isDown) this.mouseTutorialImg.fadeIn()
 
         if (this.game.getFrame() % 3 == 0) {
             let worldView = this.cameras.main.worldView;
@@ -158,9 +136,23 @@ export default class PlayScene extends Phaser.Scene {
             this.HighwayTileLoader.update(worldView.left, worldView.right, worldView.top, worldView.bottom)
             // this.RoadTileLoader.update(this.car.x, this.car.y, this.car.x, this.car.y)
             this.obstacleSpawner.update(worldView.top - 500, worldView.bottom + 500)
-            if (this.car.y < -10000) this.scene.start('dialogscene')
+            // if (this.car.y < -10000) this.scene.start('dialogscene')
         }
-        // this.CameraUpdater.update(this.car.x, this.car.y, 0, 0)
+
+        // handle camera velocity forward push
+        let cameraVelocityOffsetMultiplier = 10;
+        let targetVector = new Phaser.Math.Vector2(this.car.body.velocity.x * cameraVelocityOffsetMultiplier, this.car.body.velocity.y * cameraVelocityOffsetMultiplier)
+        let targetDist = targetVector.length()
+        if (targetDist > 150) {
+            targetVector.normalize().scale(200);
+            // let dist = Phaser.Math.Clamp(this.carCameraFollowOffsetVector.distance(targetVector), 5, 100) * 0.1
+            this.carCameraFollowOffsetVector.lerp(targetVector, 0.01)
+            // this.carCameraFollowOffsetVector.add(targetVector.scale(-1).add(this.carCameraFollowOffsetVector).normalize())
+        }
+
+        this.cameras.main.setFollowOffset(-this.carCameraFollowOffsetVector.x, -this.carCameraFollowOffsetVector.y)
+
+
         let newLevelName = levelMap.checkTargetOverlap("lvl1", this.car.x, this.car.y)
         if (newLevelName != null) console.count(newLevelName);
     }
