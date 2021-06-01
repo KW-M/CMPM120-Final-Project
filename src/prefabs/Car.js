@@ -35,6 +35,7 @@ export default class Car extends Phaser.Physics.Matter.Image {
 
         this.debugRect1 = this.scene.add.rectangle(0, 0, 2, 2, 0xFF00FF).setDepth(100)
         this.debugRect0 = this.scene.add.rectangle(this.x, this.y, 2, 2, 0xFFFF00).setDepth(100)
+        this.debugRect2 = this.scene.add.rectangle(0, 0, 2, 2, 0x00FFFF).setDepth(100)
 
         // Constants
         // this.backupSteering = 1; // -1 when backing up
@@ -71,17 +72,7 @@ export default class Car extends Phaser.Physics.Matter.Image {
         this.accelSound = this.scene.sound.add('accelSound')
     }
 
-    update(mouseWorldPositionVector, isOffroad) {
-        const carToMouseVector = new Phaser.Math.Vector2(this).scale(-1).add(mouseWorldPositionVector);
-        const carForwardVector = new Phaser.Math.Vector2(1, 0).setAngle(this.rotation);
-        const carVelocityVector = new Phaser.Math.Vector2(this.body.velocity);
-
-        const carToMouseCarForwardComponent = carToMouseVector.clone().rotate(0).dot(carForwardVector);
-
-        let carForwardToMouseVectorAngle = (carForwardVector.angle() - carToMouseVector.angle()) * 1 / DEG_TO_RAD
-        carForwardToMouseVectorAngle = (carForwardToMouseVectorAngle + 180) % 360 - 180
-
-        let offroadSpeedMultiplier = 1;
+    drawSkidMarks(isOffroad, carForwardVector, carVelocityLength) {
         let backLeftWheelPosition = new Phaser.Math.Vector2(-20, -10).rotate(this.rotation).add(new Phaser.Math.Vector2(this))
         let backRightWheelPosition = new Phaser.Math.Vector2(-20, 10).rotate(this.rotation).add(new Phaser.Math.Vector2(this))
         this.skidMarks1.setPosition(backLeftWheelPosition.x, backLeftWheelPosition.y);
@@ -92,24 +83,39 @@ export default class Car extends Phaser.Physics.Matter.Image {
             let dustDirectionMin = (carAngle - 60) % 360
             let dustDirectionMax = (carAngle + 60) % 360
 
-            let speed = carVelocityVector.length() * 5
+            let speed = carVelocityLength * 5
             this.offroadDust1.setPosition(backLeftWheelPosition.x, backLeftWheelPosition.y).setAngle({ min: dustDirectionMin, max: dustDirectionMax }).setSpeed(speed).setQuantity(10);
             this.offroadDust2.setPosition(backRightWheelPosition.x, backRightWheelPosition.y).setAngle({ min: dustDirectionMin, max: dustDirectionMax }).setSpeed(speed).setQuantity(10);
             this.skidMarks1.setTint(0x885500);
             this.skidMarks2.setTint(0x885500);
-
-            offroadSpeedMultiplier = 1 / 4;
         } else {
             this.offroadDust1.setQuantity(0);
             this.offroadDust2.setQuantity(0);
             this.skidMarks1.setTint(0x000000);
             this.skidMarks2.setTint(0x000000);
         }
+    }
 
+    update(mouseWorldPositionVector, isOffroad) {
+        const carToMouseVector = new Phaser.Math.Vector2(this).scale(-1).add(mouseWorldPositionVector);
+        const carForwardVector = new Phaser.Math.Vector2(1, 0).setAngle(this.rotation);
+        const carVelocityVector = new Phaser.Math.Vector2(this.body.velocity);
 
+        const carToMouseCarForwardComponent = carToMouseVector.clone().rotate(0).dot(carForwardVector);
 
-        if (carVelocityVector.length() < 0.1) this.accelAmount = 0;
-        if (Math.abs(carForwardToMouseVectorAngle) < 160) {
+        let carForwardToMouseVectorAngle = (carForwardVector.angle() - carToMouseVector.angle()) / DEG_TO_RAD
+        carForwardToMouseVectorAngle = (carForwardToMouseVectorAngle + 540) % 360 - 180 // handle wraparound of degrees 0->360
+
+        let offroadSpeedMultiplier = 1;
+        if (isOffroad) {
+            offroadSpeedMultiplier = 1 / 4;
+        }
+
+        let carVelocityLength = carVelocityVector.length();
+        this.drawSkidMarks(isOffroad, carForwardVector, carVelocityLength)
+
+        if (carVelocityLength < 0.1) this.accelAmount = 0; // handle instant stop from cracks.
+        if (Math.abs(carForwardToMouseVectorAngle) < 150) {
             this.accelAmount = Phaser.Math.Linear(
                 this.accelAmount,
                 ACCELERATION_RATE_MULTIPLIER * offroadSpeedMultiplier * Phaser.Math.Clamp(carToMouseCarForwardComponent, 10, 200),
@@ -121,20 +127,22 @@ export default class Car extends Phaser.Physics.Matter.Image {
                 ACCELERATION_RATE_MULTIPLIER * offroadSpeedMultiplier * Phaser.Math.Clamp(carToMouseCarForwardComponent * 0.2, -200, -5),
                 0.1
             )
-            carForwardToMouseVectorAngle = (carForwardToMouseVectorAngle + 180) % 360
+        }
+
+        let carIsMovingBackward = carForwardVector.clone().add(carVelocityVector.normalize()).length() < 1;
+        if (carIsMovingBackward) {
+            carForwardToMouseVectorAngle = (carForwardToMouseVectorAngle + 360) % 360 - 180
+            console.log(carForwardToMouseVectorAngle)
         }
 
 
         this.thrust(this.accelAmount)
-        this.setAngularVelocity(STEARING_RATE_MULTIPLIER * (1 / offroadSpeedMultiplier) * -carForwardToMouseVectorAngle * DEG_TO_RAD / ((carVelocityVector.length() / 100) + 1) * Phaser.Math.Clamp(carVelocityVector.length(), 0, 5) / 5)
+        this.setAngularVelocity(STEARING_RATE_MULTIPLIER * (1 / offroadSpeedMultiplier) * -carForwardToMouseVectorAngle * DEG_TO_RAD / ((carVelocityLength / 100) + 1) * Phaser.Math.Clamp(carVelocityLength, 0, 5) / 5)
 
         this.debugRect0.setPosition(carForwardVector.x * this.accelAmount + this.x, carForwardVector.y * this.accelAmount + this.y)
         this.debugRect1.setPosition(carVelocityVector.x + this.x, carVelocityVector.y + this.y)
-
-        // console.log(a, carToMouseVector.angle() * 1 / DEG_TO_RAD, carForwardVector.angle() * 1 / DEG_TO_RAD);
-        // console.log(carToMouseCarForwardComponent, carToMouseVector, carForwardVector, carVelocityVector)
-
-        // this.setAngularVelocity(delta);
+        let angleVector = new Phaser.Math.Vector2(100, 0).setAngle(carForwardToMouseVectorAngle * DEG_TO_RAD)
+        this.debugRect2.setPosition(angleVector.x + this.x, angleVector.y + this.y)
     }
 
     reset() {
