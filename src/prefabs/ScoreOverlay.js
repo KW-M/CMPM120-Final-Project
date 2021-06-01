@@ -1,23 +1,20 @@
 import Phaser from 'phaser'
 
-export default class ScoreOverlay extends Phaser.GameObjects.GameObject {
-    constructor(scene) {
-        super(scene);
-        scene.add.existing(this);   // add to existing scene
+export class ScoreOverlay {
+    constructor(scene, roadWidth) {
+        this.scene = scene
 
         // create a game clock counter that will count up.
-        this.clock = 0;
-
-        this.doomLevel = 1;
+        this.clock = 60 * 1000;
 
         // create an object to populate the text configuration members
         this.textConfig = {
             fontFamily: "Courier",
-            fontSize: "20px",
-            backgroundColor: "#00b0ff85",
+            fontSize: "30px",
+            backgroundColor: "#88111185",
             color: "#FFFFFF",
-            align: "right",
-            fixedWidth: 0,
+            align: "center",
+            fixedWidth: roadWidth,
             padding: { top: 5, bottom: 5, left: 5, right: 5 },
         };
 
@@ -28,58 +25,36 @@ export default class ScoreOverlay extends Phaser.GameObjects.GameObject {
             this.formatTime(this.clock), // text to display
             this.textConfig // text style config object
         );
-        this.clockText.depth = 20;
+        this.clockText.depth = 200;
+        this.clockText.scrollFactorY = 0;
+        this.clockText.setOrigin(0.5, 0)
 
         // add the event to increment the clock;
         this.timedEvent = this.scene.time.addEvent({
-            delay: 1000,
+            delay: 100,
             callback: () => {
-                this.clock += 1000;
+                this.clock -= 10;
                 this.clockText.text = this.formatTime(this.clock);
             },
             scope: this,
             loop: true
         });
-        this.doomBar = this.scene.add.rectangle(62, 4, 1, 56, 0xff0000)
-        this.doomText = this.scene.add.text(
-            62,
-            0,
-            "Speed 6",
-            this.textConfig
-        )
-        this.doomText.depth = 18;
-        // this.doomText.depth = 2;
 
-        this.resize(this.scene.gameSize)
+        // this.resize(this.scene.cameras.width)
     }
 
-    getSpeedValue() {
-        return 25 * Math.log(this.doomLevel / 2 + 1);
-    }
-
-    resize(gameSize) {
-        let fullWidth = gameSize.width - 62;
-        this.doomText.setStyle(Object.assign({}, this.textConfig, {
-            fixedWidth: Math.max(fullWidth * (this.getSpeedValue() / 50), 120),
-            backgroundColor: "#FF000085",
-        }))
-        // this.doomBar.width = fullWidth * (this.doomLevel / 100)
-    }
-
-    incrementDoomLevel(doomLevelInc) {
-        this.doomLevel += doomLevelInc;
-        this.doomLevel = Phaser.Math.Clamp(this.doomLevel, 1, 100);
-        this.doomText.text = "Rad lvl " + Math.floor(this.getSpeedValue());
-        this.resize(this.scene.gameSize)
+    resize(gameWidth) {
+        // this.clockText.setOrigin(0.5, 0).setPosition(gameWidth / 2, 0)
     }
 
     // FORMAT TIME function
-    formatTime(ms) {
-        let s = ms / 1000;
+    formatTime(decisseconds) {
+        let s = Math.floor(decisseconds / 100);
         let min = Math.floor(s / 60);
         let seconds = s % 60;
+        decisseconds = (decisseconds % 100).toString().padStart(2, "0");
         seconds = seconds.toString().padStart(2, "0");
-        return `${min}:${seconds}`;
+        return `${min}:${seconds}.${decisseconds}`;
     };
 
 

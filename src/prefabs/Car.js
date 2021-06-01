@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 
 const ROAD_FRICTION = 0.5;
-const STEARING_RATE_MULTIPLIER = 0.1;
+const STEARING_RATE_MULTIPLIER = 0.15;
 const ACCELERATION_RATE_MULTIPLIER = .5;
 const DEG_TO_RAD = Math.PI / 180;
 
@@ -26,9 +26,9 @@ export default class Car extends Phaser.Physics.Matter.Image {
         this.body.label = "car";
         this.setRectangle(35, 20); // Physics Colider Rectangle;
         this.setMass(10000)
-
         this.setFrictionAir(ROAD_FRICTION)
         this.setFixedRotation()
+        this.setAngle(-90)
 
         //keep track of current acceleration for lerp
         this.accelAmount = 0;
@@ -111,25 +111,26 @@ export default class Car extends Phaser.Physics.Matter.Image {
             offroadSpeedMultiplier = 1 / 4;
         }
 
+        let carIsMovingBackward = carForwardVector.clone().add(carVelocityVector.normalize()).length() < 1;
         let carVelocityLength = carVelocityVector.length();
         this.drawSkidMarks(isOffroad, carForwardVector, carVelocityLength)
 
         if (carVelocityLength < 0.1) this.accelAmount = 0; // handle instant stop from cracks.
-        if (Math.abs(carForwardToMouseVectorAngle) < 150) {
-            this.accelAmount = Phaser.Math.Linear(
-                this.accelAmount,
-                ACCELERATION_RATE_MULTIPLIER * offroadSpeedMultiplier * Phaser.Math.Clamp(carToMouseCarForwardComponent, 10, 200),
-                0.1
-            )
-        } else {
+        if (Math.abs(carForwardToMouseVectorAngle) > 150 || (carIsMovingBackward === true && Math.abs(carForwardToMouseVectorAngle) > 90)) {
+            // car accelerates backward
             this.accelAmount = Phaser.Math.Linear(
                 this.accelAmount,
                 ACCELERATION_RATE_MULTIPLIER * offroadSpeedMultiplier * Phaser.Math.Clamp(carToMouseCarForwardComponent * 0.2, -200, -5),
                 0.1
             )
+        } else {
+            // car accelerates forward
+            this.accelAmount = Phaser.Math.Linear(
+                this.accelAmount,
+                ACCELERATION_RATE_MULTIPLIER * offroadSpeedMultiplier * Phaser.Math.Clamp(carToMouseCarForwardComponent, 10, 200),
+                0.1
+            )
         }
-
-        let carIsMovingBackward = carForwardVector.clone().add(carVelocityVector.normalize()).length() < 1;
         if (carIsMovingBackward) {
             carForwardToMouseVectorAngle = (carForwardToMouseVectorAngle + 360) % 360 - 180
             console.log(carForwardToMouseVectorAngle)

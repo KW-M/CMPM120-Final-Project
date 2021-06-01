@@ -8,6 +8,7 @@ import { RoadLoader } from "../prefabs/RoadLoader"
 import { ObstacleSpawner } from "../prefabs/ObstacleSpawner"
 import CornerButton from "/src/prefabs/CornerButton"
 import levelMap from "/src/prefabs/levelMap"
+import { ScoreOverlay } from "/src/prefabs/ScoreOverlay"
 
 
 export default class PlayScene extends Phaser.Scene {
@@ -60,6 +61,9 @@ export default class PlayScene extends Phaser.Scene {
         window.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         window.keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         window.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+
+
+        this.ScoreOverlay = new ScoreOverlay(this, this.obstacleSpawner.roadWidth)
 
 
         this.mouseTutorialImg = new FadeInOutImage(this, this.cameras.main.width / 2, this.cameras.main.height * (3 / 4), "move_mouse_tutorial", 0.01, console.log)
