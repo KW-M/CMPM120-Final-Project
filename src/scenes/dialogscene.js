@@ -21,10 +21,10 @@ export default class Dialogscene extends Phaser.Scene {
         image_dialogue.setOrigin (0,0)
         image_dialogue.setScale(3, 3.2)
 
-        var image_dialoguebox = this.add.image(1, 1, 'Dialogue box');
-        image_dialoguebox.setposition
-        image_dialoguebox.setOrigin (0,0)
-        image_dialoguebox.setScale (1.5,1.5)
+        //var image_dialoguebox = this.add.image(1, 1, 'Dialogue box');
+        //image_dialoguebox.setposition
+        //image_dialoguebox.setOrigin (0,0)
+        //image_dialoguebox.setScale (1.5,1.5)
 
         //rectangle
         //this.add.rectangle(1, 1, 1000, 1000, 0x000000)
@@ -32,15 +32,15 @@ export default class Dialogscene extends Phaser.Scene {
 
 
         var scene = this;
-        Alert(scene, '11', 'Alien: Hello')
+        Alert(scene, '11 Alien: Hello, Human, \nhow are you. I want to talke to you')
             .then(function () {
-                return Alert(scene, '22', 'Hello again');
+                return Alert(scene, '22 Hello again');
             })
             .then(function () {
-                return Alert(scene, '33', 'OKKKKK');
+                return Alert(scene, '33 OKKKKK');
             })
             .then(function () {
-                return Alert(scene, '44', 'Goodbye');
+                return Alert(scene, '44 Goodbye');
 
             })
     }
@@ -133,10 +133,10 @@ var SetAlertDialog = function (dialog, title, content) {
 var AlertDialog;
 var Alert = function (scene, title, content, x, y) {
     if (x === undefined) {
-        x = 750;
+        x = 1000;
     }
     if (y === undefined) {
-        y = 400;
+        y = 900;
     }
     if (!AlertDialog) {
         AlertDialog = CreateAlertDialog(scene)
@@ -148,12 +148,12 @@ var Alert = function (scene, title, content, x, y) {
         .layout();
 
     return AlertDialog
-        .moveFromPromise(1000, undefined, '-=800', 'Bounce')
+        .moveFromPromise(1, undefined, '-=800', 'Bounce')
         .then(function () {
             return scene.rexUI.waitEvent(AlertDialog, 'button.click');
         })
         .then(function () {
-            return AlertDialog.moveToPromise(1000, undefined, '-=600', 'Back');
+            return AlertDialog.moveToPromise(1, undefined, '-=600', 'Back');
         })
         .then(function () {
             AlertDialog.setVisible(false);

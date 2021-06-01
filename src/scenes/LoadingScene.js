@@ -10,7 +10,7 @@ import images_highway_tile from 'url:/assets/high_way_grunge1.png'
 import images_tile_loading_icon from 'url:/assets/tile_loading_icon.png'
 import images_car from 'url:/assets/car.png';
 import image_dialogue from 'url:/assets/dialogue background.png';
-import image_dialoguebox from 'url:/assets/Dialogue box.png';
+//import image_dialoguebox from 'url:/assets/Dialogue box.png';
 import image_dust_particle from 'url:/assets/dust_particle.png'
 
 import images_left_crack_1 from 'url:/assets/left_crack_1.png';
@@ -49,7 +49,7 @@ export default class LoadingScene extends Phaser.Scene {
       this.load.image('car', images_car);
       this.load.image('tile_loading_icon', images_tile_loading_icon);
       this.load.image('dialogue background', image_dialogue);
-      this.load.image('Dialogue box', image_dialoguebox);
+      //this.load.image('Dialogue box', image_dialoguebox);
       this.load.image('dust_particle', image_dust_particle);
 
       this.load.image('left_crack_1', images_left_crack_1)
