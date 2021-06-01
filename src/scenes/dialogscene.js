@@ -21,10 +21,10 @@ export default class Dialogscene extends Phaser.Scene {
         image_dialogue.setOrigin (0,0)
         image_dialogue.setScale(3, 3.2)
 
-        var image_dialoguebox = this.add.image(1, 1, 'Dialogue box');
-        image_dialoguebox.setposition
-        image_dialoguebox.setOrigin (0,0)
-        image_dialoguebox.setScale (1.5,1.5)
+        //var image_dialoguebox = this.add.image(1, 1, 'Dialogue box');
+        //image_dialoguebox.setposition
+        //image_dialoguebox.setOrigin (0,0)
+        //image_dialoguebox.setScale (1.5,1.5)
 
         //rectangle
         //this.add.rectangle(1, 1, 1000, 1000, 0x000000)
@@ -32,15 +32,36 @@ export default class Dialogscene extends Phaser.Scene {
 
 
         var scene = this;
-        Alert(scene, '11', 'Alien: Hello')
+        Alert(scene, '“Good”: \nLook Karen, we both know the world\n has been unjust to your needs,\n but can you for once in your life\n think about others instead of yourself? ')
             .then(function () {
-                return Alert(scene, '22', 'Hello again');
+                return Alert(scene, ' I know you like asking to speak to the manager, \nbut have you ever thought about \nwhy people make fun of you for that?');
             })
             .then(function () {
-                return Alert(scene, '33', 'OKKKKK');
+                return Alert(scene, '“Bad”: \nLook Karen, I have been watching you for a while \nand we both know that saving others won’t make them respect you.');
             })
             .then(function () {
-                return Alert(scene, '44', 'Goodbye');
+                return Alert(scene, '33 OKKKKK');
+            })
+            .then(function () {
+                return Alert(scene, '33 OKKKKK');
+            })
+            .then(function () {
+                return Alert(scene, '33 OKKKKK');
+            })
+            .then(function () {
+                return Alert(scene, '33 OKKKKK');
+            })
+            .then(function () {
+                return Alert(scene, '33 OKKKKK');
+            })
+            .then(function () {
+                return Alert(scene, '33 OKKKKK');
+            })
+            .then(function () {
+                return Alert(scene, '33 OKKKKK');
+            })
+            .then(function () {
+                return Alert(scene, '44 Goodbye');
 
             })
     }
@@ -133,10 +154,10 @@ var SetAlertDialog = function (dialog, title, content) {
 var AlertDialog;
 var Alert = function (scene, title, content, x, y) {
     if (x === undefined) {
-        x = 750;
+        x = 1000;
     }
     if (y === undefined) {
-        y = 400;
+        y = 1100;
     }
     if (!AlertDialog) {
         AlertDialog = CreateAlertDialog(scene)
@@ -148,13 +169,13 @@ var Alert = function (scene, title, content, x, y) {
         .layout();
 
     return AlertDialog
-        .moveFromPromise(1000, undefined, '-=800', 'Bounce')
+        .moveFromPromise(0, undefined, '-=800', 'Bounce')
         .then(function () {
             return scene.rexUI.waitEvent(AlertDialog, 'button.click');
         })
-        .then(function () {
-            return AlertDialog.moveToPromise(1000, undefined, '-=600', 'Back');
-        })
+        /*.then(function () {
+            return AlertDialog.moveToPromise(0, undefined, '-=600', 'Back');
+        })*/
         .then(function () {
             AlertDialog.setVisible(false);
             return Promise.resolve();
