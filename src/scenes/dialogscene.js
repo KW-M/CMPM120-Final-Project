@@ -32,9 +32,30 @@ export default class Dialogscene extends Phaser.Scene {
 
 
         var scene = this;
-        Alert(scene, '11 Alien: Hello, Human, \nhow are you. I want to talke to you')
+        Alert(scene, '“Good”: \nLook Karen, we both know the world\n has been unjust to your needs,\n but can you for once in your life\n think about others instead of yourself? ')
             .then(function () {
-                return Alert(scene, '22 Hello again');
+                return Alert(scene, ' I know you like asking to speak to the manager, \nbut have you ever thought about \nwhy people make fun of you for that?');
+            })
+            .then(function () {
+                return Alert(scene, '“Bad”: \nLook Karen, I have been watching you for a while \nand we both know that saving others won’t make them respect you.');
+            })
+            .then(function () {
+                return Alert(scene, '33 OKKKKK');
+            })
+            .then(function () {
+                return Alert(scene, '33 OKKKKK');
+            })
+            .then(function () {
+                return Alert(scene, '33 OKKKKK');
+            })
+            .then(function () {
+                return Alert(scene, '33 OKKKKK');
+            })
+            .then(function () {
+                return Alert(scene, '33 OKKKKK');
+            })
+            .then(function () {
+                return Alert(scene, '33 OKKKKK');
             })
             .then(function () {
                 return Alert(scene, '33 OKKKKK');
@@ -136,7 +157,7 @@ var Alert = function (scene, title, content, x, y) {
         x = 1000;
     }
     if (y === undefined) {
-        y = 900;
+        y = 1100;
     }
     if (!AlertDialog) {
         AlertDialog = CreateAlertDialog(scene)
@@ -148,13 +169,13 @@ var Alert = function (scene, title, content, x, y) {
         .layout();
 
     return AlertDialog
-        .moveFromPromise(1, undefined, '-=800', 'Bounce')
+        .moveFromPromise(0, undefined, '-=800', 'Bounce')
         .then(function () {
             return scene.rexUI.waitEvent(AlertDialog, 'button.click');
         })
-        .then(function () {
-            return AlertDialog.moveToPromise(1, undefined, '-=600', 'Back');
-        })
+        /*.then(function () {
+            return AlertDialog.moveToPromise(0, undefined, '-=600', 'Back');
+        })*/
         .then(function () {
             AlertDialog.setVisible(false);
             return Promise.resolve();
