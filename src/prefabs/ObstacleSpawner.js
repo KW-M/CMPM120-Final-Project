@@ -24,21 +24,29 @@ const obstacleConfigs = {
         }
     },
     'crack_1': {
-        shape: 'circle',
+        "isSensor": true,
+        "isStatic": true,
+        'shape': 'circle',
         'circleRadius': 10
     },
     'crack_2': {
+        "isSensor": true,
+        "isStatic": true,
         'shape': 'circle',
         'circleRadius': 10
 
     },
     'crack_3': {
-        shape: 'circle',
-        'circleRadius': 10
+        "isSensor": true,
+        "isStatic": true,
+        'shape': 'circle',
+        'circleRadius': 10,
     },
     'crack_4': {
-        shape: 'circle',
-        'circleRadius': 10
+        "isSensor": true,
+        "isStatic": true,
+        'shape': 'circle',
+        'circleRadius': 10,
     },
 }
 

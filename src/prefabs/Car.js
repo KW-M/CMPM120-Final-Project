@@ -68,6 +68,14 @@ export default class Car extends Phaser.Physics.Matter.Image {
         this.skidMarks1 = skidParticles.createEmitter(skidConfig)
         this.skidMarks2 = skidParticles.createEmitter(skidConfig)
 
+        this.collisionInProgressCount = 0
+        this.setOnCollide(() => {
+            this.collisionInProgressCount++
+            this.thrust(-0.1)
+        })
+        this.setOnCollideEnd(() => {
+            this.collisionInProgressCount--
+        })
         // Sounds
         this.accelSound = this.scene.sound.add('accelSound')
         this.accelSoundConfig = {
@@ -121,6 +129,9 @@ export default class Car extends Phaser.Physics.Matter.Image {
         if (isOffroad) {
             offroadSpeedMultiplier = 1 / 4;
         }
+
+        // if (this.collisionInProgressCount > 0) this.setFrictionAir(ROAD_FRICTION * 3.5)
+        // else this.setFrictionAir(ROAD_FRICTION)
 
         let carIsMovingBackward = carForwardVector.clone().add(carVelocityVector.normalize()).length() < 1;
         let carVelocityLength = carVelocityVector.length();
