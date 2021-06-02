@@ -162,7 +162,7 @@ export default class Car extends Phaser.Physics.Matter.Image {
             // Plays accelSound at pitch x*Velocity
             console.log('car velocity:', this.accelAmount);
             this.accelSound.play(this.accelSoundConfig);
-            this.accelSound.setRate(this.accelAmount * 0.1);
+            this.accelSound.setDetune(this.accelAmount * 10);
         }
 
 
