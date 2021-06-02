@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 
 const ROAD_FRICTION = 0.5;
-const STEARING_RATE_MULTIPLIER = 0.15;
+const STEARING_RATE_MULTIPLIER = 0.7;
 const ACCELERATION_RATE_MULTIPLIER = .5;
 const DEG_TO_RAD = Math.PI / 180;
 
