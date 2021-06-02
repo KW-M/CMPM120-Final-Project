@@ -70,6 +70,17 @@ export default class Car extends Phaser.Physics.Matter.Image {
 
         // Sounds
         this.accelSound = this.scene.sound.add('accelSound')
+        this.accelSoundConfig = {
+            mute: false,
+            volume: 1,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: true,
+            delay: 0
+        }
+        
+
     }
 
     drawSkidMarks(isOffroad, carForwardVector, carVelocityLength) {
@@ -134,6 +145,12 @@ export default class Car extends Phaser.Physics.Matter.Image {
         if (carIsMovingBackward) {
             carForwardToMouseVectorAngle = (carForwardToMouseVectorAngle + 360) % 360 - 180
             console.log(carForwardToMouseVectorAngle)
+        }
+
+        if (carVelocityLength != 0) {
+            // Plays accelSound at pitch x*Velocity
+            this.accelSound.play(this.accelSoundConfig)
+            this.accelSound.setRate(carVelocityLength)
         }
 
 
