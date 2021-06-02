@@ -2,10 +2,26 @@ import Phaser from 'phaser'
 
 const obstacleConfigs = {
     'right_crack_1': {
-        'vertices': [{ "x": 80, "y": 16 }, { "x": 40, "y": 5 }, { "x": 5, "y": 17 }, { "x": 20, "y": 15 }, { "x": 40, "y": 21 }]
+        "shape": {
+            "type": "fromPhysicsEditor",
+            "isStatic": true,
+            "fixtures": [{
+                "vertices": [
+                    [{ "x": 40, "y": 5 }, { "x": 13, "y": 17 }, { "x": 20, "y": 16 }, { "x": 40, "y": 23 }],
+                ]
+            }]
+        }
     },
     'left_crack_1': {
-        'vertices': [{ "x": 0, "y": 16 }, { "x": 48, "y": 2 }, { "x": 82, "y": 16 }, { "x": 57, "y": 24 }, { "x": 48, "y": 21 }] // An array, or an array of arrays, containing the vertex data in x/y object pairs },
+        "shape": {
+            "type": "fromPhysicsEditor",
+            "isStatic": true,
+            "fixtures": [{
+                "vertices": [ // An array, or an array of arrays, containing the vertex data in x/y object pairs },
+                    [{ "x": 0, "y": 2 }, { "x": 33, "y": 16 }, { "x": 10, "y": 24 }, { "x": 0, "y": 21 }],
+                ]
+            }]
+        }
     },
     'crack_1': {
         shape: 'circle',
@@ -14,6 +30,7 @@ const obstacleConfigs = {
     'crack_2': {
         'shape': 'circle',
         'circleRadius': 10
+
     },
     'crack_3': {
         shape: 'circle',
@@ -67,7 +84,7 @@ export class ObstacleSpawner {
     }
 
     drawObstacle(x, y, textureName) {
-        let sprite = this.scene.matter.add.sprite(x, y, textureName, null, obstacleConfigs[textureName])
+        let sprite = this.scene.matter.add.image(x, y, textureName, null, obstacleConfigs[textureName])
         sprite.setDepth(3);
         sprite.setStatic(true)
         this.obstacles.push(sprite)
@@ -85,12 +102,14 @@ export class ObstacleSpawner {
             x = -this.roadWidth / 2;
             this.scene.graphicsLayer.lineStyle(2, 0xdd55FF, 1);
             // this.scene.graphicsLayer.fillCircle(x, y, 10);
-            this.drawObstacle(x, y, "left_crack_1").setOrigin(0.5, 0.5).setScale(1.5 + Math.random())
+            let obst = this.drawObstacle(x, y, "left_crack_1").setScale(1.5 + Math.random())
+            obst.x += obst.width / 2
         } else if (x > (this.roadWidth / 2) - SideZonesWidth) {
             x = this.roadWidth / 2;
             this.scene.graphicsLayer.lineStyle(2, 0xddFFdd, 1);
             // this.scene.graphicsLayer.fillCircle(x, y, 10);
-            this.drawObstacle(x, y, "right_crack_1").setOrigin(0.5, 0.5).setScale(1.5 + Math.random())
+            let obst = this.drawObstacle(x, y, "right_crack_1").setScale(1.5 + Math.random())
+            obst.x -= obst.width / 2
         } else {
             this.scene.graphicsLayer.lineStyle(2, colors[this.colorIndex], 1);
             // this.scene.graphicsLayer.strokeCircle(x, y, 6);

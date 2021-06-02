@@ -65,6 +65,8 @@ export default class PlayScene extends Phaser.Scene {
 
         this.ScoreOverlay = new ScoreOverlay(this, this.obstacleSpawner.roadWidth)
 
+        // console.log(this.matter.add.image(0, 0, "move_mouse_tutorial", null, {}).body)
+
 
         this.mouseTutorialImg = new FadeInOutImage(this, this.cameras.main.width / 2, this.cameras.main.height * (3 / 4), "move_mouse_tutorial", 0.01, console.log)
         this.mouseTutorialImg.setDepth(500).setScrollFactor(0, 0).fadeIn()

@@ -31,9 +31,9 @@ export class ScoreOverlay {
 
         // add the event to increment the clock;
         this.timedEvent = this.scene.time.addEvent({
-            delay: 100,
+            delay: 45,
             callback: () => {
-                this.clock -= 10;
+                this.clock -= 45;
                 this.clockText.text = this.formatTime(this.clock);
             },
             scope: this,
@@ -47,14 +47,17 @@ export class ScoreOverlay {
         // this.clockText.setOrigin(0.5, 0).setPosition(gameWidth / 2, 0)
     }
 
-    // FORMAT TIME function
-    formatTime(decisseconds) {
-        let s = Math.floor(decisseconds / 100);
+    // FORMAT TIME function given
+    formatTime(ms) {
+        let s = Math.floor(ms / 1000);
         let min = Math.floor(s / 60);
         let seconds = s % 60;
-        decisseconds = (decisseconds % 100).toString().padStart(2, "0");
+        let miliseconds = Math.floor(Math.abs((ms % 1000) / 10)).toString().padStart(2, "0");
         seconds = seconds.toString().padStart(2, "0");
-        return `${min}:${seconds}.${decisseconds}`;
+        if (min > 0)
+            return `${min}:${seconds}:${miliseconds}`;
+        else
+            return `${seconds}:${miliseconds}`;
     };
 
 
