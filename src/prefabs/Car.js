@@ -71,7 +71,6 @@ export default class Car extends Phaser.Physics.Matter.Image {
         this.collisionInProgressCount = 0
         this.setOnCollide(() => {
             this.collisionInProgressCount++
-            this.thrust(-0.1)
         })
         this.setOnCollideEnd(() => {
             this.collisionInProgressCount--
@@ -87,7 +86,7 @@ export default class Car extends Phaser.Physics.Matter.Image {
             loop: true,
             delay: 0
         }
-        
+
 
     }
 
@@ -130,8 +129,14 @@ export default class Car extends Phaser.Physics.Matter.Image {
             offroadSpeedMultiplier = 1 / 4;
         }
 
-        // if (this.collisionInProgressCount > 0) this.setFrictionAir(ROAD_FRICTION * 3.5)
-        // else this.setFrictionAir(ROAD_FRICTION)
+        if (this.collisionInProgressCount > 0) this.setFrictionAir(ROAD_FRICTION * 3.5)
+        else this.setFrictionAir(ROAD_FRICTION)
+        // if (this.collisionInProgressCount > 0) {
+        //     // this.collisionInProgressCount++
+        //     c
+        //     this.applyForce(carForwardVector.clone().scale(-1))
+
+        // }
 
         let carIsMovingBackward = carForwardVector.clone().add(carVelocityVector.normalize()).length() < 1;
         let carVelocityLength = carVelocityVector.length();
@@ -155,7 +160,6 @@ export default class Car extends Phaser.Physics.Matter.Image {
         }
         if (carIsMovingBackward) {
             carForwardToMouseVectorAngle = (carForwardToMouseVectorAngle + 360) % 360 - 180
-            console.log(carForwardToMouseVectorAngle)
         }
 
         if (carVelocityLength != 0) {
@@ -164,7 +168,6 @@ export default class Car extends Phaser.Physics.Matter.Image {
             this.accelSound.play(this.accelSoundConfig);
             this.accelSound.setRate(this.accelAmount * 0.1);
         }
-
 
         this.thrust(this.accelAmount)
         this.setAngularVelocity(STEARING_RATE_MULTIPLIER * (1 / offroadSpeedMultiplier) * -carForwardToMouseVectorAngle * DEG_TO_RAD / ((carVelocityLength / 100) + 1) * Phaser.Math.Clamp(carVelocityLength, 0, 5) / 5)

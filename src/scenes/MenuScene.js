@@ -14,37 +14,27 @@ export default class MenuScene extends Phaser.Scene {
     this.load.image('checkedBox', images_checkbox);
     this.load.image('blueButton1', button02);
     this.load.image('blueButton2', button03);
-    console.log("heree")
   }
 
   create () {
-    this.gameButton = this.add.sprite(100, 200, 'blueButton1').setInteractive();
-    this.centerButton(this.gameButton, 1);
-
+    this.gameButton = this.add.sprite(0, -100, 'blueButton1').setInteractive();
     this.gameText = this.add.text(0, 0, 'Play', { fontSize: '32px', fill: '#fff' });
     this.centerButtonText(this.gameText, this.gameButton);
-
-    this.gameButton.on('pointerdown', function (pointer) {
+    this.gameButton.on('pointerdown', (pointer) => {
       this.scene.start('playScene');
-    }.bind(this));
+    });
 
-    this.optionsButton = this.add.sprite(300, 200, 'blueButton1').setInteractive();
-    this.centerButton(this.optionsButton);
-
+    this.optionsButton = this.add.sprite(0, 0, 'blueButton1').setInteractive();
     this.optionsText = this.add.text(0, 0, 'Options', { fontSize: '32px', fill: '#fff' });
     this.centerButtonText(this.optionsText, this.optionsButton);
-
-    this.optionsButton.on('pointerdown', function (pointer) {
+    this.optionsButton.on('pointerdown', (pointer) => {
       this.scene.start('dialogscene');
       // this.scene.start('optionsScene');
-    }.bind(this));
+    });
 
-    this.controlsButton = this.add.sprite(300, 200, 'blueButton1').setInteractive();
-    this.centerButton(this.controlsButton, -1);
-
+    this.controlsButton = this.add.sprite(0, 100, 'blueButton1').setInteractive();
     this.controlsText = this.add.text(0, 0, 'Controls', { fontSize: '32px', fill: '#fff' });
     this.centerButtonText(this.controlsText, this.controlsButton);
-
     this.controlsButton.on('pointerdown', function (pointer) {
       this.scene.start('Introscene');
     }.bind(this));
@@ -56,14 +46,14 @@ export default class MenuScene extends Phaser.Scene {
     this.input.on('pointerout', function (event, gameObjects) {
       gameObjects[0].setTexture('blueButton1');
     });
-    // this.cameras.main.centerOn(0, 0)
-  }
 
-  centerButton (gameObject, offset = 0) {
-    Phaser.Display.Align.In.Center(
-      gameObject,
-      this.add.zone(this.cameras.main.width / 2, this.cameras.main.height / 2 - offset * 100, this.cameras.main.width, this.cameras.main.height)
-    );
+    // handle when the screen size changes (device rotated, window resized, etc...)
+    this.scale.on('resize', (gameSize, baseSize, displaySize, resolution) => {
+      this.cameras.main.width = gameSize.width
+      this.cameras.main.height = gameSize.height
+      this.cameras.main.centerOn(0, 0)
+    }); this.cameras.main.centerOn(0, 0)
+
   }
 
   centerButtonText (gameText, gameButton) {

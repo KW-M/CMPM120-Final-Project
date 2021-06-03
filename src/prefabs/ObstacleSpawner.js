@@ -51,10 +51,10 @@ const obstacleConfigs = {
 }
 
 export class ObstacleSpawner {
-    constructor(scene, graphics) {
+    constructor(scene, graphics, roadWidth) {
         this.scene = scene
         this.obstacles = []
-        this.roadWidth = 90 * 3;
+        this.roadWidth = roadWidth;
         this.colorIndex = 3;
 
         this.psudoRandomArraySize = 600;

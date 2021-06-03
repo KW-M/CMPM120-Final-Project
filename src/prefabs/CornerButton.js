@@ -19,7 +19,7 @@ export default class CornerButton extends Phaser.GameObjects.Rectangle {
         this.txt.scrollFactorY = 0;
         this.depth = 100;
         this.txt.depth = 101;
-        this.resize()
+        this.resize(this.scene.scale.gameSize)
         this.scrollFactorX = 0;
         this.scrollFactorY = 0;
         this.setInteractive()
@@ -37,16 +37,17 @@ export default class CornerButton extends Phaser.GameObjects.Rectangle {
         this.setAlpha(0.5)
     }
 
-    resize() {
+    resize(gameSize) {
+        console.log(gameSize)
         let offset = this.size / 6
         if (this.corner == "top-right") {
-            this.x = this.scene.gameSize.width
+            this.x = gameSize.width
             this.y = 0;
             this.setAngle(45)
             this.txt.setPosition(this.x - offset, this.y + offset)
         } else if (this.corner == "bottom-right") {
-            this.x = this.scene.gameSize.width
-            this.y = this.scene.gameSize.height;
+            this.x = gameSize.width
+            this.y = gameSize.height;
             this.setAngle(-135)
             this.txt.setPosition(this.x - offset, this.y - offset)
         } else if (this.corner == "top-left") {
@@ -56,7 +57,7 @@ export default class CornerButton extends Phaser.GameObjects.Rectangle {
             this.txt.setPosition(this.x + offset, this.y + offset)
         } else if (this.corner == "bottom-left") {
             this.x = 0;
-            this.y = this.scene.gameSize.height;
+            this.y = gameSize.height;
             this.setAngle(-135)
             this.txt.setPosition(this.x + offset, this.y - offset)
         }
