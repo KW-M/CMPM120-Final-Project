@@ -162,11 +162,11 @@ export default class Car extends Phaser.Physics.Matter.Image {
             carForwardToMouseVectorAngle = (carForwardToMouseVectorAngle + 360) % 360 - 180
         }
 
-        if (carVelocityLength != 0) {
+        if (this.accelAmount != 0) {
             // Plays accelSound at pitch x*Velocity
             console.log('car velocity:', this.accelAmount);
             this.accelSound.play(this.accelSoundConfig);
-            this.accelSound.setRate(this.accelAmount * 0.1);
+            this.accelSound.setDetune(this.accelAmount * 10);
         }
 
         this.thrust(this.accelAmount)

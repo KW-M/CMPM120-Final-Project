@@ -38,12 +38,12 @@ export default class Introscene extends Phaser.Scene {
     var content = `
     In the year 20XX, Earth has become inhospitable to the human race.
     Aliens from Planet Nowhere have descended to intervene. The Nowherians have two heads, each making different claims and promising different things.
-                                        .
+                                        [color=black].[/color]
     They say there's a space elevator down Highway 51, and something about eforts to terraform the Earth. [b] They say we don't have much time.[/b]
 
 
 
-                      .
+                      [color=black].[/color]
     You burst into the living room where the kids are playing JortFite and you tell them it's time to go. Everybody gets in the car and you drive off towards the highway. You'll get your answers the only way you know how: [color=red] you will speak to their manager. [/color]`;
 
     var text = this.PageTypingText(this, this.cameras.main.width / 2 - 300, this.cameras.main.height / 2 - 300, '', {

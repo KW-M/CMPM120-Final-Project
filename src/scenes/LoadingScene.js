@@ -25,7 +25,8 @@ import images_crack_4 from 'url:/assets/crack4.png';
 // import images_surfer from 'url:/assets/surfer_sm.png'
 // import images_ocean_tile from 'url:/assets/ocean_tile.png';
 
-import audioAccelerate from 'url:/assets/audio/accelerate.wav';
+import audioAccelerateOgg from 'url:/assets/audio/accelerate.ogg';
+import audioAccelerateWav from 'url:/assets/audio/accelerate.wav';
 // import audioBrake from 'url:/assets/audio/brake.wav';
 // import audioReverse from 'url:/assets/audio/reverse.wav';
 // import audioHonk from 'url:/assets/audio/honk.wav';
@@ -62,7 +63,7 @@ export default class LoadingScene extends Phaser.Scene {
       this.load.image('crack_4', images_crack_4)
 
       // load spritesheets
-      this.load.audio('accelSound', audioAccelerate);
+      this.load.audio('accelSound', [audioAccelerateOgg, audioAccelerateWav]);
       // this.load.audio('brakeSound', audioBrake);
       // this.load.audio('reverseSound', audioReverse);
       // this.load.audio('honkSound', audioHonk);
