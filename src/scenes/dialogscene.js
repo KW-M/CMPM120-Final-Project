@@ -29,7 +29,7 @@ export default class Dialogscene extends Phaser.Scene {
         //rectangle
         //this.add.rectangle(1, 1, 1000, 1000, 0x000000)
 
-        this.input.keyboard.once('keydown-SPACE', () => { this.fadeSceneTransition("playScene") });
+        this.input.keyboard.on('keydown-SPACE', () => { this.fadeSceneTransition("playScene") });
 
         var scene = this;
         Alert(scene, '“Good”: \nLook Karen, we both know the world\n has been unjust to your needs,\n but can you for once in your life\n think about others instead of yourself? ')

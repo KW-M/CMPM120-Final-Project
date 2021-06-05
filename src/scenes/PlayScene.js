@@ -100,6 +100,7 @@ export default class PlayScene extends Phaser.Scene {
         if (this.mouseTutorialImg.currentAlpha > 0.8 && Math.abs(this.car.y) > 100) this.mouseTutorialImg.fadeOut()
         else if (window.keyUP.isDown || window.keyW.isDown) this.mouseTutorialImg.fadeIn()
 
+        if (this.scene.transitionProgress === 0 || this.scene.transitionProgress === 1) this.transitionInProgress = false;
         if (this.transitionInProgress) return; // ignore further update function code while transitioning
 
         // handle updating levelMap including obstacles, background tiles, road tiles and intersections
