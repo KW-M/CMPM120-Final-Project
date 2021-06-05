@@ -4,7 +4,7 @@ export class RoadLoader {
 
         this.tilePxSize = tilePxSize;
         this.tileWorldSize = tileWorldSize;
-        this.tileScaleFactor = window.map_scaling * tileScaleFactor;
+        this.tileScaleFactor = tileScaleFactor;
         this.tileZoomLevel = tileZoomLevel;
         this.tileNumStartX = Math.floor(tileNumStartX);
         this.tileNumStartY = Math.floor(tileNumStartY);

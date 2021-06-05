@@ -6,7 +6,7 @@ const ACCELERATION_RATE_MULTIPLIER = .5;
 const DEG_TO_RAD = Math.PI / 180;
 
 // includes driving code from: https://gitlab.com/grigoriytretyakov/phaser3-racing-car/-/blob/master/src/Game.js
-export default class Car extends Phaser.Physics.Matter.Image {
+export class Car extends Phaser.Physics.Matter.Image {
     constructor(scene, x, y, depth) {
         super(scene.matter.world, x, y, "car", null,
             {
@@ -15,7 +15,6 @@ export default class Car extends Phaser.Physics.Matter.Image {
             }
         );
         scene.add.existing(this);   // add to existing scene
-        this.scene = scene;
 
         // Sprite Settings
         this.depth = depth; // z-depth in the rendering layers
@@ -114,6 +113,13 @@ export default class Car extends Phaser.Physics.Matter.Image {
         }
     }
 
+    clearSkidMarks() {
+        this.offroadDust1.killAll()
+        this.offroadDust2.killAll()
+        this.skidMarks1.killAll()
+        this.skidMarks2.killAll()
+    }
+
     update(mouseWorldPositionVector, isOffroad) {
         const carToMouseVector = new Phaser.Math.Vector2(this).scale(-1).add(mouseWorldPositionVector);
         const carForwardVector = new Phaser.Math.Vector2(1, 0).setAngle(this.rotation);
@@ -164,7 +170,6 @@ export default class Car extends Phaser.Physics.Matter.Image {
 
         if (this.accelAmount != 0) {
             // Plays accelSound at pitch x*Velocity
-            console.log('car velocity:', this.accelAmount);
             this.accelSound.play(this.accelSoundConfig);
             this.accelSound.setDetune(this.accelAmount * 10);
         }

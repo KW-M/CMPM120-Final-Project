@@ -7,7 +7,7 @@ export default class BackgroundTileLoader extends Phaser.GameObjects.GameObject 
 
 
         this.tileSize = 256 * 2;
-        this.tileScaleFactor = window.map_scaling;
+        this.tileScaleFactor = 1;
         //16/25537/11844
         // 18/104297/47802
         // 16/25731/11511 // Badwatter Bason - Death Valley

@@ -21,6 +21,8 @@ export default class MenuScene extends Phaser.Scene {
     this.gameText = this.add.text(0, 0, 'Play', { fontSize: '32px', fill: '#fff' });
     this.centerButtonText(this.gameText, this.gameButton);
     this.gameButton.on('pointerdown', (pointer) => {
+      // this.events.off();
+      // this.scale.off('resize')
       this.scene.start('playScene');
     });
 
@@ -28,6 +30,8 @@ export default class MenuScene extends Phaser.Scene {
     this.optionsText = this.add.text(0, 0, 'Options', { fontSize: '32px', fill: '#fff' });
     this.centerButtonText(this.optionsText, this.optionsButton);
     this.optionsButton.on('pointerdown', (pointer) => {
+      // this.events.off();
+      // this.scale.off('resize')
       this.scene.start('dialogscene');
       // this.scene.start('optionsScene');
     });
@@ -36,6 +40,8 @@ export default class MenuScene extends Phaser.Scene {
     this.controlsText = this.add.text(0, 0, 'Controls', { fontSize: '32px', fill: '#fff' });
     this.centerButtonText(this.controlsText, this.controlsButton);
     this.controlsButton.on('pointerdown', function (pointer) {
+      // this.events.off();
+      // this.scale.off('resize')
       this.scene.start('Introscene');
     }.bind(this));
 
@@ -49,11 +55,11 @@ export default class MenuScene extends Phaser.Scene {
 
     // handle when the screen size changes (device rotated, window resized, etc...)
     this.scale.on('resize', (gameSize, baseSize, displaySize, resolution) => {
-      this.cameras.main.width = gameSize.width
-      this.cameras.main.height = gameSize.height
+      if (this.cameras.main === undefined) return;
+      this.cameras.resize(gameSize.width, gameSize.height);
       this.cameras.main.centerOn(0, 0)
-    }); this.cameras.main.centerOn(0, 0)
-
+    });
+    this.cameras.main.centerOn(0, 0)
   }
 
   centerButtonText (gameText, gameButton) {

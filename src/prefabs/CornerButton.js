@@ -7,7 +7,7 @@ let scoreConfig = {
     align: 'center',
 };
 
-export default class CornerButton extends Phaser.GameObjects.Rectangle {
+export class CornerButton extends Phaser.GameObjects.Rectangle {
     constructor(scene, corner, size, label) {
         super(scene, 0, 0, size, size / 2, 0x000000, 0.5)
         scene.add.existing(this);

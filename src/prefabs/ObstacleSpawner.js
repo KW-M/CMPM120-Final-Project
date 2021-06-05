@@ -55,6 +55,7 @@ export class ObstacleSpawner {
         this.scene = scene
         this.obstacles = []
         this.roadWidth = roadWidth;
+        this.obstacleLengthwiseSpacing = 200;
         this.colorIndex = 3;
 
         this.psudoRandomArraySize = 600;
@@ -83,7 +84,7 @@ export class ObstacleSpawner {
 
     reset() {
         for (let i = 0; i < this.obstacles.length; i++) {
-            this.obstacles[i].destory();
+            this.obstacles[i].destroy();
         }
         this.obstacles = []
         this.currentlySpawedAreaTopBound = -800
@@ -130,7 +131,7 @@ export class ObstacleSpawner {
 
     update(topYBound, bottomYBound) {
 
-        let obstacleYSpacing = 200
+        let obstacleYSpacing = this.obstacleLengthwiseSpacing;
 
         let addObstacle = (yPx) => {
             if (Math.abs(yPx) % obstacleYSpacing !== 0) return;

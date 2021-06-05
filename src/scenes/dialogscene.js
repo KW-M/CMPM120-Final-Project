@@ -29,7 +29,7 @@ export default class Dialogscene extends Phaser.Scene {
         //rectangle
         //this.add.rectangle(1, 1, 1000, 1000, 0x000000)
 
-
+        this.input.keyboard.once('keydown-SPACE', () => { this.fadeSceneTransition("playScene") });
 
         var scene = this;
         Alert(scene, '“Good”: \nLook Karen, we both know the world\n has been unjust to your needs,\n but can you for once in your life\n think about others instead of yourself? ')
@@ -67,6 +67,21 @@ export default class Dialogscene extends Phaser.Scene {
     }
 
     update() { }
+
+    fadeSceneTransition(targetSceneName) {
+        this.transitionInProgress = true;
+        this.scene.transition({ target: targetSceneName, duration: 2000, sleep: true, moveBelow: true });
+        let targetScene = this.scene.manager.scenes[this.scene.getIndex(targetSceneName)]
+        this.cameras.main.fadeOut(1000, 0, 0, 0);
+        targetScene.cameras.main.fadeOut(0, 0, 0, 0);
+        this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+            targetScene.cameras.main.fadeIn(1000, 0, 0, 0);
+            this.scene.manager.bringToTop(targetSceneName);
+            targetScene.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_IN_COMPLETE, (cam, effect) => {
+                this.transitionInProgress = false;
+            })
+        })
+    }
 }
 
 var CreateAlertDialog = function (scene) {

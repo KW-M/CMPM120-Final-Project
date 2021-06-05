@@ -4,23 +4,48 @@ import { ObstacleSpawner } from "../prefabs/ObstacleSpawner"
 
 let levelMaps = {
     "lvl1": {
-        carStart: { x: 0 * window.map_scaling, y: 0 * window.map_scaling, angle: 180 },
+        carStart: { x: 0, y: 0, angle: 180 },
         backgroundOffset: { longitudeX: 4315715, lattitudeY: -13000062 },
-        gameBounds: { top: -5000 * window.map_scaling, left: -5000 * window.map_scaling, width: 10000 * window.map_scaling, height: 6000 * window.map_scaling },
+        gameBounds: { top: -1550, left: -5000, bottom: 100, right: 5000 },
         roadWidth: 90 * 3,
+        obstacleLengthwiseSpacing: 200,
         intersection: {
-            x: -5 * window.map_scaling,
-            y: -10 * window.map_scaling,
+            x: 0,
+            y: -1000,
             angle: 0,
-            scaling: .5 * window.map_scaling,
-            spriteName: "highway_intersection_tile",
+            scaling: 1.52,
+            textureName: "highway_intersection_tile",
             sceneTransitionTargets: [
-                { x: 0, y: -100, radius: 10 * window.map_scaling, lvlName: "I1" },
+                { x: 100, y: -120, radius: 50, lvlName: "Alien_Encounter_1" },
+                { x: 0, y: -300, radius: 200, lvlName: "Level_2_Toward_Elevator" },
+                { x: 290, y: -110, radius: 120, lvlName: "Level_2_Toward_Home" },
             ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)
         },
         sceneTransitionTargets: [
-            { x: -2 * window.map_scaling, y: -5 * window.map_scaling, radius: 10 * window.map_scaling, lvlName: "G1" },
-            { x: -800 * window.map_scaling, y: -50 * window.map_scaling, radius: 20 * window.map_scaling, lvlName: "G2" },
+            { x: -2, y: -5, radius: 10, lvlName: "G1" },
+            { x: -800, y: -50, radius: 20, lvlName: "G2" },
+        ] // uses global position in map-scaled pixels
+    },
+    "lvl2": {
+        carStart: { x: 200, y: 0, angle: 90 },
+        backgroundOffset: { longitudeX: 4239215, lattitudeY: -13000062 }, // Only add or subtract increments of 153!!!!!!!!!!!!!
+        gameBounds: { top: -1350, left: -5000, bottom: 100, right: 5000 },
+        roadWidth: 90 * 3,
+        obstacleLengthwiseSpacing: 70,
+        intersection: {
+            x: 0,
+            y: 100,
+            angle: 0,
+            scaling: 1.52,
+            textureName: "highway_intersection_tile",
+            sceneTransitionTargets: [
+                { x: 100, y: -120, radius: 50, lvlName: "Alien_Encounter_1" },
+                { x: 0, y: -300, radius: 200, lvlName: "Level_2_Toward_Elevator" },
+                { x: 290, y: -110, radius: 120, lvlName: "Level_1_Toward_Home" },
+            ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)
+        },
+        sceneTransitionTargets: [
+            { x: 0, y: 0, radius: 2, lvlName: "G1" },
         ] // uses global position in map-scaled pixels
     }
 }
@@ -28,10 +53,11 @@ let levelMaps = {
 export class LevelMap {
     constructor(scene) {
         this.scene = scene
+        this.currentTargetLvlName = null;
         this.currentLvlConfig = levelMaps["lvl1"];
         this.intersectionImages = [];
 
-        this.BackgroundTileLoader = new TileLoader(this.scene, "background", 256, 153, 2, 18, -13000062, 4315715, 1, -1, 0, 1,
+        this.BackgroundTileLoader = new TileLoader(this.scene, "background", 256, 153, 2, 18, 0, 0, 1, -1, 0, 1,
             (tileZoomLevel, tileNumX, tileNumY, tilePxSize, tileWorldUnitSize) => {
                 // return `./ImageMapTiles/${tileZoomLevel}/${tileNumX}/${tileNumY}.png`; // For use in production.
                 return `./mapTiles/background/[${tileWorldUnitSize}=${tilePxSize}]${tileNumX},${tileNumY}.png`
@@ -51,7 +77,7 @@ export class LevelMap {
 
     addIntersection(textureName, x, y, scaling, angle) {
         this.intersectionImages.push(
-            this.scene.add.image(x, y, textureName).setOrigin(0.5, 1).setAngle(angle).setDepth(4).setScale(scaling)
+            this.scene.add.image(x, y, textureName).setOrigin(0.5, 1).setAngle(angle).setDepth(2).setScale(scaling)
         )
     }
 
@@ -72,15 +98,44 @@ export class LevelMap {
         }
     }
 
-    setupLevel(levelName) {
-        let lvl = this.currentLvlConfig = levelMaps[levelName];
-        this.scene.cameras.main.setBounds(lvl.gameBounds.top, lvl.gameBounds.left, lvl.gameBounds.width, lvl.gameBounds.height, false)
-
+    clearCurrentLevel() {
         for (const intersectionImage of this.intersectionImages) {
-            intersectionImage.destory()
+            console.log(intersectionImage)
+            intersectionImage.destroy()
         }
-        this.addIntersection(lvl.intersection.textureName, lvl.intersection.x)
+        this.scene.graphicsLayer.clear()
+        this.obstacleSpawner.reset();
+        this.scene.car.clearSkidMarks();
+    }
+
+    setupLevel(levelName) {
+        this.clearCurrentLevel();
+
+        let lvl = this.currentLvlConfig = levelMaps[levelName];
+        console.log("newLevel:", levelName, lvl)
+
+        this.scene.car.setPosition(lvl.carStart.x, lvl.carStart.y).setAngle(lvl.carStart.angle)
+
+        this.BackgroundTileLoader.tileNumStartX = lvl.backgroundOffset.lattitudeY;
+        this.BackgroundTileLoader.tileNumStartY = lvl.backgroundOffset.longitudeX;
+
+        this.HighwayTileLoader;
+        this.obstacleSpawner.roadWidth = this.currentLvlConfig.roadWidth;
+        this.obstacleSpawner.obstacleLengthwiseSpacing = this.currentLvlConfig.obstacleLengthwiseSpacing
+
+        // this.scene.cameras.main.setBounds(lvl.gameBounds.left, lvl.gameBounds.top, lvl.gameBounds.right - lvl.gameBounds.left, lvl.gameBounds.bottom - lvl.gameBounds.top, false)
+        this.addIntersection(lvl.intersection.textureName, lvl.intersection.x, lvl.intersection.y, lvl.intersection.scaling, lvl.intersection.angle)
         this.drawDebugCircleZones(lvl)
+
+        return lvl
+    }
+
+    checkTargetEntry(carX, carY) {
+        let targetLvlName = this.checkTargetOverlap(carX, carY)
+        if (targetLvlName !== this.currentTargetLvlName) {
+            this.currentTargetLvlName = targetLvlName
+            return targetLvlName
+        } else return null;
     }
 
     checkTargetOverlap(carX, carY) {
