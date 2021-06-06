@@ -4,12 +4,7 @@ export default class Dialogscene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.scenePlugin({
-            key: 'rexuiplugin',
-            url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js',
-            sceneKey: 'rexUI'
-        });
-        this.load.script('rexdialogquest', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexdialogquest.min.js');
+        // this.load.script('rexdialogquest', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexdialogquest.min.js');
 
     }
 
@@ -17,8 +12,8 @@ export default class Dialogscene extends Phaser.Scene {
 
         //Background
         // var image = scene.add.image(x, y, key, frame);
-        var image_dialogue = this.add.image(1, 1, 'dialogue background');
-        image_dialogue.setOrigin (0,0)
+        var image_dialogue = this.add.image(0, 0, 'dialogue background');
+        image_dialogue.setOrigin(0.5, 0.5)
         image_dialogue.setScale(3, 3.2)
 
         //var image_dialoguebox = this.add.image(1, 1, 'Dialogue box');
@@ -31,39 +26,49 @@ export default class Dialogscene extends Phaser.Scene {
 
         this.input.keyboard.on('keydown-SPACE', () => { this.fadeSceneTransition("playScene") });
 
-        var scene = this;
+        let scene = this;
+        console.log(scene)
         Alert(scene, '“Good”: \nLook Karen, we both know the world\n has been unjust to your needs,\n but can you for once in your life\n think about others instead of yourself? ')
-            .then(function () {
+            .then(() => {
                 return Alert(scene, ' I know you like asking to speak to the manager, \nbut have you ever thought about \nwhy people make fun of you for that?');
             })
-            .then(function () {
+            .then(() => {
                 return Alert(scene, '“Bad”: \nLook Karen, I have been watching you for a while \nand we both know that saving others won’t make them respect you.');
             })
-            .then(function () {
+            .then(() => {
                 return Alert(scene, '33 OKKKKK');
             })
-            .then(function () {
+            .then(() => {
                 return Alert(scene, '33 OKKKKK');
             })
-            .then(function () {
+            .then(() => {
                 return Alert(scene, '33 OKKKKK');
             })
-            .then(function () {
+            .then(() => {
                 return Alert(scene, '33 OKKKKK');
             })
-            .then(function () {
+            .then(() => {
                 return Alert(scene, '33 OKKKKK');
             })
-            .then(function () {
+            .then(() => {
                 return Alert(scene, '33 OKKKKK');
             })
-            .then(function () {
+            .then(() => {
                 return Alert(scene, '33 OKKKKK');
             })
-            .then(function () {
+            .then(() => {
                 return Alert(scene, '44 Goodbye');
 
             })
+
+        // handle when the screen size changes (device rotated, window resized, etc...)
+        let resizeHandler = (gameSize, baseSize, displaySize, resolution) => {
+            if (this.cameras.main === undefined) return;
+            this.cameras.resize(gameSize.width, gameSize.height);
+            this.cameras.main.centerToSize().setZoom(Math.min(gameSize.width / (image_dialogue.width * image_dialogue.scaleX), gameSize.height / (image_dialogue.height * image_dialogue.scaleY)))
+            this.cameras.main.centerOn(0, 0)
+        }; resizeHandler(this.game.scale.gameSize)
+        this.scale.on('resize', resizeHandler)
     }
 
     update() { }
@@ -102,7 +107,7 @@ var CreateAlertDialog = function (scene) {
             }
 
         }),
-x: scene.cameras.main.width / 2,
+        x: scene.cameras.main.width / 2,
         y: scene.cameras.main.height / 2,
         content: scene.add.text(0, 0, '', {
             fontSize: '50px'
@@ -126,8 +131,8 @@ x: scene.cameras.main.width / 2,
         ],
 
         space: {
-            title: 25,
-            content: 25,
+            title: 0,
+            content: 0,
             action: 15,
 
             left: 20,
@@ -169,30 +174,22 @@ var SetAlertDialog = function (dialog, title, content) {
 var AlertDialog;
 var Alert = function (scene, title, content, x, y) {
     if (x === undefined) {
-        x = 1000;
+        x = 0;
     }
     if (y === undefined) {
-        y = 1100;
+        y = 650;
     }
     if (!AlertDialog) {
         AlertDialog = CreateAlertDialog(scene)
     }
     SetAlertDialog(AlertDialog, title, content);
     AlertDialog
-        .setPosition(x, y)
+        .setPosition(x, y).setOrigin(0.5, 1)
         .setVisible(true)
         .layout();
 
-    return AlertDialog
-        .moveFromPromise(0, undefined, '-=800', 'Bounce')
-        .then(function () {
-            return scene.rexUI.waitEvent(AlertDialog, 'button.click');
-        })
-        /*.then(function () {
-            return AlertDialog.moveToPromise(0, undefined, '-=600', 'Back');
-        })*/
-        .then(function () {
-            AlertDialog.setVisible(false);
-            return Promise.resolve();
-        })
+    return scene.rexUI.waitEvent(AlertDialog, 'button.click').then(function () {
+        AlertDialog.setVisible(false);
+        return Promise.resolve();
+    })
 }

@@ -9,6 +9,8 @@ Layered audio gives an imersive experience.
 
 
 import Phaser from 'phaser';
+import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
+
 import LoadingScene from "/src/scenes/loadingScene"
 import MenuScene from "/src/scenes/MenuScene"
 import PlayScene from "/src/scenes/PlayScene"
@@ -46,6 +48,15 @@ let gameConfig = {
         showStaticBody: true
       }
     }
+  },
+  plugins: {
+    scene: [{
+      key: 'rexUI',
+      plugin: RexUIPlugin,
+      mapping: 'rexUI'
+    },
+      // ...
+    ]
   },
   scene: [LoadingScene, MenuScene, Introscene, ControlsScene, OptionsScene, PlayScene, dialogscene]// EndScene
 }
