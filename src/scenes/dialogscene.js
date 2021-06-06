@@ -31,34 +31,14 @@ export default class Dialogscene extends Phaser.Scene {
         Alert(scene, '“Good”: \nLook Karen, we both know the world\n has been unjust to your needs,\n but can you for once in your life\n think about others instead of yourself? ')
             .then(() => {
                 return Alert(scene, ' I know you like asking to speak to the manager, \nbut have you ever thought about \nwhy people make fun of you for that?');
-            })
-            .then(() => {
+            }).then(() => {
                 return Alert(scene, '“Bad”: \nLook Karen, I have been watching you for a while \nand we both know that saving others won’t make them respect you.');
-            })
-            .then(() => {
+            }).then(() => {
                 return Alert(scene, '33 OKKKKK');
-            })
-            .then(() => {
-                return Alert(scene, '33 OKKKKK');
-            })
-            .then(() => {
-                return Alert(scene, '33 OKKKKK');
-            })
-            .then(() => {
-                return Alert(scene, '33 OKKKKK');
-            })
-            .then(() => {
-                return Alert(scene, '33 OKKKKK');
-            })
-            .then(() => {
-                return Alert(scene, '33 OKKKKK');
-            })
-            .then(() => {
-                return Alert(scene, '33 OKKKKK');
-            })
-            .then(() => {
+            }).then(() => {
                 return Alert(scene, '44 Goodbye');
-
+            }).then(() => {
+                this.fadeSceneTransition("playScene")
             })
 
         // handle when the screen size changes (device rotated, window resized, etc...)
