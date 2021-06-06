@@ -20,17 +20,11 @@ import dialogscene from "/src/scenes/dialogscene"
 import Introscene from "/src/scenes/introscene"
 
 // reserve vars
-let game, keySPACE, keyR, keyLEFT, keyRIGHT, keyUP, keyDOWN;
-
-const targetFPS = 20;
+let game;
 
 let gameConfig = {
   type: Phaser.AUTO,
   autoRound: true,
-  fps: {
-    target: targetFPS,
-    forceSetTimeOut: true,
-  },
   scale: {
     // zoom: 2,
     mode: Phaser.Scale.RESIZE,// Phaser.Scale.NONE, // we scale the game manually in resize()
