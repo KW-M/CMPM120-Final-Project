@@ -68,11 +68,14 @@ export class Car extends Phaser.Physics.Matter.Image {
         this.skidMarks2 = skidParticles.createEmitter(skidConfig)
 
         this.collisionInProgressCount = 0
+        this.justCollided = false;
         this.setOnCollide(() => {
+            this.justCollided = true;
             this.collisionInProgressCount++
         })
         this.setOnCollideEnd(() => {
             this.collisionInProgressCount--
+            console.log(this.collisionInProgressCount)
         })
         // Sounds
         this.accelSound = this.scene.sound.add('accelSound')
@@ -135,14 +138,16 @@ export class Car extends Phaser.Physics.Matter.Image {
             offroadSpeedMultiplier = 1 / 4;
         }
 
-        if (this.collisionInProgressCount > 0) this.setFrictionAir(ROAD_FRICTION * 3.5)
-        else this.setFrictionAir(ROAD_FRICTION)
-        // if (this.collisionInProgressCount > 0) {
-        //     // this.collisionInProgressCount++
-        //     c
-        //     this.applyForce(carForwardVector.clone().scale(-1))
-
-        // }
+        if (this.collisionInProgressCount > 0) {
+            offroadSpeedMultiplier /= 1
+            // this.setFrictionAir(ROAD_FRICTION * 3.5)
+        } else this.setFrictionAir(ROAD_FRICTION)
+        if (this.justCollided === true) {
+            this.justCollided = false;
+            carForwardToMouseVectorAngle = (carForwardToMouseVectorAngle * Math.PI) % 360;
+            let newVelocity = carVelocityVector.clone().scale(0.01)
+            this.setVelocity(newVelocity.x, newVelocity.y)
+        }
 
         let carIsMovingBackward = carForwardVector.clone().add(carVelocityVector.normalize()).length() < 1;
         let carVelocityLength = carVelocityVector.length();
@@ -174,7 +179,9 @@ export class Car extends Phaser.Physics.Matter.Image {
             this.accelSound.setDetune(this.accelAmount * 10);
         }
 
-        this.thrust(this.accelAmount)
+        // console.log()
+        this.applyForce(carForwardVector.clone().scale(this.accelAmount))
+        // this.thrust(this.accelAmount)
         this.setAngularVelocity(STEARING_RATE_MULTIPLIER * (1 / offroadSpeedMultiplier) * -carForwardToMouseVectorAngle * DEG_TO_RAD / ((carVelocityLength / 100) + 1) * Phaser.Math.Clamp(carVelocityLength, 0, 5) / 5)
 
         this.debugRect0.setPosition(carForwardVector.x * this.accelAmount + this.x, carForwardVector.y * this.accelAmount + this.y)

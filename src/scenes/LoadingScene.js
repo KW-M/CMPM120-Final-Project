@@ -77,7 +77,6 @@ export default class LoadingScene extends Phaser.Scene {
 
     // handle when the screen size changes (device rotated, window resized, etc...)
     this.scale.on('resize', (gameSize, baseSize, displaySize, resolution) => {
-      console.log("hiipos", this);
       if (this.cameras.main === undefined) return;
       this.cameras.resize(gameSize.width, gameSize.height);
       this.cameras.main.centerOn(0, 0)
@@ -88,9 +87,7 @@ export default class LoadingScene extends Phaser.Scene {
     this.events.off();
     this.scene.start('menuScene');
     // this.scene.start('playScene');
-
-    console.log("removing loading scene")
-    this.scene.stop('loadingScene')
-    //  .remove(this.scene.key);
+    this.scene.stop(this.scene.key)
+    this.scene.remove(this.scene.key);
   }
 }
