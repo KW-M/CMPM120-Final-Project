@@ -12,7 +12,7 @@ let levelMaps = {
         intersections: [
             {
                 x: 0,
-                y: -1000,
+                y: -3000,
                 angle: 0,
                 scaling: 3,
                 textureName: "highway_y_intersection",
@@ -42,7 +42,7 @@ let levelMaps = {
         intersections: [
             {
                 x: 0,
-                y: -1000,
+                y: -3000,
                 angle: 0,
                 scaling: 3,
                 textureName: "highway_y_intersection",
@@ -60,14 +60,14 @@ let levelMaps = {
 
     "lvl3": {
         carStart: { x: 0, y: 0, angle: -90 },
-        backgroundOffset: { longitudeX: 4239215, lattitudeY: -13000062 }, // Only add or subtract increments of 153!!!!!!!!!!!!!
+        backgroundOffset: { longitudeX: 4252985, lattitudeY: -13000062 }, // Only add or subtract increments of 153!!!!!!!!!!!!!
         gameBounds: { top: -1403, left: -5000, bottom: 100, right: 5000 },
         roadWidth: 90 * 3,
         obstacleLengthwiseSpacing: 200,
         intersections: [
             {
                 x: 0,
-                y: -1000,
+                y: -3000,
                 angle: 0,
                 scaling: 3,
                 textureName: "highway_y_intersection",
