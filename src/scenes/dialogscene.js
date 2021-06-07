@@ -3,10 +3,7 @@ export default class Dialogscene extends Phaser.Scene {
         super("dialogscene")
     }
 
-    preload() {
-        // this.load.script('rexdialogquest', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexdialogquest.min.js');
-
-    }
+    preload() { }
 
     create() {
 
@@ -26,41 +23,6 @@ export default class Dialogscene extends Phaser.Scene {
 
         this.input.keyboard.on('keydown-SPACE', () => { this.fadeSceneTransition("playScene") });
 
-        let scene = this;
-        console.log(scene)
-        Alert(scene, '“Good”: \nLook Karen, we both know the world\n has been unjust to your needs,\n but can you for once in your life\n think about others instead of yourself? ')
-            .then(() => {
-                return Alert(scene, ' I know you like asking to speak to the manager, \nbut have you ever thought about \nwhy people make fun of you for that?');
-            })
-            .then(() => {
-                return Alert(scene, '“Bad”: \nLook Karen, I have been watching you for a while \nand we both know that saving others won’t make them respect you.');
-            })
-            .then(() => {
-                return Alert(scene, '33 OKKKKK');
-            })
-            .then(() => {
-                return Alert(scene, '33 OKKKKK');
-            })
-            .then(() => {
-                return Alert(scene, '33 OKKKKK');
-            })
-            .then(() => {
-                return Alert(scene, '33 OKKKKK');
-            })
-            .then(() => {
-                return Alert(scene, '33 OKKKKK');
-            })
-            .then(() => {
-                return Alert(scene, '33 OKKKKK');
-            })
-            .then(() => {
-                return Alert(scene, '33 OKKKKK');
-            })
-            .then(() => {
-                return Alert(scene, '44 Goodbye');
-
-            })
-
         // handle when the screen size changes (device rotated, window resized, etc...)
         let resizeHandler = (gameSize, baseSize, displaySize, resolution) => {
             if (this.cameras.main === undefined) return;
@@ -69,6 +31,28 @@ export default class Dialogscene extends Phaser.Scene {
             this.cameras.main.centerOn(0, 0)
         }; resizeHandler(this.game.scale.gameSize)
         this.scale.on('resize', resizeHandler)
+
+        this.events.on(Phaser.Scenes.Events.WAKE, function () {
+            this.wake();
+        }, this);
+        this.wake();
+    }
+
+    wake() {
+        let scene = this;
+        console.log(scene)
+        Alert(scene, '“Good”: \nLook Karen, we both know the world\n has been unjust to your needs,\n but can you for once in your life\n think about others instead of yourself? ')
+            .then(() => {
+                return Alert(scene, ' I know you like asking to speak to the manager, \nbut have you ever thought about \nwhy people make fun of you for that?');
+            }).then(() => {
+                return Alert(scene, '“Bad”: \nLook Karen, I have been watching you for a while \nand we both know that saving others won’t make them respect you.');
+            }).then(() => {
+                return Alert(scene, '33 OKKKKK');
+            }).then(() => {
+                return Alert(scene, '44 Goodbye');
+            }).then(() => {
+                this.fadeSceneTransition("playScene")
+            })
     }
 
     update() { }
