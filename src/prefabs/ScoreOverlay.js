@@ -3,7 +3,7 @@ export class ScoreOverlay {
         this.scene = scene
 
         // create a game clock counter that will count up.
-        this.STARTING_COUNTDOWN_TIME = 10000//60000
+        this.STARTING_COUNTDOWN_TIME = 3400000//60000
         this.clock = this.STARTING_COUNTDOWN_TIME;
 
         // create an object to populate the text configuration members

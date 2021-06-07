@@ -6,11 +6,14 @@ import { LevelMap } from "../prefabs/levelMap"
 import { ScoreOverlay } from "/src/prefabs/ScoreOverlay"
 import { GameOverOverlay } from '../prefabs/GameOverOverlay'
 
+const scriptList = ["encounter_1", "encounter_2", "encounter_3"]
+
 export default class PlayScene extends Phaser.Scene {
 
     constructor() {
         super({ key: "playScene" });
         this.dialogScriptsAlreadyCompleted = {}
+        this.currentScriptIndex = 0;
     }
     create() {
 
@@ -61,6 +64,11 @@ export default class PlayScene extends Phaser.Scene {
 
     }
 
+    playNextScript() {
+        this.fadeSceneTransition("dialogScene", { scriptName: scriptList[this.currentScriptIndex] })
+        this.currentScriptIndex++;
+    }
+
     update() {
         // when game is over, don't do anything, just check for input.
         if (this.gameOver) {
@@ -75,9 +83,9 @@ export default class PlayScene extends Phaser.Scene {
 
         // update car driving controller only when mouse button is down (physics runs regardless).
         if (this.game.input.activePointer.isDown) {
-            let isOffroad = this.car.x > this.lvlMap.currentLvlConfig.roadWidth / 2 || this.car.x < -this.lvlMap.currentLvlConfig.roadWidth / 2
+            // let isOffroad = this.car.x > this.lvlMap.currentLvlConfig.roadWidth / 2 || this.car.x < -this.lvlMap.currentLvlConfig.roadWidth / 2
             let mouseCoords = this.cameras.main.getWorldPoint(this.game.input.activePointer.x, this.game.input.activePointer.y)
-            this.car.update(mouseCoords, isOffroad);  // update car sprite
+            this.car.update(mouseCoords);  // update car sprite
         } else {
             // if the mouse isn't down (Ie: car isn't driving) stop emmiting dust particles
             this.car.offroadDust1.setQuantity(0);
@@ -96,8 +104,9 @@ export default class PlayScene extends Phaser.Scene {
             this.lvlMap.update(this.cameras.main.worldView);
             let targetDetails = this.lvlMap.checkTargetEntry(this.car.x, this.car.y, true)
             if (targetDetails === null) { }
-            else if (targetDetails.label.startsWith("Alien") && this.dialogScriptsAlreadyCompleted[targetDetails.label] === undefined) {
-                this.fadeSceneTransition("dialogScene", { scriptName: "E2L1" })
+            else if (this.dialogScriptsAlreadyCompleted[targetDetails.label] !== undefined) { }
+            else if (targetDetails.label === "Alien_Encounter_1" || targetDetails.label === "Alien_Encounter_2" || targetDetails.label === "Alien_Encounter_3") {
+                this.playNextScript()
                 this.dialogScriptsAlreadyCompleted[targetDetails.label] = true;
             } else if (targetDetails.targetLvl !== undefined) {
                 this.fadeLevelTransition(targetDetails.targetLvl)
