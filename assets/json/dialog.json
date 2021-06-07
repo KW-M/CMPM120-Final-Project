@@ -151,27 +151,19 @@
 			},
 			{
 				"speaker": "karen",
-				"dialog": "Don’t care. I’ve been driving so long now, I don’t even remember what I was confused about. I guess I just need to know where the hell I’m supposed to be right now."
+				"dialog": "Don’t care. I’ve been driving so long now, I don’t even remember what I was confused about. How do I get to the space elevator?"
 			},
 			{
 				"speaker": "janus_left",
-				"dialog": "Well, that’s a complicated question. My colleague here is developing a selective terraforming process that’ll leave humanity intact while repairing much of the damage done to the ecosystems around the world."
+				"dialog": "I’m glad you asked, just take a left here and you’ll be right there."
 			},
 			{
 				"speaker": "janus_right",
-				"dialog": "And this guy is trying to get you humans offworld in a giant space station while Earth is left to heal on its own. We elected to let humanity decide whether they’d prefer staying or leaving, and found that it’s a pretty even split. You’re the last one to show up, so you're the deciding factor here."
+				"dialog": "If you’ve changed your mind and would rather watch the world get terraformed, then you’ll have to turn back around and make your way to the right."
 			},
 			{
 				"speaker": "karen",
-				"dialog": "I… this is all a lot to take in at once, I’m a little overwhelmed."
-			},
-			{
-				"speaker": "janus_right",
-				"dialog": "Well you get what you ask for. You wanted answers, and this is as simple as it gets. So, make your decision. If you want me to go forward with terraforming Earth, take a right."
-			},
-			{
-				"speaker": "janus_left",
-				"dialog": "And if you want me to take your people to space for the foreseeable future, take a left."
+				"dialog": "If I wanted that, I would’ve asked."
 			}
 		]
 	],
@@ -203,27 +195,19 @@
 			},
 			{
 				"speaker": "karen",
-				"dialog": "Don’t care. I’ve been driving so long now, I don’t even remember what I was confused about. I guess I just need to know where the hell I’m supposed to be right now."
-			},
-			{
-				"speaker": "janus_left",
-				"dialog": "Well, that’s a complicated question. My colleague here is developing a selective terraforming process that’ll leave humanity intact while repairing much of the damage done to the ecosystems around the world."
+				"dialog": "Don’t care. I’ve been driving so long now, I don’t even remember what I was confused about. How do I get to Billi's so we can wait out the terraforming process?"
 			},
 			{
 				"speaker": "janus_right",
-				"dialog": "And this guy is trying to get you humans offworld in a giant space station while Earth is left to heal on its own. We elected to let humanity decide whether they’d prefer staying or leaving, and found that it’s a pretty even split. You’re the last one to show up, so you're the deciding factor here."
+				"dialog": "I’m glad you asked, just take a right here and you’ll be right there."
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "If you’ve changed your mind and would rather watch the world get terraformed, then you’ll have to turn back around and make your way to the left."
 			},
 			{
 				"speaker": "karen",
-				"dialog": "I… this is all a lot to take in at once, I’m a little overwhelmed."
-			},
-			{
-				"speaker": "janus_right",
-				"dialog": "Well you get what you ask for. You wanted answers, and this is as simple as it gets. So, make your decision. If you want me to go forward with terraforming Earth, take a right."
-			},
-			{
-				"speaker": "janus_left",
-				"dialog": "And if you want me to take your people to space for the foreseeable future, take a left."
+				"dialog": "If I wanted that, I would’ve asked."
 			}
 		]
 	],
