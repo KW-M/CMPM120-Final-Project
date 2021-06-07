@@ -1,51 +1,49 @@
 {
-	"E1R0": [
+	"encounter_1": [
 		[
 			{
 				"speaker": "karen",
-				"dialog": "See now, how men lay blame upon us gods for what is after all nothing but their own folly."
-			},
-			{
-				"speaker": "karen",
-				"dialog": "Look at Aegisthus; he must needs make love to Agamemnon's wife unrighteously and then kill Agamemnon, though he knew it would be the death of him."
+				"dialog": "See now, how encounter_1"
 			},
 			{
 				"speaker": "janus_left",
-				"dialog": "Father, son of Saturn, King of kings, it served Aegisthus right, and so it would any one else who does as he did; but Aegisthus is neither here nor there."
-			},
-			{
-				"speaker": "janus_left",
-				"dialog": "It is for Ulysses that my heart bleeds, when I think of his sufferings in that lonely sea-girt island, far away, poor man, from all his friends."
+				"dialog": "It is for Ulysses that my heart bleeds, when I think of his sufferings in that"
 			},
 			{
 				"speaker": "janus_right",
 				"dialog": "My child, what are you talking about? How can I forget Ulysses than whom there is no more capable man on earth, nor more liberal in his offerings to the immortal gods that live in heaven?"
-			},
-			{
-				"speaker": "janus_left",
-				"dialog": "If, then, the gods now mean that Ulysses should get home, we should first send Mercury to the Ogygian island to tell Calypso that we have made up our minds and that he is to return."
 			}
 		]
 	],
-	"E2L1": [
+	"encounter_2": [
 		[
 			{
 				"speaker": "karen",
-				"dialog": "See now, how this is E2L1 not just the regular one!"
-
+				"dialog": "See now, how encounter_2"
 			},
 			{
 				"speaker": "janus_left",
-				"dialog": "Father, son of Saturn, King of kings, it served Aegisthus right, and so it would any one else who does as he did; but Aegisthus is neither here nor there.It is for Ulysses that my heart bleeds, when I think of his sufferings in that lonely sea-girt island, far away, poor man, from all his friends."
+				"dialog": "It is for Ulysses that my heart bleeds, when I think of his sufferings in that"
 			},
 			{
 				"speaker": "janus_right",
 				"dialog": "My child, what are you talking about? How can I forget Ulysses than whom there is no more capable man on earth, nor more liberal in his offerings to the immortal gods that live in heaven?"
-
+			}
+		]
+	],
+	"encounter_3": [
+		[
+			{
+				"speaker": "karen",
+				"dialog": "See now, how encounter 3"
 			},
 			{
 				"speaker": "janus_left",
-				"dialog": "If, then, the gods now mean that Ulysses should get home, we should first send Mercury to the Ogygian island to tell Calypso that we have made up our minds and that he is to return."
+				"dialog": "It is for Ulysses that my heart bleeds, when I think of his sufferings in that"
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "My child, what are you talking about? How can I forget Ulysses than whom there is no more capable man on earth, nor more liberal in his offerings to the immortal gods that live in heaven?"
 			}
 		]
 	],
@@ -54,7 +52,6 @@
 			{
 				"speaker": "homer",
 				"dialog": "Tell me, O muse, of that ingenious hero who travelled far and wide after he had sacked the famous town of Troy."
-
 			},
 			{
 				"speaker": "homer",
@@ -81,7 +78,6 @@
 			{
 				"speaker": "karen",
 				"dialog": "See now, how men lay blame upon us gods for what is after all nothing but their own folly."
-
 			},
 			{
 				"speaker": "karen",
@@ -90,7 +86,6 @@
 			{
 				"speaker": "janus_left",
 				"dialog": "Father, son of Saturn, King of kings, it served Aegisthus right, and so it would any one else who does as he did; but Aegisthus is neither here nor there."
-
 			},
 			{
 				"speaker": "janus_left",
@@ -99,12 +94,10 @@
 			{
 				"speaker": "janus_right",
 				"dialog": "My child, what are you talking about? How can I forget Ulysses than whom there is no more capable man on earth, nor more liberal in his offerings to the immortal gods that live in heaven?"
-
 			},
 			{
 				"speaker": "janus_left",
 				"dialog": "If, then, the gods now mean that Ulysses should get home, we should first send Mercury to the Ogygian island to tell Calypso that we have made up our minds and that he is to return."
-
 			}
 		]
 	]

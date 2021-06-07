@@ -81,14 +81,25 @@ export default class DialogScene extends Phaser.Scene {
         this.janus_right.setAlpha(0);
         this.karen.setAlpha(0);
 
+        this.wasDown = this.game.input.activePointer.isDown;
+
         // start dialog
         this.typeText();
     }
 
     update() {
         // check for spacebar press
-        if ((Phaser.Input.Keyboard.JustDown(this.keySPACE) || this.game.input.activePointer.isDown) && !this.dialogTyping) {
-            // trigger dialog
+        if (this.game.input.activePointer.isDown) {
+            if (!this.wasDown && !this.dialogTyping) {
+                // trigger next page of dialog
+                this.typeText();
+            }
+            this.wasDown = true
+        } else {
+            this.wasDown = false
+        }
+        if (Phaser.Input.Keyboard.JustDown(this.keySPACE) && !this.dialogTyping) {
+            // trigger next page of dialog
             this.typeText();
         }
     }

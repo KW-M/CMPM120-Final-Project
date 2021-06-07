@@ -1,11 +1,10 @@
-import Phaser from 'phaser'
-
 export class ScoreOverlay {
     constructor(scene, roadWidth) {
         this.scene = scene
 
         // create a game clock counter that will count up.
-        this.clock = 60 * 1000;
+        this.STARTING_COUNTDOWN_TIME = 3400000//60000
+        this.clock = this.STARTING_COUNTDOWN_TIME;
 
         // create an object to populate the text configuration members
         this.textConfig = {

@@ -6,8 +6,8 @@ Play the [live game](https://kw-m.github.io/CMPM120-Final-Project/) online!
 
 ## Building the game in development:
 1. Get Node.JS from: https://nodejs.org/en/download
-2. Get this source code by typing `git clone https://github.com/KW-M/Tsurfnami.git` into your terminal/cmd prompt
-3. `cd ./Tsurfnami` to get into the Tsurfnami folder.
+2. Get this source code by typing `git clone https://github.com/KW-M/Highway_to_Nowhere.git` into your terminal/cmd prompt
+3. `cd ./Highway_to_Nowhere` to get into the Highway_to_Nowhere folder.
 4. run `npm install` in the terminal to install dependancies (JS libraries)
 5. Whenever you want to run the game code, type `npm run start` in the terminal and it should build the project with parcel 2, and start a development server.
 

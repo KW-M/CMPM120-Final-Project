@@ -4,6 +4,7 @@ const ROAD_FRICTION = 0.5;
 const STEARING_RATE_MULTIPLIER = 0.7;
 const ACCELERATION_RATE_MULTIPLIER = .5;
 const DEG_TO_RAD = Math.PI / 180;
+const MAX_HEALTH = 5
 
 // includes driving code from: https://gitlab.com/grigoriytretyakov/phaser3-racing-car/-/blob/master/src/Game.js
 export class Car extends Phaser.Physics.Matter.Image {
@@ -37,11 +38,10 @@ export class Car extends Phaser.Physics.Matter.Image {
         this.debugRect2 = this.scene.add.rectangle(0, 0, 2, 2, 0x00FFFF).setDepth(100)
 
         // Constants
-        // this.backupSteering = 1; // -1 when backing up
-        // this.maxSteeringAngle = 10 // in degrees
+        this.carHealth = MAX_HEALTH
 
         // particles
-        let dustConfig = {
+        this.dustConfig = {
             x: 0,
             y: 0,
             particleFriction: 0.2,
@@ -50,22 +50,23 @@ export class Car extends Phaser.Physics.Matter.Image {
             scale: { start: .3, end: 1 },
             lifespan: { min: 600, max: 800 },
         }
-        let dustParticles = this.scene.add.particles('dust_particle').setDepth(this.depth - 1)
-        this.offroadDust1 = dustParticles.createEmitter(dustConfig)
-        this.offroadDust2 = dustParticles.createEmitter(dustConfig)
+        this.dustParticles = this.scene.add.particles('dust_particle').setDepth(this.depth - 1)
+        this.offroadDust1 = this.dustParticles.createEmitter(this.dustConfig)
+        this.offroadDust2 = this.dustParticles.createEmitter(this.dustConfig)
+        this.isOffroad = false;
 
-        let skidConfig = {
+        this.skidConfig = {
             x: 0,
             y: 0,
             quantitiy: 1,
-            tint: 0x000000,
+            tint: { onEmit: () => { return this.isOffroad ? 0x885500 : 0x000000; } },
             alpha: .5,
             scale: .2,
             lifespan: 10000,
         }
-        let skidParticles = this.scene.add.particles('dust_particle').setDepth(this.depth - 2)
-        this.skidMarks1 = skidParticles.createEmitter(skidConfig)
-        this.skidMarks2 = skidParticles.createEmitter(skidConfig)
+        this.skidParticles = this.scene.add.particles('dust_particle').setDepth(this.depth - 2)
+        this.skidMarks1 = this.skidParticles.createEmitter(this.skidConfig)
+        this.skidMarks2 = this.skidParticles.createEmitter(this.skidConfig)
 
         this.collisionInProgressCount = 0
         this.justCollided = false;
@@ -92,13 +93,13 @@ export class Car extends Phaser.Physics.Matter.Image {
 
     }
 
-    drawSkidMarks(isOffroad, carForwardVector, carVelocityLength) {
+    drawSkidMarks(carForwardVector, carVelocityLength) {
         let backLeftWheelPosition = new Phaser.Math.Vector2(-20, -10).rotate(this.rotation).add(new Phaser.Math.Vector2(this))
         let backRightWheelPosition = new Phaser.Math.Vector2(-20, 10).rotate(this.rotation).add(new Phaser.Math.Vector2(this))
         this.skidMarks1.setPosition(backLeftWheelPosition.x, backLeftWheelPosition.y);
         this.skidMarks2.setPosition(backRightWheelPosition.x, backRightWheelPosition.y);
 
-        if (isOffroad) {
+        if (this.isOffroad) {
             let carAngle = carForwardVector.angle() / DEG_TO_RAD
             let dustDirectionMin = (carAngle - 60) % 360
             let dustDirectionMax = (carAngle + 60) % 360
@@ -106,24 +107,29 @@ export class Car extends Phaser.Physics.Matter.Image {
             let speed = carVelocityLength * 5
             this.offroadDust1.setPosition(backLeftWheelPosition.x, backLeftWheelPosition.y).setAngle({ min: dustDirectionMin, max: dustDirectionMax }).setSpeed(speed).setQuantity(10);
             this.offroadDust2.setPosition(backRightWheelPosition.x, backRightWheelPosition.y).setAngle({ min: dustDirectionMin, max: dustDirectionMax }).setSpeed(speed).setQuantity(10);
-            this.skidMarks1.setTint(0x885500);
-            this.skidMarks2.setTint(0x885500);
         } else {
             this.offroadDust1.setQuantity(0);
             this.offroadDust2.setQuantity(0);
-            this.skidMarks1.setTint(0x000000);
-            this.skidMarks2.setTint(0x000000);
         }
     }
 
     clearSkidMarks() {
-        this.offroadDust1.killAll()
-        this.offroadDust2.killAll()
-        this.skidMarks1.killAll()
-        this.skidMarks2.killAll()
+        this.dustParticles.destroy();
+        this.skidParticles.destroy();
+        this.dustParticles = this.scene.add.particles('dust_particle').setDepth(this.depth - 1)
+        this.skidParticles = this.scene.add.particles('dust_particle').setDepth(this.depth - 2)
+        this.offroadDust1 = this.dustParticles.createEmitter(this.dustConfig)
+        this.offroadDust2 = this.dustParticles.createEmitter(this.dustConfig)
+        this.skidMarks1 = this.skidParticles.createEmitter(this.skidConfig)
+        this.skidMarks2 = this.skidParticles.createEmitter(this.skidConfig)
     }
 
-    update(mouseWorldPositionVector, isOffroad) {
+    takeDamage(ammount) {
+        this.carHealth -= ammount;
+        this.setTint(Phaser.Display.Color.HSLToColor(0.1, 1, this.carHealth / MAX_HEALTH / 2 + 0.5).color)
+    }
+
+    update(mouseWorldPositionVector) {
         const carToMouseVector = new Phaser.Math.Vector2(this).scale(-1).add(mouseWorldPositionVector);
         const carForwardVector = new Phaser.Math.Vector2(1, 0).setAngle(this.rotation);
         const carVelocityVector = new Phaser.Math.Vector2(this.body.velocity);
@@ -134,7 +140,7 @@ export class Car extends Phaser.Physics.Matter.Image {
         carForwardToMouseVectorAngle = (carForwardToMouseVectorAngle + 540) % 360 - 180 // handle wraparound of degrees 0->360
 
         let offroadSpeedMultiplier = 1;
-        if (isOffroad) {
+        if (this.isOffroad) {
             offroadSpeedMultiplier = 1 / 4;
         }
 
@@ -144,6 +150,7 @@ export class Car extends Phaser.Physics.Matter.Image {
         } else this.setFrictionAir(ROAD_FRICTION)
         if (this.justCollided === true) {
             this.justCollided = false;
+            this.takeDamage(1)
             carForwardToMouseVectorAngle = (carForwardToMouseVectorAngle * Math.PI) % 360;
             let newVelocity = carVelocityVector.clone().scale(0.01)
             this.setVelocity(newVelocity.x, newVelocity.y)
@@ -151,7 +158,7 @@ export class Car extends Phaser.Physics.Matter.Image {
 
         let carIsMovingBackward = carForwardVector.clone().add(carVelocityVector.normalize()).length() < 1;
         let carVelocityLength = carVelocityVector.length();
-        this.drawSkidMarks(isOffroad, carForwardVector, carVelocityLength)
+        this.drawSkidMarks(carForwardVector, carVelocityLength)
 
         if (carVelocityLength < 0.1) this.accelAmount = 0; // handle instant stop from cracks.
         if (Math.abs(carForwardToMouseVectorAngle) > 150 || (carIsMovingBackward === true && Math.abs(carForwardToMouseVectorAngle) > 90)) {

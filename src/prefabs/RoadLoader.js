@@ -1,5 +1,5 @@
 export class RoadLoader {
-    constructor(scene, tileMapName, tilePxSize, tileWorldSize, tileScaleFactor, tileZoomLevel, tileNumStartX, tileNumStartY, xTilingDirection, yTilingDirection, tileDepth, tileOpacity, tileURLGenerator, backupTileURLGenerator) {
+    constructor(scene, tileMapName, tilePxSize, tileWorldSize, tileScaleFactor, tileZoomLevel, tileNumStartX, tileNumStartY, xTilingDirection, yTilingDirection, tileDepth, tileOpacity, renderTexture) {
         this.scene = scene
 
         this.tilePxSize = tilePxSize;
@@ -12,6 +12,7 @@ export class RoadLoader {
         this.yTilingDirection = yTilingDirection;
         this.tileDepth = tileDepth;
         this.tileOpacity = tileOpacity;
+        this.renderTexture = renderTexture;
 
         this.tileMapId = tileMapName;
         this.visibleTiles = {}
@@ -29,6 +30,7 @@ export class RoadLoader {
         tile.setScale(this.tileScaleFactor)
         tile.setAlpha(this.tileOpacity)
         tile.depth = this.tileDepth;
+        console.log("placing texture at ", gameX, gameY)
 
         // add the tile to the list of known tiles
         this.placedTiles[tileNumY] = tile;
@@ -53,7 +55,6 @@ export class RoadLoader {
         let yRange = range(topBoundTileNumY, bottomBoundTileNumY, 1);
         for (const xIndx of xRange) {
             for (const yIndx of yRange) {
-
                 let gamePosX = xIndx * this.tilePxSize * this.tileScaleFactor;
                 let gamePosY = yIndx * this.tilePxSize * this.tileScaleFactor;
                 if (gamePosY < this.roadEndTopBound) continue;
@@ -63,13 +64,17 @@ export class RoadLoader {
             }
         }
 
+        this.renderTexture.beginDraw()
         // delete tiles that have moved offscreen (not in visibleTiles object)
         for (const tileName in this.placedTiles) {
             if (this.visibleTiles[tileName] === undefined) {
                 this.placedTiles[tileName].destroy();
                 delete this.placedTiles[tileName];
+            } else {
+                this.renderTexture.batchDraw(this.placedTiles[tileName], this.placedTiles[tileName].x, this.placedTiles[tileName].y)
             }
         }
+        this.renderTexture.endDraw()
     }
 }
 

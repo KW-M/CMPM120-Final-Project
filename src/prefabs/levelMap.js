@@ -36,15 +36,15 @@ let levelMaps = {
     "lvl2": {
         carStart: { x: 0, y: 0, angle: -90 },
         backgroundOffset: { longitudeX: 4239215, lattitudeY: -13000062 }, // Only add or subtract increments of 153!!!!!!!!!!!!!
-        gameBounds: { top: -1350, left: -5000, bottom: 200, right: 5000 },
+        gameBounds: { top: -2200, left: -5000, bottom: 200, right: 5000 },
         roadWidth: 90 * 3,
         obstacleLengthwiseSpacing: 180,
         intersections: [
             {
                 x: 0,
-                y: 100,
+                y: -2000,
                 angle: 0,
-                scaling: 1.52,
+                scaling: 0.84,
                 textureName: "highway_y_intersection",
                 sceneTransitionTargets: [
                     { x: 100, y: -120, radius: 50, label: "Alien_Encounter_2", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
@@ -67,9 +67,9 @@ let levelMaps = {
         intersections: [
             {
                 x: 0,
-                y: 3000,
+                y: -3000,
                 angle: 0,
-                scaling: 1.52,
+                scaling: 0.84,
                 textureName: "highway_y_intersection",
                 sceneTransitionTargets: [
                     { x: 100, y: -120, radius: 50, label: "Alien_Encounter_3", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
@@ -86,10 +86,14 @@ let levelMaps = {
 
 export class LevelMap {
     constructor(scene) {
+
         this.scene = scene
+        this.debugRect1 = this.scene.add.rectangle(0, 0, 20, 20, 0xFF00FF).setDepth(100)
         this.currentTargetLabel = null;
         this.currentLvlConfig = levelMaps["lvl1"];
         this.intersectionImages = [];
+
+        this.offroadRenderTexture = this.scene.add.renderTexture(0, 0, 1000, 1000).setDepth(200).setScrollFactor(0, 0)
 
         this.alienStoryLean = 0; // number is more positive the more you align with the right alien and more negative if you align with the left alien.
         this.alienStoryLeanHistory = [0];
@@ -109,13 +113,13 @@ export class LevelMap {
             }
         );
 
-        this.HighwayTileLoader = new RoadLoader(this.scene, "road", 116, 1, 3, 18, 0, 0, 1, -1, 1, .98);
+        this.HighwayTileLoader = new RoadLoader(this.scene, "road", 116, 1, 3, 18, 0, 0, 1, -1, 1, .98, this.offroadRenderTexture);
         this.obstacleSpawner = new ObstacleSpawner(this.scene, this.scene.graphicsLayer, this.currentLvlConfig.roadWidth)
     }
 
     addIntersection(textureName, x, y, scaling, angle) {
         this.intersectionImages.push(
-            this.scene.add.image(x, y, textureName).setOrigin(0.5, 1).setAngle(angle).setDepth(2).setScale(scaling)
+            this.scene.add.image(x, y, textureName).setDepth(2).setScale(scaling)
         )
     }
 
@@ -152,7 +156,8 @@ export class LevelMap {
         this.clearCurrentLevel();
 
         let lvl = this.currentLvlConfig = levelMaps[levelName];
-        console.log("newLevel:" + levelName, lvl, "current lean:" + this.alienStoryLean + " current level episode:" + this.levelEpisodeValue)
+        if (lvl === undefined) console.warn("Level NOT FOUND:" + levelName)
+        else console.log("New Level:" + levelName, lvl, "current lean:" + this.alienStoryLean + " current level episode:" + this.levelEpisodeValue)
 
         this.scene.car.setPosition(lvl.carStart.x, lvl.carStart.y).setAngle(lvl.carStart.angle)
 
@@ -217,9 +222,28 @@ export class LevelMap {
         return null;
     }
 
+    drawIntersectionsOnRenderTexture() {
+        this.offroadRenderTexture.beginDraw();
+        for (const intersectionImg of this.intersectionImages) {
+            this.offroadRenderTexture.batchDraw(intersectionImg, intersectionImg.x, intersectionImg.y)
+        }
+        this.offroadRenderTexture.endDraw();
+    }
+
     update(cameraWorldView) {
+        this.offroadRenderTexture.clear();
+        this.offroadRenderTexture.camera.setScroll(this.scene.cameras.main.scrollX, this.scene.cameras.main.scrollY);
+        // Call once:
+        this.offroadRenderTexture.fill(0x000000, .2);
+        this.drawIntersectionsOnRenderTexture();
         this.BackgroundTileLoader.update(cameraWorldView.left, cameraWorldView.right, cameraWorldView.top, cameraWorldView.bottom)
         this.HighwayTileLoader.update(cameraWorldView.left, cameraWorldView.right, cameraWorldView.top, cameraWorldView.bottom)
         this.obstacleSpawner.update(cameraWorldView.top - 500, cameraWorldView.bottom + 500)
+        this.offroadRenderTexture.draw('car', Math.floor(this.scene.car.x - this.scene.cameras.main.scrollX), Math.floor(this.scene.car.y - this.scene.cameras.main.scrollY))
+        this.offroadRenderTexture.snapshotPixel(Math.floor(this.scene.car.x - this.scene.cameras.main.scrollX), Math.floor(this.scene.car.y - this.scene.cameras.main.scrollY), (color) => {
+            this.debugRect1.setDepth(10000).setFillStyle(color.color, 1).setScrollFactor(0, 0)
+            this.scene.car.isOffroad = (color.g === 0 && color.b === 0 && color.r === 0);
+        })
+        this.offroadRenderTexture.visible = false;
     }
 }
