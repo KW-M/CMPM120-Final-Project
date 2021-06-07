@@ -58,6 +58,8 @@ export class ObstacleSpawner {
         this.obstacleLengthwiseSpacing = 200;
         this.colorIndex = 3;
 
+        this.roadEndTopBound = -Infinity
+
         this.psudoRandomArraySize = 600;
         this.psudoRandomArray = new Array(this.psudoRandomArraySize)
         this.reset()
@@ -87,8 +89,8 @@ export class ObstacleSpawner {
             this.obstacles[i].destroy();
         }
         this.obstacles = []
-        this.currentlySpawedAreaTopBound = -800
-        this.currentlySpawedAreaBottomBound = 400
+        this.currentlySpawedAreaTopBound = -200
+        this.currentlySpawedAreaBottomBound = 200
         this.generateNewPsudoRandomArray()
     }
 
@@ -160,9 +162,8 @@ export class ObstacleSpawner {
             }
             this.currentlySpawedAreaBottomBound = bottomYBound;
         }
-
         // top y bound is always the (small or negative) number.
-        if (topYBound < this.currentlySpawedAreaTopBound) {
+        if (Math.min(topYBound, this.roadEndTopBound) < this.currentlySpawedAreaTopBound) {
             for (let yPx = this.currentlySpawedAreaTopBound; yPx > topYBound; yPx--) {
                 addObstacle(yPx);
             }

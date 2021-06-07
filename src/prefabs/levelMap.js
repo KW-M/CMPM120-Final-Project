@@ -167,6 +167,7 @@ export class LevelMap {
         this.BackgroundTileLoader.tileNumStartY = lvl.backgroundOffset.longitudeX;
 
         this.HighwayTileLoader.roadEndTopBound = lvl.intersections[0].y;
+        this.obstacleSpawner.roadEndTopBound = lvl.intersections[0].y;
         this.obstacleSpawner.roadWidth = this.currentLvlConfig.roadWidth;
         this.obstacleSpawner.obstacleLengthwiseSpacing = this.currentLvlConfig.obstacleLengthwiseSpacing
         // sets the bounds of the level to the point of

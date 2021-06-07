@@ -17,27 +17,13 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   create () {
-    this.gameButton = this.add.sprite(0, -100, 'blueButton1').setInteractive();
+    this.titleText = this.add.image(0, -100, 'game_title').setScale(3)
+    this.gameButton = this.add.sprite(0, 100, 'blueButton1').setInteractive();
     this.gameText = this.add.text(0, 0, 'Play', { fontSize: '32px', fill: '#fff' });
     this.centerButtonText(this.gameText, this.gameButton);
     this.gameButton.on('pointerdown', (pointer) => {
       this.scene.start('PlayScene');
     });
-
-    this.optionsButton = this.add.sprite(0, 0, 'blueButton1').setInteractive();
-    this.optionsText = this.add.text(0, 0, 'Options', { fontSize: '32px', fill: '#fff' });
-    this.centerButtonText(this.optionsText, this.optionsButton);
-    this.optionsButton.on('pointerdown', (pointer) => {
-      this.scene.start('DialogScene');
-      // this.scene.start('optionsScene');
-    });
-
-    this.controlsButton = this.add.sprite(0, 100, 'blueButton1').setInteractive();
-    this.controlsText = this.add.text(0, 0, 'Controls', { fontSize: '32px', fill: '#fff' });
-    this.centerButtonText(this.controlsText, this.controlsButton);
-    this.controlsButton.on('pointerdown', function (pointer) {
-      this.scene.start('IntroScene');
-    }.bind(this));
 
     this.input.on('pointerover', function (event, gameObjects) {
       gameObjects[0].setTexture('blueButton2');

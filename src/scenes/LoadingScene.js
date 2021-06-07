@@ -4,7 +4,8 @@ import Phaser from 'phaser'
 // import images_menu_bg from 'url:/assets/menu.png';
 // import images_key_bg from 'url:/assets/Key_BG.png';
 import move_mouse_img from 'url:/assets/UI/cursor_graphicks1.png'
-// import click_mouse_img from 'url:/assets/cursor_graphicks2.png'
+import game_title_img from 'url:/assets/game_title.png'
+
 
 import images_highway_tile from 'url:/assets/high_way_grunge1.png'
 import images_highway_t_intersection_tile from 'url:/assets/high_way_intersection.png'
@@ -53,10 +54,9 @@ export default class LoadingScene extends Phaser.Scene {
     var loading_bar_background = this.add.rectangle(0, 0, 400, 30, 0x666666).setOrigin(0.5, 0.5);
     var loading_bar = this.add.rectangle(loading_bar_background.x, loading_bar_background.y, loading_bar_background.width, loading_bar_background.height, 0xffffff).setScale(0, 1).setOrigin(0.5, 0.5);
 
-    // this.load.image('key_bg', images_key_bg);
-    // this.load.image('menu_bg', images_menu_bg);
+    // load the images
+    this.load.image('game_title', game_title_img)
     this.load.image('move_mouse_tutorial', move_mouse_img)
-    // this.load.image('click_mouse_tutorial', click_mouse_img)
 
     this.load.image('highway_house_intersection', images_highway_house_intersection)
     this.load.image('highway_t_intersection', images_highway_t_intersection_tile);
@@ -110,7 +110,7 @@ export default class LoadingScene extends Phaser.Scene {
 
   update() {
     this.events.off();
-    this.scene.start('MenuScene');
+    this.scene.start('IntroScene');
     // this.scene.start('PlayScene');
     this.scene.stop(this.scene.key)
     this.scene.remove(this.scene.key);
