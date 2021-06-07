@@ -4,7 +4,7 @@ import { ObstacleSpawner } from "../prefabs/ObstacleSpawner"
 
 let levelMaps = {
     "lvl1": {
-        carStart: { x: 200, y: -20, angle: 0 },
+        carStart: { x: 200, y: -20, angle: 45 },
         backgroundOffset: { longitudeX: 4315715, lattitudeY: -13000062 },
         gameBounds: { top: -1850, left: -5000, bottom: 200, right: 5000 },
         roadWidth: 90 * 3,
@@ -90,7 +90,7 @@ export class LevelMap {
         this.scene = scene
         this.debugRect1 = this.scene.add.rectangle(0, 0, 20, 20, 0xFF00FF).setDepth(100)
         this.currentTargetLabel = null;
-        this.currentLvlConfig = levelMaps["lvl1"];
+        this.currentLvlConfig = null;
         this.intersectionImages = [];
 
         this.offroadRenderTexture = this.scene.add.renderTexture(0, 0, 1000, 1000).setDepth(200).setScrollFactor(0, 0)
@@ -114,7 +114,7 @@ export class LevelMap {
         );
 
         this.HighwayTileLoader = new RoadLoader(this.scene, "road", 116, 1, 3, 18, 0, 0, 1, -1, 1, .98, this.offroadRenderTexture);
-        this.obstacleSpawner = new ObstacleSpawner(this.scene, this.scene.graphicsLayer, this.currentLvlConfig.roadWidth)
+        this.obstacleSpawner = new ObstacleSpawner(this.scene, this.scene.graphicsLayer, 0)
     }
 
     addIntersection(textureName, x, y, scaling, angle) {
@@ -152,8 +152,10 @@ export class LevelMap {
     }
 
     setupLevel(levelName) {
-        this.currentLvlConfig.carStart = { x: this.scene.car.x, y: this.scene.car.y, angle: (this.scene.car.angle + 180 % 360) }
-        this.clearCurrentLevel();
+        if (this.currentLvlConfig) {
+            this.currentLvlConfig.carStart = { x: this.scene.car.x, y: this.scene.car.y, angle: (this.scene.car.angle + 180 % 360) }
+            this.clearCurrentLevel();
+        }
 
         let lvl = this.currentLvlConfig = levelMaps[levelName];
         if (lvl === undefined) console.warn("Level NOT FOUND:" + levelName)

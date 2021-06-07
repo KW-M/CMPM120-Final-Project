@@ -25,8 +25,9 @@ export default class IntroScene extends Phaser.Scene {
           text.forceNextPage()
         } else {
           console.log('done!');
-          // this.emit('complete');
-          this.scene.start('menuScene');
+
+          this.emit('complete');
+
         }
       };
 
@@ -35,7 +36,7 @@ export default class IntroScene extends Phaser.Scene {
         this.typing.start(txt);
         console.log('getting next page!');
       };
-      text.typing.on('complete', text.typeNextPage, text);
+      text.typing.on('complete', () => { this.scene.start('menuScene'); }, text);
       return text;
     }
 
@@ -63,8 +64,9 @@ export default class IntroScene extends Phaser.Scene {
         speed: 0.9 * 1000, // found the speed setting
       }
       });
-      this.text.once('complete', function () {
+    this.text.once('complete', () => {
         console.log('done');
+        this.scene.start('menuScene');
       }).start(content, 50);
     }
 
@@ -72,7 +74,7 @@ export default class IntroScene extends Phaser.Scene {
     // console.log(this.wasDown)
     if (this.game.input.activePointer.isDown) {
       if (!this.wasDown) {
-        this.text.forceNextPage()
+        this.text.typeNextPage()
       }
     this.wasDown = true
     } else {
