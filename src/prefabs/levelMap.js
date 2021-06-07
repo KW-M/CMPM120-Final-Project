@@ -156,7 +156,8 @@ export class LevelMap {
         this.clearCurrentLevel();
 
         let lvl = this.currentLvlConfig = levelMaps[levelName];
-        console.log("newLevel:" + levelName, lvl, "current lean:" + this.alienStoryLean + " current level episode:" + this.levelEpisodeValue)
+        if (lvl === undefined) console.warn("Level NOT FOUND:" + levelName)
+        else console.log("New Level:" + levelName, lvl, "current lean:" + this.alienStoryLean + " current level episode:" + this.levelEpisodeValue)
 
         this.scene.car.setPosition(lvl.carStart.x, lvl.carStart.y).setAngle(lvl.carStart.angle)
 
@@ -237,7 +238,7 @@ export class LevelMap {
         this.drawIntersectionsOnRenderTexture();
         this.BackgroundTileLoader.update(cameraWorldView.left, cameraWorldView.right, cameraWorldView.top, cameraWorldView.bottom)
         this.HighwayTileLoader.update(cameraWorldView.left, cameraWorldView.right, cameraWorldView.top, cameraWorldView.bottom)
-        // this.obstacleSpawner.update(cameraWorldView.top - 500, cameraWorldView.bottom + 500)
+        this.obstacleSpawner.update(cameraWorldView.top - 500, cameraWorldView.bottom + 500)
         this.offroadRenderTexture.draw('car', Math.floor(this.scene.car.x - this.scene.cameras.main.scrollX), Math.floor(this.scene.car.y - this.scene.cameras.main.scrollY))
         this.offroadRenderTexture.snapshotPixel(Math.floor(this.scene.car.x - this.scene.cameras.main.scrollX), Math.floor(this.scene.car.y - this.scene.cameras.main.scrollY), (color) => {
             this.debugRect1.setDepth(10000).setFillStyle(color.color, 1).setScrollFactor(0, 0)
