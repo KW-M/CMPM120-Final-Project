@@ -53,7 +53,6 @@ export class RoadLoader {
         let yRange = range(topBoundTileNumY, bottomBoundTileNumY, 1);
         for (const xIndx of xRange) {
             for (const yIndx of yRange) {
-
                 let gamePosX = xIndx * this.tilePxSize * this.tileScaleFactor;
                 let gamePosY = yIndx * this.tilePxSize * this.tileScaleFactor;
                 if (gamePosY < this.roadEndTopBound) continue;
