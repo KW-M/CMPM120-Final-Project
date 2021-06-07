@@ -123,7 +123,11 @@
 			},
 			{
 				"speaker": "janus_right",
-				"dialog": "And this guy is trying to get you humans offworld in a giant space station while Earth is left to heal on its own. We elected to let humanity decide whether they’d prefer staying or leaving, and found that it’s a pretty even split. You’re the last one to show up, so you're the deciding factor here."
+				"dialog": "And this guy is trying to get you humans offworld in a giant space station while Earth is left to heal on its own."
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "We elected to let humanity decide whether they’d prefer staying or leaving, and found that it’s a pretty even split. You’re the last one to show up, so you're the deciding factor here."
 			},
 			{
 				"speaker": "karen",
