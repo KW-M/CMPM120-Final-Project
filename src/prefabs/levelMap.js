@@ -6,7 +6,7 @@ let levelMaps = {
     "lvl1": {
         carStart: { x:0, y: 50, angle:-80 },
         backgroundOffset: { longitudeX: 4315715, lattitudeY: -13000062 },
-        gameBounds: { top: -1403, left: -5000, bottom: 100, right: 5000 },
+        gameBounds: { top: -3403, left: -5000, bottom: 100, right: 5000 },
         roadWidth: 90 * 3,
         obstacleLengthwiseSpacing: 200,
         intersections: [
@@ -36,7 +36,7 @@ let levelMaps = {
     "lvl2": {
         carStart: { x: 0, y: 0, angle: -90 },
         backgroundOffset: { longitudeX: 4239215, lattitudeY: -13000062 }, // Only add or subtract increments of 153!!!!!!!!!!!!!
-        gameBounds: { top: -1403, left: -5000, bottom: 100, right: 5000  },
+        gameBounds: { top: -3403, left: -5000, bottom: 100, right: 5000  },
         roadWidth: 90 * 3,
         obstacleLengthwiseSpacing: 200,
         intersections: [
@@ -61,7 +61,7 @@ let levelMaps = {
     "lvl3": {
         carStart: { x: 0, y: 0, angle: -90 },
         backgroundOffset: { longitudeX: 4252985, lattitudeY: -13000062 }, // Only add or subtract increments of 153!!!!!!!!!!!!!
-        gameBounds: { top: -1403, left: -5000, bottom: 100, right: 5000 },
+        gameBounds: { top: -3403, left: -5000, bottom: 100, right: 5000 },
         roadWidth: 90 * 3,
         obstacleLengthwiseSpacing: 200,
         intersections: [
