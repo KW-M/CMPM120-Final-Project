@@ -21,8 +21,6 @@ export default class MenuScene extends Phaser.Scene {
     this.gameText = this.add.text(0, 0, 'Play', { fontSize: '32px', fill: '#fff' });
     this.centerButtonText(this.gameText, this.gameButton);
     this.gameButton.on('pointerdown', (pointer) => {
-      // this.events.off();
-      // this.scale.off('resize')
       this.scene.start('playScene');
     });
 
@@ -30,9 +28,7 @@ export default class MenuScene extends Phaser.Scene {
     this.optionsText = this.add.text(0, 0, 'Options', { fontSize: '32px', fill: '#fff' });
     this.centerButtonText(this.optionsText, this.optionsButton);
     this.optionsButton.on('pointerdown', (pointer) => {
-      // this.events.off();
-      // this.scale.off('resize')
-      this.scene.start('dialogscene');
+      this.scene.start('dialogScene');
       // this.scene.start('optionsScene');
     });
 
@@ -40,9 +36,7 @@ export default class MenuScene extends Phaser.Scene {
     this.controlsText = this.add.text(0, 0, 'Controls', { fontSize: '32px', fill: '#fff' });
     this.centerButtonText(this.controlsText, this.controlsButton);
     this.controlsButton.on('pointerdown', function (pointer) {
-      // this.events.off();
-      // this.scale.off('resize')
-      this.scene.start('Introscene');
+      this.scene.start('introScene');
     }.bind(this));
 
     this.input.on('pointerover', function (event, gameObjects) {

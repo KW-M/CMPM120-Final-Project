@@ -25,11 +25,9 @@ export class FadeInOutImage extends Phaser.GameObjects.Image {
     fadeOut() {
         this.fadeDirection = -1;
         this.fadeChange()
-        console.log("fadeout")
     }
     fadeIn() {
         this.fadeDirection = 1;
         this.fadeChange()
-        console.log("fadein")
     }
 }

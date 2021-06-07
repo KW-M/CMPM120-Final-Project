@@ -38,7 +38,6 @@ export class CornerButton extends Phaser.GameObjects.Rectangle {
     }
 
     resize(gameSize) {
-        console.log(gameSize)
         let offset = this.size / 6
         if (this.corner == "top-right") {
             this.x = gameSize.width

@@ -75,7 +75,6 @@ export class Car extends Phaser.Physics.Matter.Image {
         })
         this.setOnCollideEnd(() => {
             this.collisionInProgressCount--
-            console.log(this.collisionInProgressCount)
         })
         // Sounds
         this.accelSound = this.scene.sound.add('accelSound')
@@ -181,7 +180,7 @@ export class Car extends Phaser.Physics.Matter.Image {
             this.accelSound.setDetune(10);
         }
 
-        // console.log()
+
         this.applyForce(carForwardVector.clone().scale(this.accelAmount))
         // this.thrust(this.accelAmount)
         this.setAngularVelocity(STEARING_RATE_MULTIPLIER * (1 / offroadSpeedMultiplier) * -carForwardToMouseVectorAngle * DEG_TO_RAD / ((carVelocityLength / 100) + 1) * Phaser.Math.Clamp(carVelocityLength, 0, 5) / 5)

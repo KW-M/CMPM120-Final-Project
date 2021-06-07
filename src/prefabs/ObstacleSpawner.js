@@ -79,7 +79,7 @@ export class ObstacleSpawner {
             fillCounter++;
         }
         this.psudoRandomArray[this.psudoRandomArrayIndex] = 0;
-        console.log("New Psudo-Random Array: ", this.psudoRandomArray)
+        // console.log("New Psudo-Random Obstacle Array: ", this.psudoRandomArray)
     }
 
     reset() {

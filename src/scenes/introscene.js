@@ -1,11 +1,9 @@
-import { LEFT } from "phaser";
-
 var GetValue = Phaser.Utils.Objects.GetValue;
 
 
-export default class Introscene extends Phaser.Scene {
+export default class IntroScene extends Phaser.Scene {
     constructor() {
-        super("Introscene")
+      super("introScene")
         this.wasDown = false
     }
 
@@ -13,7 +11,7 @@ export default class Introscene extends Phaser.Scene {
       var text = scene.add.rexBBCodeText(x, y, text, config);
       text.page = scene.plugins.get('rextextpageplugin').add(text, GetValue(config, 'page', undefined));
       text.typing = scene.plugins.get('rextexttypingplugin').add(text, GetValue(config, 'type', undefined));
-  
+
       text.start = function (text, speed) {
         this.page.setText(text);
         if (speed !== undefined) {
@@ -21,13 +19,14 @@ export default class Introscene extends Phaser.Scene {
         }
         this.typeNextPage();
       };
-  
+
       text.typeNextPage = function (speed) {
         if (!this.page.isLastPage) {
           text.forceNextPage()
         } else {
           console.log('done!');
-          this.emit('complete');
+          // this.emit('complete');
+          this.scene.start('menuScene');
         }
       };
 
