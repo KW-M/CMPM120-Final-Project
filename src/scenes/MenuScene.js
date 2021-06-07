@@ -6,7 +6,7 @@ import button03 from 'url:/assets/blue_button02.png'
 
 export default class MenuScene extends Phaser.Scene {
   constructor () {
-    super('menuScene');
+    super('MenuScene');
   }
 
   preload() {
@@ -21,14 +21,14 @@ export default class MenuScene extends Phaser.Scene {
     this.gameText = this.add.text(0, 0, 'Play', { fontSize: '32px', fill: '#fff' });
     this.centerButtonText(this.gameText, this.gameButton);
     this.gameButton.on('pointerdown', (pointer) => {
-      this.scene.start('playScene');
+      this.scene.start('PlayScene');
     });
 
     this.optionsButton = this.add.sprite(0, 0, 'blueButton1').setInteractive();
     this.optionsText = this.add.text(0, 0, 'Options', { fontSize: '32px', fill: '#fff' });
     this.centerButtonText(this.optionsText, this.optionsButton);
     this.optionsButton.on('pointerdown', (pointer) => {
-      this.scene.start('dialogScene');
+      this.scene.start('DialogScene');
       // this.scene.start('optionsScene');
     });
 
@@ -36,7 +36,7 @@ export default class MenuScene extends Phaser.Scene {
     this.controlsText = this.add.text(0, 0, 'Controls', { fontSize: '32px', fill: '#fff' });
     this.centerButtonText(this.controlsText, this.controlsButton);
     this.controlsButton.on('pointerdown', function (pointer) {
-      this.scene.start('introScene');
+      this.scene.start('IntroScene');
     }.bind(this));
 
     this.input.on('pointerover', function (event, gameObjects) {

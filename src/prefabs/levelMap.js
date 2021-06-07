@@ -4,7 +4,7 @@ import { ObstacleSpawner } from "../prefabs/ObstacleSpawner"
 
 let levelMaps = {
     "lvl1": {
-        carStart: { x: 200, y: -20, angle: 45 },
+        carStart: { x:-300, y: 50, angle: 80 },
         backgroundOffset: { longitudeX: 4315715, lattitudeY: -13000062 },
         gameBounds: { top: -1850, left: -5000, bottom: 200, right: 5000 },
         roadWidth: 90 * 3,
@@ -17,7 +17,7 @@ let levelMaps = {
                 scaling: 3,
                 textureName: "highway_y_intersection",
                 sceneTransitionTargets: [
-                    { x: -50, y: -120, radius: 50, label: "Alien_Encounter_1", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
+                    { x: 0, y: -100, radius: 100, label: "Alien_Encounter_1", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
                     { x: 0, y: -300, radius: 200, label: "Level_2_Toward_Elevator", targetLvl: "lvl2", alienStoryLeanAdjustment: 1, levelEpisodeAdjustemnt: 1 },
                     { x: 290, y: -110, radius: 120, label: "Level_2_Toward_Home", targetLvl: "lvl2", alienStoryLeanAdjustment: -1, levelEpisodeAdjustemnt: 1 },
                 ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)

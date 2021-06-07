@@ -3,7 +3,7 @@ var GetValue = Phaser.Utils.Objects.GetValue;
 
 export default class IntroScene extends Phaser.Scene {
     constructor() {
-      super("introScene")
+      super("IntroScene")
         this.wasDown = false
     }
 
@@ -36,10 +36,11 @@ export default class IntroScene extends Phaser.Scene {
         this.typing.start(txt);
         console.log('getting next page!');
       };
-      text.typing.on('complete', () => { this.scene.start('menuScene'); }, text);
+      text.typing.on('complete', () => { this.scene.start('MenuScene'); }, text);
       return text;
     }
 
+    
   create() {
     console.log("in intro scene")
     var content = `
@@ -66,7 +67,7 @@ export default class IntroScene extends Phaser.Scene {
       });
     this.text.once('complete', () => {
         console.log('done');
-        this.scene.start('menuScene');
+        this.scene.start('MenuScene');
       }).start(content, 50);
     }
 

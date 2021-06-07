@@ -15,13 +15,13 @@ Notable cool things:
 import Phaser from 'phaser';
 import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
 
-import LoadingScene from "/src/scenes/loadingScene"
+import LoadingScene from "/src/scenes/LoadingScene"
 import MenuScene from "/src/scenes/MenuScene"
 import PlayScene from "/src/scenes/PlayScene"
 import ControlsScene from "/src/scenes/controlsScene"
 import OptionsScene from "/src/scenes/optionsScene"
-import DialogScene from "/src/scenes/dialogScene"
-import IntroScene from "/src/scenes/introScene"
+import DialogScene from "/src/scenes/DialogScene"
+import IntroScene from "/src/scenes/IntroScene"
 
 // reserve vars
 let game;
