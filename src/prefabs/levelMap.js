@@ -4,48 +4,74 @@ import { ObstacleSpawner } from "../prefabs/ObstacleSpawner"
 
 let levelMaps = {
     "lvl1": {
-        carStart: { x: 0, y: 0, angle: 180 },
+        carStart: { x: 200, y: -20, angle: 0 },
         backgroundOffset: { longitudeX: 4315715, lattitudeY: -13000062 },
-        gameBounds: { top: -1550, left: -5000, bottom: 100, right: 5000 },
+        gameBounds: { top: -1550, left: -5000, bottom: 200, right: 5000 },
         roadWidth: 90 * 3,
         obstacleLengthwiseSpacing: 200,
-        intersection: {
-            x: 0,
-            y: -1000,
-            angle: 0,
-            scaling: 1.52,
-            textureName: "highway_intersection_tile",
-            sceneTransitionTargets: [
-                { x: 100, y: -120, radius: 50, lvlName: "Alien_Encounter_1" },
-                { x: 0, y: -300, radius: 200, lvlName: "Level_2_Toward_Elevator" },
-                { x: 290, y: -110, radius: 120, lvlName: "Level_2_Toward_Home" },
-            ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)
-        },
-        sceneTransitionTargets: [
-            { x: -2, y: -5, radius: 10, lvlName: "G1" },
-            { x: -800, y: -50, radius: 20, lvlName: "G2" },
-        ] // uses global position in map-scaled pixels
+        intersections: [
+            {
+                x: 0,
+                y: -1000,
+                angle: 0,
+                scaling: 1.52,
+                textureName: "highway_intersection_tile",
+                sceneTransitionTargets: [
+                    { x: 100, y: -120, radius: 50, label: "Alien_Encounter_1", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
+                    { x: 0, y: -300, radius: 200, label: "Level_2_Toward_Elevator", targetLvl: "lvl2", alienStoryLeanAdjustment: 1, levelEpisodeAdjustemnt: 1 },
+                    { x: 290, y: -110, radius: 120, label: "Level_2_Toward_Home", targetLvl: "lvl2", alienStoryLeanAdjustment: -1, levelEpisodeAdjustemnt: 1 },
+                ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)
+            },
+        ],
+        sceneTransitionTargets: [] // uses global position in map-scaled pixels
     },
     "lvl2": {
-        carStart: { x: 200, y: 0, angle: 90 },
+        carStart: { x: 0, y: 0, angle: -90 },
         backgroundOffset: { longitudeX: 4239215, lattitudeY: -13000062 }, // Only add or subtract increments of 153!!!!!!!!!!!!!
-        gameBounds: { top: -1350, left: -5000, bottom: 100, right: 5000 },
+        gameBounds: { top: -1350, left: -5000, bottom: 200, right: 5000 },
+        roadWidth: 90 * 3,
+        obstacleLengthwiseSpacing: 180,
+        intersections: [
+            {
+                x: 0,
+                y: 100,
+                angle: 0,
+                scaling: 1.52,
+                textureName: "highway_intersection_tile",
+                sceneTransitionTargets: [
+                    { x: 100, y: -120, radius: 50, label: "Alien_Encounter_2", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
+                    { x: 0, y: -300, radius: 200, label: "Level_3_Toward_Elevator", targetLvl: "lvl3", alienStoryLeanAdjustment: 1, levelEpisodeAdjustemnt: 1 },
+                    { x: 290, y: -110, radius: 120, label: "Level_3_Toward_Home", targetLvl: "lvl3", alienStoryLeanAdjustment: -1, levelEpisodeAdjustemnt: 1 },
+                ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)
+            },
+        ],
+        sceneTransitionTargets: [
+            { x: 0, y: 600, radius: 500, label: "back_to_lvl_1", targetLvl: "lvl1", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: -1 },
+        ] // uses global position in map-scaled pixels
+    },
+
+    "lvl3": {
+        carStart: { x: 0, y: 0, angle: -90 },
+        backgroundOffset: { longitudeX: 4239215, lattitudeY: -13000062 }, // Only add or subtract increments of 153!!!!!!!!!!!!!
+        gameBounds: { top: -3850, left: -5000, bottom: 200, right: 5000 },
         roadWidth: 90 * 3,
         obstacleLengthwiseSpacing: 70,
-        intersection: {
-            x: 0,
-            y: 100,
-            angle: 0,
-            scaling: 1.52,
-            textureName: "highway_intersection_tile",
-            sceneTransitionTargets: [
-                { x: 100, y: -120, radius: 50, lvlName: "Alien_Encounter_1" },
-                { x: 0, y: -300, radius: 200, lvlName: "Level_2_Toward_Elevator" },
-                { x: 290, y: -110, radius: 120, lvlName: "Level_1_Toward_Home" },
-            ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)
-        },
+        intersections: [
+            {
+                x: 0,
+                y: 3000,
+                angle: 0,
+                scaling: 1.52,
+                textureName: "highway_intersection_tile",
+                sceneTransitionTargets: [
+                    { x: 100, y: -120, radius: 50, label: "Alien_Encounter_3", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
+                    { x: 0, y: -300, radius: 200, label: "Level_4_Toward_Elevator", targetLvl: "lvl4", alienStoryLeanAdjustment: 1, levelEpisodeAdjustemnt: 1 },
+                    { x: 290, y: -110, radius: 120, label: "Level_4_Toward_Home", targetLvl: "lvl4", alienStoryLeanAdjustment: -1, levelEpisodeAdjustemnt: 1 },
+                ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)
+            },
+        ],
         sceneTransitionTargets: [
-            { x: 0, y: 0, radius: 2, lvlName: "G1" },
+            { x: 0, y: 600, radius: 500, label: "back_to_lvl_2", targetLvl: "lvl2", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: -1 },
         ] // uses global position in map-scaled pixels
     }
 }
@@ -53,9 +79,13 @@ let levelMaps = {
 export class LevelMap {
     constructor(scene) {
         this.scene = scene
-        this.currentTargetLvlName = null;
+        this.currentTargetLabel = null;
         this.currentLvlConfig = levelMaps["lvl1"];
         this.intersectionImages = [];
+
+        this.alienStoryLean = 0; // number is more positive the more you align with the right alien and more negative if you align with the left alien.
+        this.alienStoryLeanHistory = [0];
+        this.levelEpisodeValue = 0; // number counts up for each new level and down if you go backward.
 
         this.BackgroundTileLoader = new TileLoader(this.scene, "background", 256, 153, 2, 18, 0, 0, 1, -1, 0, 1,
             (tileZoomLevel, tileNumX, tileNumY, tilePxSize, tileWorldUnitSize) => {
@@ -90,17 +120,18 @@ export class LevelMap {
             this.scene.graphicsLayer.lineStyle(2, colors[i], 1);
             this.scene.graphicsLayer.strokeCircle(target.x, target.y, target.radius);
         }
-        for (let i = 0; i < lvl.intersection.sceneTransitionTargets.length; i++) {
-            const target = lvl.intersection.sceneTransitionTargets[i];
-            let targetVector = new Phaser.Math.Vector2(target.x, target.y).rotate(lvl.intersection.angle / (180 / Math.PI)).scale(lvl.intersection.scaling).add(lvl.intersection)
-            this.scene.graphicsLayer.lineStyle(2, colors[i], 1);
-            this.scene.graphicsLayer.strokeCircle(targetVector.x, targetVector.y, target.radius);
+        for (const intersection of lvl.intersections) {
+            for (let i = 0; i < intersection.sceneTransitionTargets.length; i++) {
+                const target = intersection.sceneTransitionTargets[i];
+                let targetVector = new Phaser.Math.Vector2(target.x, target.y).rotate(intersection.angle / (180 / Math.PI)).scale(intersection.scaling).add(intersection)
+                this.scene.graphicsLayer.lineStyle(2, colors[i], 1);
+                this.scene.graphicsLayer.strokeCircle(targetVector.x, targetVector.y, target.radius);
+            }
         }
     }
 
     clearCurrentLevel() {
         for (const intersectionImage of this.intersectionImages) {
-            console.log(intersectionImage)
             intersectionImage.destroy()
         }
         this.scene.graphicsLayer.clear()
@@ -109,10 +140,11 @@ export class LevelMap {
     }
 
     setupLevel(levelName) {
+        this.currentLvlConfig.carStart = { x: this.scene.car.x, y: this.scene.car.y, angle: (this.scene.car.angle + 180 % 360) }
         this.clearCurrentLevel();
 
         let lvl = this.currentLvlConfig = levelMaps[levelName];
-        console.log("newLevel:", levelName, lvl)
+        console.log("newLevel:" + levelName, lvl, "current lean:" + this.alienStoryLean + " current level episode:" + this.levelEpisodeValue)
 
         this.scene.car.setPosition(lvl.carStart.x, lvl.carStart.y).setAngle(lvl.carStart.angle)
 
@@ -123,18 +155,38 @@ export class LevelMap {
         this.obstacleSpawner.roadWidth = this.currentLvlConfig.roadWidth;
         this.obstacleSpawner.obstacleLengthwiseSpacing = this.currentLvlConfig.obstacleLengthwiseSpacing
 
-        // this.scene.cameras.main.setBounds(lvl.gameBounds.left, lvl.gameBounds.top, lvl.gameBounds.right - lvl.gameBounds.left, lvl.gameBounds.bottom - lvl.gameBounds.top, false)
-        this.addIntersection(lvl.intersection.textureName, lvl.intersection.x, lvl.intersection.y, lvl.intersection.scaling, lvl.intersection.angle)
+        this.scene.cameras.main.setBounds(lvl.gameBounds.left, lvl.gameBounds.top, lvl.gameBounds.right - lvl.gameBounds.left, lvl.gameBounds.bottom - lvl.gameBounds.top, false)
+        for (const intersection of lvl.intersections) {
+            this.addIntersection(intersection.textureName, intersection.x, intersection.y, intersection.scaling, intersection.angle)
+        }
         this.drawDebugCircleZones(lvl)
+
+        this.checkTargetEntry(this.scene.car.x, this.scene.car.y, false)
 
         return lvl
     }
 
-    checkTargetEntry(carX, carY) {
-        let targetLvlName = this.checkTargetOverlap(carX, carY)
-        if (targetLvlName !== this.currentTargetLvlName) {
-            this.currentTargetLvlName = targetLvlName
-            return targetLvlName
+    checkTargetEntry(carX, carY, doLogTransition) {
+        let targetDetails = this.checkTargetOverlap(carX, carY)
+        if (targetDetails === null) {
+            this.currentTargetLabel = null;
+            return null;
+        }
+        if (targetDetails.label !== this.currentTargetLabel) {
+            this.currentTargetLabel = targetDetails.label
+            if (doLogTransition) {
+                if (targetDetails.levelEpisodeAdjustemnt >= 1) {
+                    //if we're going forwards in episode levels.
+                    this.alienStoryLeanHistory[this.levelEpisodeValue] = this.alienStoryLean;
+                    this.alienStoryLean += targetDetails.alienStoryLeanAdjustment;
+                    this.levelEpisodeValue += targetDetails.levelEpisodeAdjustemnt;
+                } else if (targetDetails.levelEpisodeAdjustemnt <= -1) {
+                    //if we're going backwards in episode levels.
+                    this.levelEpisodeValue += targetDetails.levelEpisodeAdjustemnt;
+                    this.alienStoryLean = this.alienStoryLeanHistory[this.levelEpisodeValue];
+                }
+            }
+            return targetDetails
         } else return null;
     }
 
@@ -143,13 +195,15 @@ export class LevelMap {
         for (let i = 0; i < lvl.sceneTransitionTargets.length; i++) {
             const target = lvl.sceneTransitionTargets[i];
             let carTargetDistance = new Phaser.Math.Vector2(target.x, target.y).scale(-1).add(new Phaser.Math.Vector2(carX, carY)).length()
-            if (carTargetDistance < target.radius) return target.lvlName;
+            if (carTargetDistance < target.radius) return target;
         }
-        for (let i = 0; i < lvl.intersection.sceneTransitionTargets.length; i++) {
-            const target = lvl.intersection.sceneTransitionTargets[i];
-            let targetVector = new Phaser.Math.Vector2(target.x, target.y).rotate(lvl.intersection.angle / (180 / Math.PI)).scale(lvl.intersection.scaling).add(lvl.intersection)
-            let carTargetDistance = targetVector.scale(-1).add(new Phaser.Math.Vector2(carX, carY)).length()
-            if (carTargetDistance < target.radius) return target.lvlName;
+        for (const intersection of lvl.intersections) {
+            for (let i = 0; i < intersection.sceneTransitionTargets.length; i++) {
+                const target = intersection.sceneTransitionTargets[i];
+                let targetVector = new Phaser.Math.Vector2(target.x, target.y).rotate(intersection.angle / (180 / Math.PI)).scale(intersection.scaling).add(intersection)
+                let carTargetDistance = targetVector.scale(-1).add(new Phaser.Math.Vector2(carX, carY)).length()
+                if (carTargetDistance < target.radius) return target;
+            }
         }
         return null;
     }

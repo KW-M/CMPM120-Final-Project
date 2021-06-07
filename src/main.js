@@ -16,8 +16,8 @@ import MenuScene from "/src/scenes/MenuScene"
 import PlayScene from "/src/scenes/PlayScene"
 import ControlsScene from "/src/scenes/controlsScene"
 import OptionsScene from "/src/scenes/optionsScene"
-import dialogscene from "/src/scenes/dialogscene"
-import Introscene from "/src/scenes/introscene"
+import DialogScene from "/src/scenes/dialogScene"
+import IntroScene from "/src/scenes/introScene"
 
 // reserve vars
 let game;
@@ -52,7 +52,7 @@ let gameConfig = {
       // ...
     ]
   },
-  scene: [LoadingScene, MenuScene, Introscene, ControlsScene, OptionsScene, PlayScene, dialogscene]// EndScene
+  scene: [LoadingScene, MenuScene, IntroScene, ControlsScene, OptionsScene, PlayScene, DialogScene]// EndScene
 }
 
 function newGame() {

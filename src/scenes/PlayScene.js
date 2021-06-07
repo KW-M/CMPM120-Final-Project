@@ -9,13 +9,10 @@ import { ScoreOverlay } from "/src/prefabs/ScoreOverlay"
 
 export default class PlayScene extends Phaser.Scene {
 
-    preload() {
-    }
-
     constructor() {
         super({ key: "playScene" });
+        this.dialogScriptsAlreadyCompleted = {}
     }
-
     create() {
         // this.add.image(x, y, textureName)
         // define keys
@@ -51,7 +48,7 @@ export default class PlayScene extends Phaser.Scene {
         // high score is saved across games played
         this.hScore = localStorage.getItem("score") || 0;
         this.ScoreOverlay = new ScoreOverlay(this, this.lvlMap.currentLvlConfig.roadWidth)
-
+        this.cameras.main.setTint(0xffff00)
         // handle when the screen size changes (device rotated, window resized, etc...)
         this.scale.on('resize', (gameSize, baseSize, displaySize, resolution) => {
             if (this.cameras.main === undefined) return;
@@ -106,14 +103,14 @@ export default class PlayScene extends Phaser.Scene {
         // handle updating levelMap including obstacles, background tiles, road tiles and intersections
         if (this.game.getFrame() % 3 == 0) {
             this.lvlMap.update(this.cameras.main.worldView);
-            let newLevelName = this.lvlMap.checkTargetEntry(this.car.x, this.car.y)
-            if (newLevelName === "Alien_Encounter_1") {
-                this.fadeSceneTransition("dialogscene")
-            } else if (newLevelName === "Level_2_Toward_Elevator") {
-                this.fadeLevelTransition("lvl2")
-            } else if (newLevelName === "Level_1_Toward_Home") {
-                this.fadeLevelTransition("lvl1")
-            } else if (newLevelName != null) console.count(newLevelName);
+            let targetDetails = this.lvlMap.checkTargetEntry(this.car.x, this.car.y, true)
+            if (targetDetails === null) { }
+            else if (targetDetails.label.startsWith("Alien") && this.dialogScriptsAlreadyCompleted[targetDetails.label] === undefined) {
+                this.fadeSceneTransition("dialogScene", { scriptName: "E2L1" })
+                this.dialogScriptsAlreadyCompleted[targetDetails.label] = true;
+            } else if (targetDetails.targetLvl !== undefined) {
+                this.fadeLevelTransition(targetDetails.targetLvl)
+            } else if (targetDetails.label != null) console.warn("No action programed for target (or target action Already Played once):", targetDetails.label);
         }
 
         // handle camera velocity forward push
@@ -129,25 +126,25 @@ export default class PlayScene extends Phaser.Scene {
 
     fadeLevelTransition(targetLevelName) {
         this.transitionInProgress = true;
-        this.cameras.main.fadeOut(1000, 0, 0, 0);
+        this.cameras.main.fadeOut(500, 0, 0, 0);
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
-            console.log("fade done")
             this.lvlMap.setupLevel(targetLevelName);
-            this.cameras.main.fadeIn(1000, 0, 0, 0);
+            this.cameras.main.fadeIn(500, 0, 0, 0);
             this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_IN_COMPLETE, (cam, effect) => {
                 this.transitionInProgress = false;
             })
         })
     }
 
-    fadeSceneTransition(targetSceneName) {
+    fadeSceneTransition(targetSceneName, data_to_pass) {
+        console.log("switching to scene: " + targetSceneName, data_to_pass)
         this.transitionInProgress = true;
-        this.scene.transition({ target: targetSceneName, duration: 2000, sleep: true, moveBelow: true });
+        this.scene.transition({ target: targetSceneName, duration: 1000, sleep: true, moveBelow: true, data: data_to_pass });
         let targetScene = this.scene.manager.scenes[this.scene.getIndex(targetSceneName)]
-        this.cameras.main.fadeOut(1000, 0, 0, 0);
+        this.cameras.main.fadeOut(500, 0, 0, 0);
         targetScene.cameras.main.fadeOut(0, 0, 0, 0);
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
-            targetScene.cameras.main.fadeIn(1000, 0, 0, 0);
+            targetScene.cameras.main.fadeIn(500, 0, 0, 0);
             this.scene.manager.bringToTop(targetSceneName);
             targetScene.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_IN_COMPLETE, (cam, effect) => {
                 this.transitionInProgress = false;
