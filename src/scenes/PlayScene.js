@@ -105,9 +105,20 @@ export default class PlayScene extends Phaser.Scene {
             let targetDetails = this.lvlMap.checkTargetEntry(this.car.x, this.car.y, true)
             if (targetDetails === null) { }
             else if (this.dialogScriptsAlreadyCompleted[targetDetails.label] !== undefined) { }
-            else if (targetDetails.label === "Alien_Encounter_1" || targetDetails.label === "Alien_Encounter_2" || targetDetails.label === "Alien_Encounter_3") {
+            else if (targetDetails.label === "Alien_Encounter_1" || targetDetails.label === "Alien_Encounter_2") {
                 this.playNextScript()
                 this.dialogScriptsAlreadyCompleted[targetDetails.label] = true;
+            } else if (targetDetails.label === "Alien_Encounter_3-1") {
+                if (LevelMap.alienStoryLean == 0) {
+                    // play 3-1
+                    this.fadeSceneTransition("Alien_Encounter_3-1");
+                } else if (LevelMap.alienStoryLean < 0) {
+                    // play 3-2
+                    this.fadeSceneTransition("Alien_Encounter_3-2");
+                } else {
+                    // play 3-3
+                    this.fadeSceneTransition("Alien_Encounter_3-3");
+                }
             } else if (targetDetails.targetLvl !== undefined) {
                 this.fadeLevelTransition(targetDetails.targetLvl)
             } else if (targetDetails.label != null) console.warn("No action programed for target (or target action Already Played once):", targetDetails.label);
