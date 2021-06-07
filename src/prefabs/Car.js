@@ -174,9 +174,10 @@ export class Car extends Phaser.Physics.Matter.Image {
         }
 
         if (this.accelAmount != 0) {
-            // Plays accelSound at pitch 10*Velocity
-            
+            // updates accelSound pitch relative to velocity
             this.accelSound.setDetune(this.accelAmount * 10);
+        } else {
+            this.accelSound.setDetune(10);
         }
 
 
