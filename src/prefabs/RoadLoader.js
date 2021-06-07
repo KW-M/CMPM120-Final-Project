@@ -16,6 +16,8 @@ export class RoadLoader {
         this.tileMapId = tileMapName;
         this.visibleTiles = {}
         this.placedTiles = {}
+
+        this.roadEndTopBound = -Infinity
     }
 
     addTile(tileNumX, tileNumY, gameX, gameY) {
@@ -51,8 +53,10 @@ export class RoadLoader {
         let yRange = range(topBoundTileNumY, bottomBoundTileNumY, 1);
         for (const xIndx of xRange) {
             for (const yIndx of yRange) {
+
                 let gamePosX = xIndx * this.tilePxSize * this.tileScaleFactor;
                 let gamePosY = yIndx * this.tilePxSize * this.tileScaleFactor;
+                if (gamePosY < this.roadEndTopBound) continue;
                 let tileNumX = xIndx * this.tileWorldSize * this.xTilingDirection + this.tileNumStartX
                 let tileNumY = yIndx * this.tileWorldSize * this.yTilingDirection + this.tileNumStartY
                 this.addTile(tileNumX, tileNumY, gamePosX, gamePosY);

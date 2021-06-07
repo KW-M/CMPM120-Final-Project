@@ -7,7 +7,11 @@ import move_mouse_img from 'url:/assets/UI/cursor_graphicks1.png'
 // import click_mouse_img from 'url:/assets/cursor_graphicks2.png'
 
 import images_highway_tile from 'url:/assets/high_way_grunge1.png'
-import images_highway_intersection_tile from 'url:/assets/high_way_intersection.png'
+import images_highway_t_intersection_tile from 'url:/assets/high_way_intersection.png'
+import images_highway_y_intersection_tile from 'url:/assets/high_way_3_way.png'
+import images_highway_house_intersection from 'url:/assets/high_way_house_intersection.png'
+import images_space_elevator from 'url:/assets/space_elevator.gif'
+
 import images_tile_loading_icon from 'url:/assets/tile_loading_icon.png'
 import images_car from 'url:/assets/car.png';
 import image_dust_particle from 'url:/assets/dust_particle.png'
@@ -54,9 +58,12 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.image('move_mouse_tutorial', move_mouse_img)
     // this.load.image('click_mouse_tutorial', click_mouse_img)
 
-    this.load.image('highway_intersection_tile', images_highway_intersection_tile);
+    this.load.image('highway_house_intersection', images_highway_house_intersection)
+    this.load.image('highway_t_intersection', images_highway_t_intersection_tile);
+    this.load.image('highway_y_intersection', images_highway_y_intersection_tile)
     this.load.image('highway_tile', images_highway_tile)
     this.load.image('tile_loading_icon', images_tile_loading_icon);
+    this.load.image('space_elevator', images_space_elevator)
 
     this.load.image('car', images_car);
     this.load.image('dust_particle', image_dust_particle);
