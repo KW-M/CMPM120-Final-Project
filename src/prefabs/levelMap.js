@@ -154,8 +154,9 @@ export class LevelMap {
         this.HighwayTileLoader;
         this.obstacleSpawner.roadWidth = this.currentLvlConfig.roadWidth;
         this.obstacleSpawner.obstacleLengthwiseSpacing = this.currentLvlConfig.obstacleLengthwiseSpacing
-
+        // sets the bounds of the level to the point of
         this.scene.cameras.main.setBounds(lvl.gameBounds.left, lvl.gameBounds.top, lvl.gameBounds.right - lvl.gameBounds.left, lvl.gameBounds.bottom - lvl.gameBounds.top, false)
+
         for (const intersection of lvl.intersections) {
             this.addIntersection(intersection.textureName, intersection.x, intersection.y, intersection.scaling, intersection.angle)
         }

@@ -1,36 +1,43 @@
+import { LEFT } from "phaser";
+
 var GetValue = Phaser.Utils.Objects.GetValue;
 
 
 export default class Introscene extends Phaser.Scene {
     constructor() {
         super("Introscene")
+        this.wasDown = false
     }
 
-  PageTypingText(scene, x, y, text, config) {
-    var text = scene.add.rexBBCodeText(x, y, text, config);
-    text.page = scene.plugins.get('rextextpageplugin').add(text, GetValue(config, 'page', undefined));
-    text.typing = scene.plugins.get('rextexttypingplugin').add(text, GetValue(config, 'type', undefined));
+    PageTypingText(scene, x, y, text, config) {
+      var text = scene.add.rexBBCodeText(x, y, text, config);
+      text.page = scene.plugins.get('rextextpageplugin').add(text, GetValue(config, 'page', undefined));
+      text.typing = scene.plugins.get('rextexttypingplugin').add(text, GetValue(config, 'type', undefined));
+  
+      text.start = function (text, speed) {
+        this.page.setText(text);
+        if (speed !== undefined) {
+          this.typing.setTypeSpeed(speed);
+        }
+        this.typeNextPage();
+      };
+  
+      text.typeNextPage = function (speed) {
+        if (!this.page.isLastPage) {
+          text.forceNextPage()
+        } else {
+          console.log('done!');
+          this.emit('complete');
+        }
+      };
 
-    this.cameras.main.startFollow(text)
-    text.start = function (text, speed) {
-      this.page.setText(text);
-      if (speed !== undefined) {
-        this.typing.setTypeSpeed(speed);
-      }
-      this.typeNextPage();
-    };
-
-    text.typeNextPage = function (speed) {
-      if (!this.page.isLastPage) {
+      text.forceNextPage = function() {
         var txt = this.page.getNextPage();
         this.typing.start(txt);
-      } else {
-        this.emit('complete');
-      }
-    };
-
-    text.typing.on('complete', text.typeNextPage, text);
-    return text;
+        console.log('getting next page!');
+      };
+      text.typing.on('complete', text.typeNextPage, text);
+      return text;
     }
 
   create() {
@@ -46,7 +53,7 @@ export default class Introscene extends Phaser.Scene {
                       [color=black].[/color]
     You burst into the living room where the kids are playing JortFite and you tell them it's time to go. Everybody gets in the car and you drive off towards the highway. You'll get your answers the only way you know how: [color=red] you will speak to their manager. [/color]`;
 
-    var text = this.PageTypingText(this, this.cameras.main.width / 2 - 300, this.cameras.main.height / 2 - 300, '', {
+    this.text = this.PageTypingText(this, this.cameras.main.width / 2 - 300, this.cameras.main.height / 2 - 300, '', {
         fontSize: '24px',
         wrap: {
           mode: 'word',
@@ -57,34 +64,21 @@ export default class Introscene extends Phaser.Scene {
         speed: 0.9 * 1000, // found the speed setting
       }
       });
-      text.once('complete', function () {
+      this.text.once('complete', function () {
         console.log('done');
       }).start(content, 50);
     }
 
-  PageTypingText(scene, x, y, text, config) {
-    var text = scene.add.rexBBCodeText(x, y, text, config);
-    text.page = scene.plugins.get('rextextpageplugin').add(text, GetValue(config, 'page', undefined));
-    text.typing = scene.plugins.get('rextexttypingplugin').add(text, GetValue(config, 'type', undefined));
-
-    text.start = function (text, speed) {
-      this.page.setText(text);
-      if (speed !== undefined) {
-        this.typing.setTypeSpeed(speed);
+  update() {
+    console.log(this.wasDown)
+    if (this.game.input.activePointer.isDown) {
+      if (!this.wasDown) {
+        this.text.forceNextPage()
       }
-      this.typeNextPage();
-    };
-
-    text.typeNextPage = function (speed) {
-      if (!this.page.isLastPage) {
-        var txt = this.page.getNextPage();
-        this.typing.start(txt);
-      } else {
-        this.emit('complete');
-      }
+    this.wasDown = true
+    } else {
+      this.wasDown = false
     }
-    text.typing.on('complete', text.typeNextPage, text);
-    return text;
   }
 
   preload() {
