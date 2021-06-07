@@ -87,6 +87,7 @@ export class Car extends Phaser.Physics.Matter.Image {
             loop: true,
             delay: 0
         }
+        this.accelSound.play(this.accelSoundConfig);
 
 
     }
@@ -173,8 +174,8 @@ export class Car extends Phaser.Physics.Matter.Image {
         }
 
         if (this.accelAmount != 0) {
-            // Plays accelSound at pitch x*Velocity
-            this.accelSound.play(this.accelSoundConfig);
+            // Plays accelSound at pitch 10*Velocity
+            
             this.accelSound.setDetune(this.accelAmount * 10);
         }
 

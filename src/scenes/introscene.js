@@ -69,7 +69,7 @@ export default class IntroScene extends Phaser.Scene {
     }
 
   update() {
-    console.log(this.wasDown)
+    // console.log(this.wasDown)
     if (this.game.input.activePointer.isDown) {
       if (!this.wasDown) {
         this.text.forceNextPage()
