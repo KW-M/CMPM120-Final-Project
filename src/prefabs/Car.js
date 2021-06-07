@@ -1,4 +1,4 @@
-import Phaser from 'phaser'
+import Phaser, { Tilemaps } from 'phaser'
 
 const ROAD_FRICTION = 0.5;
 const STEARING_RATE_MULTIPLIER = 0.7;
@@ -185,6 +185,10 @@ export class Car extends Phaser.Physics.Matter.Image {
             this.accelSound.setDetune(this.accelAmount * 10);
         } else {
             this.accelSound.setDetune(10);
+        }
+
+        if (this.carHealth <= 0) {
+            this.accelSound.stop();
         }
 
 
