@@ -4,6 +4,7 @@ const ROAD_FRICTION = 0.5;
 const STEARING_RATE_MULTIPLIER = 0.7;
 const ACCELERATION_RATE_MULTIPLIER = .5;
 const DEG_TO_RAD = Math.PI / 180;
+const MAX_HEALTH = 5
 
 // includes driving code from: https://gitlab.com/grigoriytretyakov/phaser3-racing-car/-/blob/master/src/Game.js
 export class Car extends Phaser.Physics.Matter.Image {
@@ -37,8 +38,7 @@ export class Car extends Phaser.Physics.Matter.Image {
         this.debugRect2 = this.scene.add.rectangle(0, 0, 2, 2, 0x00FFFF).setDepth(100)
 
         // Constants
-        // this.backupSteering = 1; // -1 when backing up
-        // this.maxSteeringAngle = 10 // in degrees
+        this.carHealth = MAX_HEALTH
 
         // particles
         let dustConfig = {
@@ -123,6 +123,11 @@ export class Car extends Phaser.Physics.Matter.Image {
         this.skidMarks2.killAll()
     }
 
+    takeDamage(ammount) {
+        this.carHealth -= ammount;
+        this.setTint(Phaser.Display.Color.HSLToColor(0.1, 1, this.carHealth / MAX_HEALTH / 2 + 0.5).color)
+    }
+
     update(mouseWorldPositionVector, isOffroad) {
         const carToMouseVector = new Phaser.Math.Vector2(this).scale(-1).add(mouseWorldPositionVector);
         const carForwardVector = new Phaser.Math.Vector2(1, 0).setAngle(this.rotation);
@@ -144,6 +149,7 @@ export class Car extends Phaser.Physics.Matter.Image {
         } else this.setFrictionAir(ROAD_FRICTION)
         if (this.justCollided === true) {
             this.justCollided = false;
+            this.takeDamage(1)
             carForwardToMouseVectorAngle = (carForwardToMouseVectorAngle * Math.PI) % 360;
             let newVelocity = carVelocityVector.clone().scale(0.01)
             this.setVelocity(newVelocity.x, newVelocity.y)
