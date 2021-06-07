@@ -1,10 +1,14 @@
 /*
-Tsurfnami
-A game by Asher Lachoff, Yukai Liu, Kelly Leung & Kyle Worcester-Moore
-May 2nd, 2021
-Multiple input methods + tilt on mobile.
-Realistic shark symulation(TM).
-Layered audio gives an imersive experience.
+Highway to Nowhere
+A game by Asher Lachoff, Yukai Liu, Kyle Worcester-Moore & Kelly Leung
+June 7th, 2021
+Notable cool things:
+- Game is responsive to different screen sizes (incl. mobile).
+- Mouse/Touch control for the car is designed to be very smooth and natural.
+- Background imagery is loaded on the fly from cached map tiles from USGS, with a fallback to live USGS National Map WMS tiles if the
+  player keeps driving away from the scene (technically you can drive around the world, but the offroad slowdown discourages that)
+- Procedural obstacle placement based on a pre-randomized array to keep things efficent.
+- Sound effects are key-adjusted to match car throttle.
 */
 
 
