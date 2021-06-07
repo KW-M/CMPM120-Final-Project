@@ -11,7 +11,7 @@ const scriptList = ["encounter_1", "encounter_2", "encounter_3"]
 export default class PlayScene extends Phaser.Scene {
 
     constructor() {
-        super({ key: "playScene" });
+        super({ key: "PlayScene" });
         this.dialogScriptsAlreadyCompleted = {}
         this.currentScriptIndex = 0;
     }
@@ -65,7 +65,7 @@ export default class PlayScene extends Phaser.Scene {
     }
 
     playNextScript() {
-        this.fadeSceneTransition("dialogScene", { scriptName: scriptList[this.currentScriptIndex] })
+        this.fadeSceneTransition("DialogScene", { scriptName: scriptList[this.currentScriptIndex] })
         this.currentScriptIndex++;
     }
 

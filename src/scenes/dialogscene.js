@@ -1,6 +1,6 @@
 export default class DialogScene extends Phaser.Scene {
     constructor() {
-        super("dialogScene")
+        super("DialogScene")
 
         // dialog constants
         this.DBOX_X = 0;			    // dialog box x-position
@@ -139,7 +139,7 @@ export default class DialogScene extends Phaser.Scene {
             this.dialogConvo = 0;
             this.dialogLine = 0;
             // go back to play scene (and stop this scene)
-            this.fadeSceneTransition("playScene")
+            this.fadeSceneTransition("PlayScene")
         } else {
             // if not, set current speaker
             this.dialogSpeaker = this.dialog[this.dialogConvo][this.dialogLine]['speaker'];

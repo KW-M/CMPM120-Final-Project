@@ -45,7 +45,7 @@ import json_dialog_script from 'url:/assets/json/dialog.json'
 
 export default class LoadingScene extends Phaser.Scene {
   constructor() {
-    super({ key: 'loadingScene' });
+    super({ key: 'LoadingScene' });
   }
 
   preload() {
@@ -110,8 +110,8 @@ export default class LoadingScene extends Phaser.Scene {
 
   update() {
     this.events.off();
-    this.scene.start('menuScene');
-    // this.scene.start('playScene');
+    this.scene.start('MenuScene');
+    // this.scene.start('PlayScene');
     this.scene.stop(this.scene.key)
     this.scene.remove(this.scene.key);
   }
