@@ -48,7 +48,7 @@ export default class PlayScene extends Phaser.Scene {
         // setup map
         this.lvlMap = new LevelMap(this)
         this.lvlMap.resetLevels();
-        this.lvlMap.setupLevel("Lvl1");
+        this.lvlMap.setupLevel("lvl1");
 
         // high score is saved across games played
         this.hScore = localStorage.getItem("score") || 0;
