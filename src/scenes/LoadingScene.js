@@ -82,10 +82,7 @@ export default class LoadingScene extends Phaser.Scene {
 
     // load spritesheets
     this.load.audio('accelSound', [audioAccelerateOgg, audioAccelerateWav]);
-    // this.load.audio('brakeSound', audioBrake);
-    // this.load.audio('reverseSound', audioReverse);
-    // this.load.audio('honkSound', audioHonk);
-    // this.load.audio('crashSound', audioCrash);
+    this.load.audio('crashSound', audioCrash);
 
     // this.load.audio('soundtrack', sounds_soundtrack);
 
