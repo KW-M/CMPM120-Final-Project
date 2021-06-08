@@ -76,6 +76,7 @@ export default class DialogScene extends Phaser.Scene {
         let script_name_to_play = this.sys.getData().scriptName;
         this.dialog = this.allDialogs[script_name_to_play] || [[{ "speaker": "karen", "dialog": "Uh Ohhhhhhhhh. There is no script called:" + script_name_to_play, "newSpeaker": "true" }]]
 
+        window.pauseTimer = true;
         //clear all speachbubbles
         this.janus_left.setAlpha(0);
         this.janus_right.setAlpha(0);
@@ -134,7 +135,7 @@ export default class DialogScene extends Phaser.Scene {
             // but you could build other logic to change game states here
 
             /* --- end of conversation ---  */
-
+            window.pauseTimer = false;
             // reset text counters
             this.dialogConvo = 0;
             this.dialogLine = 0;
