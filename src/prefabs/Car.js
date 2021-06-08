@@ -78,7 +78,7 @@ export class Car extends Phaser.Physics.Matter.Image {
             this.collisionInProgressCount--
         })
         // Sounds
-        this.accelSound = this.scene.sound.add('accelSound')
+        this.accelSound = this.scene.sound.add('accelSound');
         this.accelSoundConfig = {
             mute: false,
             volume: 1,
@@ -87,8 +87,10 @@ export class Car extends Phaser.Physics.Matter.Image {
             seek: 0,
             loop: true,
             delay: 0
-        }
+        };
         this.accelSound.play(this.accelSoundConfig);
+
+        this.crashSound = this.scene.sound.add('crashSound');
 
 
     }
@@ -151,6 +153,7 @@ export class Car extends Phaser.Physics.Matter.Image {
         if (this.justCollided === true) {
             this.justCollided = false;
             this.takeDamage(1)
+            this.crashSound.play();
             carForwardToMouseVectorAngle = (carForwardToMouseVectorAngle * Math.PI) % 360;
             let newVelocity = carVelocityVector.clone().scale(0.01)
             this.setVelocity(newVelocity.x, newVelocity.y)
