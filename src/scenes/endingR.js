@@ -2,43 +2,43 @@ var GetValue = Phaser.Utils.Objects.GetValue;
 
 
 export default class EndingR extends Phaser.Scene {
-    constructor() {
-      super("EndingR")
-        this.wasDown = false
-    }
+  constructor() {
+    super("EndingR")
+    this.wasDown = false
+  }
 
-    PageTypingText(scene, x, y, text, config) {
-      var text = scene.add.rexBBCodeText(x, y, text, config);
-      text.page = scene.plugins.get('rextextpageplugin').add(text, GetValue(config, 'page', undefined));
-      text.typing = scene.plugins.get('rextexttypingplugin').add(text, GetValue(config, 'type', undefined));
+  PageTypingText(scene, x, y, text, config) {
+    var text = scene.add.rexBBCodeText(x, y, text, config);
+    text.page = scene.plugins.get('rextextpageplugin').add(text, GetValue(config, 'page', undefined));
+    text.typing = scene.plugins.get('rextexttypingplugin').add(text, GetValue(config, 'type', undefined));
 
-      text.start = function (text, speed) {
-        this.page.setText(text);
-        if (speed !== undefined) {
-          this.typing.setTypeSpeed(speed);
-        }
-        this.typeNextPage();
-      };
+    text.start = function (text, speed) {
+      this.page.setText(text);
+      if (speed !== undefined) {
+        this.typing.setTypeSpeed(speed);
+      }
+      this.typeNextPage();
+    };
 
-      text.typeNextPage = function (speed) {
-        if (!this.page.isLastPage) {
-          text.forceNextPage()
-        } else {
-          console.log('done!');
+    text.typeNextPage = function (speed) {
+      if (!this.page.isLastPage) {
+        text.forceNextPage()
+      } else {
+        console.log('done!');
 
-          this.emit('complete');
+        this.emit('complete');
 
-        }
-      };
+      }
+    };
 
-      text.forceNextPage = function() {
-        var txt = this.page.getNextPage();
-        this.typing.start(txt);
-        console.log('getting next page!');
-      };
-      text.typing.on('complete', text.typeNextPage, text);
-      return text;
-    }
+    text.forceNextPage = function () {
+      var txt = this.page.getNextPage();
+      this.typing.start(txt);
+      console.log('getting next page!');
+    };
+    text.typing.on('complete', text.typeNextPage, text);
+    return text;
+  }
 
 
   create() {
@@ -54,37 +54,30 @@ export default class EndingR extends Phaser.Scene {
     With a sad chuckle, she turns to join her children at the window. They watch together as the desert slowly begins to change, as life returns to the earth.`;
 
     this.text = this.PageTypingText(this, this.cameras.main.width / 2 - 300, this.cameras.main.height / 2 - 300, '', {
-        fontSize: '24px',
-        wrap: {
-          mode: 'word',
-          width: 600
-        },
+      fontSize: '24px',
+      wrap: {
+        mode: 'word',
+        width: 600
+      },
       maxLines: 8,
       type: {
         speed: 0.9 * 1000, // found the speed setting
       }
-      });
+    });
 
     this.text.once('complete', () => {
-        console.log('done');
-
-      let targetScene = this.scene.manager.scenes[this.scene.getIndex("PlayScene")]
-      targetScene.scene.registry.destroy();
-      targetScene.scene.events.off();
-      targetScene.scene.restart();
-      this.scene.registry.destroy();
-      this.scene.events.off();
-      this.scene.stop();
-        this.scene.start('MenuScene');
-      }).start(content, 50);
-    }
+      console.log('done');
+      window.restartOnBoot = true;
+      this.scene.start('MenuScene');
+    }).start(content, 50);
+  }
 
   update() {
     if (this.game.input.activePointer.isDown) {
       if (!this.wasDown) {
         this.text.typeNextPage()
       }
-    this.wasDown = true
+      this.wasDown = true
     } else {
       this.wasDown = false
     }

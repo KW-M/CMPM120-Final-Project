@@ -78,6 +78,9 @@ export default class PlayScene extends Phaser.Scene {
         } else if (this.ScoreOverlay.clock < 0 || this.car.carHealth <= 0) {
             this.gameOver = true;
             this.gameOverOverlay = new GameOverOverlay(this).create()
+        } else if (window.restartOnBoot) {
+            window.restartOnBoot = false;
+            new GameOverOverlay(this).restartGame()
         }
 
         this.cameras.main.setTint(Phaser.Display.Color.HSLToColor(0.1, 1, this.ScoreOverlay.clock / this.ScoreOverlay.STARTING_COUNTDOWN_TIME / 2 + 0.5).color)
@@ -113,13 +116,13 @@ export default class PlayScene extends Phaser.Scene {
             } else if (targetDetails.label === "Alien_Encounter_3") {
                 if (LevelMap.alienStoryLean == 0) {
                     // play 3-1
-                    this.fadeSceneTransition("DialogScene", { scriptName: "Alien_Encounter_3-1" });
+                    this.fadeSceneTransition("DialogScene", { scriptName: "encounter_3-1" });
                 } else if (LevelMap.alienStoryLean < 0) {
                     // play 3-2
-                    this.fadeSceneTransition("DialogScene", { scriptName: "Alien_Encounter_3-2" });
+                    this.fadeSceneTransition("DialogScene", { scriptName: "encounter_3-2" });
                 } else {
                     // play 3-3
-                    this.fadeSceneTransition("DialogScene", { scriptName: "Alien_Encounter_3-3" });
+                    this.fadeSceneTransition("DialogScene", { scriptName: "encounter_3-3" });
                 }
             } else if (targetDetails.label === "House_exit") {
                 this.fadeSceneTransition("EndingR", {})

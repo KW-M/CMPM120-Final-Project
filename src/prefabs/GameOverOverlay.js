@@ -32,10 +32,8 @@ export class GameOverOverlay {//extends Phaser.GameObjects.GameObject
     restartGame() {
         this.scene.registry.destroy();
         this.scene.events.off();
-        // this.scene.music.destroy();
         this.scene.scene.restart();
         this.gameOver = false;
-        this.destroy();
     }
 
     update() {
