@@ -52,7 +52,8 @@ export default class IntroScene extends Phaser.Scene {
 
 
                       [color=black].[/color]
-    You burst into the living room where the kids are playing JortFite and you tell them it's time to go. Everybody gets in the car and you drive off towards the highway. You'll get your answers the only way you know how: [color=red] you will speak to their manager. [/color]`;
+    You burst into the living room where the kids are playing JortFite and you tell them it's time to go. Everybody gets in the car and you drive off towards the highway. You'll get your answers the only way you know how: [color=red] you will speak to their manager. [/color]
+          [color=black].[/color]`;
 
     this.text = this.PageTypingText(this, this.cameras.main.width / 2 - 300, this.cameras.main.height / 2 - 300, '', {
         fontSize: '24px',
