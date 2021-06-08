@@ -8,7 +8,7 @@ let levelMaps = {
         backgroundOffset: { longitudeX: 4315715, lattitudeY: -13000062 },
         gameBounds: { top: -1403, left: -5000, bottom: 100, right: 5000 },
         roadWidth: 90 * 3,
-        obstacleLengthwiseSpacing: 200,
+        obstacleLengthwiseSpacing: 100,
         intersections: [
             {
                 x: 0,
@@ -38,7 +38,7 @@ let levelMaps = {
         backgroundOffset: { longitudeX: 4239215, lattitudeY: -13000062 }, // Only add or subtract increments of 153!!!!!!!!!!!!!
         gameBounds: { top: -1403, left: -5000, bottom: 100, right: 5000  },
         roadWidth: 90 * 3,
-        obstacleLengthwiseSpacing: 200,
+        obstacleLengthwiseSpacing: 80,
         intersections: [
             {
                 x: 0,
@@ -63,7 +63,7 @@ let levelMaps = {
         backgroundOffset: { longitudeX: 4252985, lattitudeY: -13000062 }, // Only add or subtract increments of 153!!!!!!!!!!!!!
         gameBounds: { top: -1403, left: -5000, bottom: 100, right: 5000 },
         roadWidth: 90 * 3,
-        obstacleLengthwiseSpacing: 200,
+        obstacleLengthwiseSpacing: 40,
         intersections: [
             {
                 x: 0,
@@ -176,7 +176,6 @@ export class LevelMap {
         for (const intersection of lvl.intersections) {
             this.addIntersection(intersection.textureName, intersection.x, intersection.y, intersection.scaling, intersection.angle)
         }
-        this.drawDebugCircleZones(lvl)
 
         this.checkTargetEntry(this.scene.car.x, this.scene.car.y, false)
 
