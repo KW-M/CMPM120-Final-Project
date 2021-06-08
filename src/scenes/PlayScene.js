@@ -108,7 +108,8 @@ export default class PlayScene extends Phaser.Scene {
             else if (targetDetails.label === "Alien_Encounter_1" || targetDetails.label === "Alien_Encounter_2") {
                 this.playNextScript()
                 this.dialogScriptsAlreadyCompleted[targetDetails.label] = true;
-            } else if (targetDetails.label === "Alien_Encounter_3-1") {
+
+            } else if (targetDetails.label === "Alien_Encounter_3") {
                 if (LevelMap.alienStoryLean == 0) {
                     // play 3-1
                     this.fadeSceneTransition("Alien_Encounter_3-1");
@@ -119,6 +120,10 @@ export default class PlayScene extends Phaser.Scene {
                     // play 3-3
                     this.fadeSceneTransition("Alien_Encounter_3-3");
                 }
+            } else if (targetDetails.label === "House_exit") {
+                alert("Thanks for playing! You stayed!")
+            } else if (targetDetails.label === "Elevator_exit") {
+                alert("Thanks for playing! You escaped!")
             } else if (targetDetails.targetLvl !== undefined) {
                 this.fadeLevelTransition(targetDetails.targetLvl)
             } else if (targetDetails.label != null) console.warn("No action programed for target (or target action Already Played once):", targetDetails.label);
