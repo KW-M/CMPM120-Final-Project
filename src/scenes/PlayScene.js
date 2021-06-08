@@ -122,7 +122,7 @@ export default class PlayScene extends Phaser.Scene {
                 }
             } else if (targetDetails.label === "House_exit") {
                 this.fadeSceneTransition("EndingR", {})
-            } else if (targetDetails.label === "Elevator_exit") {
+            } else if (targetDetails.label === "Elevator_Exit") {
                 this.fadeSceneTransition("EndingL", {})
             } else if (targetDetails.targetLvl !== undefined) {
                 this.fadeLevelTransition(targetDetails.targetLvl)

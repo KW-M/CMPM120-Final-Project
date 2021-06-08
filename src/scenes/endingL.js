@@ -36,7 +36,7 @@ export default class EndingL extends Phaser.Scene {
         this.typing.start(txt);
         console.log('getting next page!');
       };
-      text.typing.on('complete', () => { this.scene.start('MenuScene'); }, text);
+      text.typing.on('complete', text.typeNextPage, text);
       return text;
     }
 

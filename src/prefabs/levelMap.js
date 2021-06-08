@@ -100,7 +100,7 @@ let levelMaps = {
             },
         ],
         sceneTransitionTargets: [
-            { x: 0, y: 600, radius: 500, label: "back_to_lvl_3", targetLvl: "lvl3", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: -1 },
+            { x: 0, y: 600, radius: 300, label: "back_to_lvl_3", targetLvl: "lvl3", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: -1 },
         ] // uses global position in map-scaled pixels
     },
     "Home_ending_lvl": {
