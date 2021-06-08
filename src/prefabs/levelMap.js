@@ -95,7 +95,7 @@ let levelMaps = {
                 scaling: 3,
                 textureName: "space_elevator",
                 sceneTransitionTargets: [
-                    { x: 0, y: -20, radius: 150, label: "Elevator_Exit", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
+                    { x: 0, y: 60, radius: 400, label: "Elevator_Exit", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
                 ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)
             },
         ],
@@ -117,7 +117,7 @@ let levelMaps = {
                 scaling: 0.84,
                 textureName: "highway_house_intersection",
                 sceneTransitionTargets: [
-                    { x: 0, y: -20, radius: 150, label: "House_exit", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
+                    { x: 0, y: -20, radius: 400, label: "House_exit", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
                 ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)
             },
         ],

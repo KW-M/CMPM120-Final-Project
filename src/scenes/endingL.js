@@ -1,9 +1,9 @@
 var GetValue = Phaser.Utils.Objects.GetValue;
 
 
-export default class IntroScene extends Phaser.Scene {
+export default class EndingL extends Phaser.Scene {
     constructor() {
-      super("IntroScene")
+      super("EndingL")
         this.wasDown = false
     }
 
@@ -40,13 +40,13 @@ export default class IntroScene extends Phaser.Scene {
       return text;
     }
 
-    
+
   create() {
     console.log("in intro scene")
     var content = `
-    Upon entering the space elevator, Karen and her children shot into the air. They watched as the Earth grew further and further away from the car window. The further they got from it, the more Karen realized the weight of her decision. 
+    Upon entering the space elevator, Karen and her children shot into the air. They watched as the Earth grew further and further away from the car window. The further they got from it, the more Karen realized the weight of her decision.
                                         [color=black].[/color]
-    As they grew further from Earth, they turned their attention to the tiatnic space station looming over it. Several domes containing small cities connected to each other via large structures and tubes. However, it was clear that the construct was not yet finished. 
+    As they grew further from Earth, they turned their attention to the tiatnic space station looming over it. Several domes containing small cities connected to each other via large structures and tubes. However, it was clear that the construct was not yet finished.
 
 
 

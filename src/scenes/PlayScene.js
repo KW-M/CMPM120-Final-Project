@@ -121,9 +121,9 @@ export default class PlayScene extends Phaser.Scene {
                     this.fadeSceneTransition("DialogScene", { scriptName: "Alien_Encounter_3-3" });
                 }
             } else if (targetDetails.label === "House_exit") {
-                alert("Thanks for playing! You stayed!")
+                this.fadeSceneTransition("EndingR", {})
             } else if (targetDetails.label === "Elevator_exit") {
-                alert("Thanks for playing! You escaped!")
+                this.fadeSceneTransition("EndingL", {})
             } else if (targetDetails.targetLvl !== undefined) {
                 this.fadeLevelTransition(targetDetails.targetLvl)
             } else if (targetDetails.label != null) console.warn("No action programed for target (or target action Already Played once):", targetDetails.label);

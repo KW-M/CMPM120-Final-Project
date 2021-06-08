@@ -22,6 +22,8 @@ import ControlsScene from "/src/scenes/controlsScene"
 import OptionsScene from "/src/scenes/optionsScene"
 import DialogScene from "/src/scenes/DialogScene"
 import IntroScene from "/src/scenes/IntroScene"
+import EndingL from "/src/scenes/endingL"
+import EndingR from "/src/scenes/endingR"
 
 // reserve vars
 let game;
@@ -52,7 +54,7 @@ let gameConfig = {
       // ...
     ]
   },
-  scene: [LoadingScene, MenuScene, IntroScene, ControlsScene, OptionsScene, PlayScene, DialogScene]// EndScene
+  scene: [LoadingScene, MenuScene, IntroScene, ControlsScene, OptionsScene, PlayScene, DialogScene, EndingR, EndingL]
 }
 
 function newGame() {

@@ -1,9 +1,9 @@
 var GetValue = Phaser.Utils.Objects.GetValue;
 
 
-export default class IntroScene extends Phaser.Scene {
+export default class EndingR extends Phaser.Scene {
     constructor() {
-      super("IntroScene")
+      super("EndingR")
         this.wasDown = false
     }
 
@@ -40,11 +40,11 @@ export default class IntroScene extends Phaser.Scene {
       return text;
     }
 
-    
+
   create() {
     console.log("in intro scene")
     var content = `
-    As Karen approaches her home, she feels a pang of frustration. However, for the first time in her life, there isn't really anybody to blame for it. 
+    As Karen approaches her home, she feels a pang of frustration. However, for the first time in her life, there isn't really anybody to blame for it.
                                         [color=black].[/color]
     She considers how absurd the whole escapade was, how she dragged her whole family out just to bring them back home with nothing lost or gained
 
