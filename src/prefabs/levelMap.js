@@ -48,8 +48,8 @@ let levelMaps = {
                 textureName: "highway_y_intersection",
                 sceneTransitionTargets: [
                     { x: 0, y: -20, radius: 150, label: "Alien_Encounter_2", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
-                    { x: -100, y: -150, radius: 200, label: "Level_3_Toward_Elevator", targetLvl: "Elevator_ending_lvl", alienStoryLeanAdjustment: -1, levelEpisodeAdjustemnt: 1 },
-                    { x: 100, y: -150, radius: 200, label: "Level_3_Toward_Home", targetLvl: "Home_ending_lvl", alienStoryLeanAdjustment: 1, levelEpisodeAdjustemnt: 1 },
+                    { x: -100, y: -150, radius: 200, label: "Level_3_Toward_Elevator", targetLvl: "lvl3", alienStoryLeanAdjustment: -1, levelEpisodeAdjustemnt: 1 },
+                    { x: 100, y: -150, radius: 200, label: "Level_3_Toward_Home", targetLvl: "lvl3", alienStoryLeanAdjustment: 1, levelEpisodeAdjustemnt: 1 },
                 ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)
             },
         ],
@@ -100,7 +100,7 @@ let levelMaps = {
             },
         ],
         sceneTransitionTargets: [
-            { x: 0, y: 600, radius: 300, label: "back_to_lvl_3", targetLvl: "lvl3", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: -1 },
+            { x: 0, y: 600, radius: 300, label: "back_to_lvl_3_a", targetLvl: "lvl3", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: -1 },
         ] // uses global position in map-scaled pixels
     },
     "Home_ending_lvl": {
@@ -122,7 +122,7 @@ let levelMaps = {
             },
         ],
         sceneTransitionTargets: [
-            { x: 0, y: 600, radius: 500, label: "back_to_lvl_3", targetLvl: "lvl3", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: -1 },
+            { x: 0, y: 600, radius: 500, label: "back_to_lvl_3_b", targetLvl: "lvl3", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: -1 },
         ] // uses global position in map-scaled pixels
     }
 }
@@ -186,9 +186,9 @@ export class LevelMap {
     }
 
     resetLevels() {
-        for (const key in lvlMap) {
-            if (Object.hasOwnProperty.call(lvlMap, key)) {
-                const lvlConfig = lvlMap[key];
+        for (const key in levelMaps) {
+            if (Object.hasOwnProperty.call(levelMaps, key)) {
+                const lvlConfig = levelMaps[key];
                 lvlConfig.carStart = { x: 0, y: 0, angle: -90 };
             }
         }
