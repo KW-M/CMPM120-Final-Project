@@ -112,13 +112,13 @@ export default class PlayScene extends Phaser.Scene {
             } else if (targetDetails.label === "Alien_Encounter_3") {
                 if (LevelMap.alienStoryLean == 0) {
                     // play 3-1
-                    this.fadeSceneTransition("Alien_Encounter_3-1");
+                    this.fadeSceneTransition("DialogScene", { scriptName: "Alien_Encounter_3-1" });
                 } else if (LevelMap.alienStoryLean < 0) {
                     // play 3-2
-                    this.fadeSceneTransition("Alien_Encounter_3-2");
+                    this.fadeSceneTransition("DialogScene", { scriptName: "Alien_Encounter_3-2" });
                 } else {
                     // play 3-3
-                    this.fadeSceneTransition("Alien_Encounter_3-3");
+                    this.fadeSceneTransition("DialogScene", { scriptName: "Alien_Encounter_3-3" });
                 }
             } else if (targetDetails.label === "House_exit") {
                 alert("Thanks for playing! You stayed!")
