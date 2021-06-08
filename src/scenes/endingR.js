@@ -64,14 +64,22 @@ export default class EndingR extends Phaser.Scene {
         speed: 0.9 * 1000, // found the speed setting
       }
       });
+
     this.text.once('complete', () => {
         console.log('done');
+
+      let targetScene = this.scene.manager.scenes[this.scene.getIndex("PlayScene")]
+      targetScene.scene.registry.destroy();
+      targetScene.scene.events.off();
+      targetScene.scene.restart();
+      this.scene.registry.destroy();
+      this.scene.events.off();
+      this.scene.stop();
         this.scene.start('MenuScene');
       }).start(content, 50);
     }
 
   update() {
-    // console.log(this.wasDown)
     if (this.game.input.activePointer.isDown) {
       if (!this.wasDown) {
         this.text.typeNextPage()
