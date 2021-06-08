@@ -48,7 +48,7 @@ export default class PlayScene extends Phaser.Scene {
         // setup map
         this.lvlMap = new LevelMap(this)
         this.lvlMap.resetLevels();
-        this.lvlMap.setupLevel("lvl1");
+        this.lvlMap.setupLevel("Lvl1");
 
         // high score is saved across games played
         this.hScore = localStorage.getItem("score") || 0;
@@ -78,6 +78,9 @@ export default class PlayScene extends Phaser.Scene {
         } else if (this.ScoreOverlay.clock < 0 || this.car.carHealth <= 0) {
             this.gameOver = true;
             this.gameOverOverlay = new GameOverOverlay(this).create()
+        } else if (window.restartOnBoot) {
+            window.restartOnBoot = false;
+            new GameOverOverlay(this).restartGame()
         }
 
         this.cameras.main.setTint(Phaser.Display.Color.HSLToColor(0.1, 1, this.ScoreOverlay.clock / this.ScoreOverlay.STARTING_COUNTDOWN_TIME / 2 + 0.5).color)

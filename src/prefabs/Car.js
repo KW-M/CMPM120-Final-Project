@@ -126,7 +126,7 @@ export class Car extends Phaser.Physics.Matter.Image {
 
     takeDamage(ammount) {
         this.carHealth -= ammount;
-        this.setTint(Phaser.Display.Color.HSLToColor(0.1, 1, this.carHealth / MAX_HEALTH / 2 + 0.5).color)
+        this.setTint(Phaser.Display.Color.HSLToColor(0, 1, this.carHealth / MAX_HEALTH * (3 / 4) + 0.15).color)
     }
 
     update(mouseWorldPositionVector) {
