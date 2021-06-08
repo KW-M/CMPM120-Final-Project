@@ -66,6 +66,14 @@ export default class EndingL extends Phaser.Scene {
       });
     this.text.once('complete', () => {
         console.log('done');
+
+      let targetScene = this.scene.manager.scenes[this.scene.getIndex("PlayScene")]
+      targetScene.scene.registry.destroy();
+      targetScene.scene.events.off();
+      targetScene.scene.restart();
+      this.scene.registry.destroy();
+      this.scene.events.off();
+      this.scene.stop();
         this.scene.start('MenuScene');
       }).start(content, 50);
     }

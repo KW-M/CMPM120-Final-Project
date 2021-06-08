@@ -185,6 +185,15 @@ export class LevelMap {
         }
     }
 
+    resetLevels() {
+        for (const key in lvlMap) {
+            if (Object.hasOwnProperty.call(lvlMap, key)) {
+                const lvlConfig = lvlMap[key];
+                lvlConfig.carStart = { x: 0, y: 0, angle: -90 };
+            }
+        }
+    }
+
     clearCurrentLevel() {
         for (const intersectionImage of this.intersectionImages) {
             intersectionImage.destroy()
