@@ -1,0 +1,288 @@
+{
+	"encounter_1": [
+		[
+			{
+				"speaker": "janus_left",
+				"dialog": "Greetings, Karen. What you’ve heard on the news is true, we are evacuating the earth via space elevator. Please take a left at the next intersection to evacuate."
+			},
+			{
+				"speaker": "karen",
+				"dialog": "What the hell is going on here!? Where are you even sending us!? How do you know my name!?"
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "I’m sorry, I cannot divulge more information. If you would like to know more, please take a left at the next intersection."
+			},
+			{
+				"speaker": "karen",
+				"dialog": "This is unbelievable, I’d like to speak to your ma-"
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "Greetings, Karen. What you’ve heard on the news is true, we are going to terraform the earth to make it habitable once more."
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "There is a Billi’s chain restaurant to the North-East of our location if you would like to eat there one last time before it closes for good."
+			},
+			{
+				"speaker": "karen",
+				"dialog": "Oh, are you kidding me? You were just telling me I should get outta here, now you’re telling me to relax? Who am I supposed to file my complaint to?"
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "I am sorry Karen, but I do not recall telling you to evacuate. I do not have clearance to give more information, however there is another Nowherian to the North East ready to tell you more about our program."
+			}
+		]
+	],
+	"encounter_2": [
+		[
+			{
+				"speaker": "janus_left",
+				"dialog": "Greetings, Karen. You’re our first customer today! You know, we already have all you need to survive aboard our state-of-the-art space station, the HMS Janus."
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "We even have complimentary “I survived the end times!” T-Shirts, as per human traditio-"
+			},
+			{
+				"speaker": "karen",
+				"dialog": "I don’t WANT your damn T-Shirts, I want answers! Is the world really ending? Where are you taking us? Are you the one in charge around here?"
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "Apologies Karen, I am not at liberty to tell you more. Please take the next left if you still have questions."
+			},
+			{
+				"speaker": "karen",
+				"dialog": "I’m never going to understand what’s going on, am I?"
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "Greetings, Karen."
+			},
+			{
+				"speaker": "karen",
+				"dialog": "Oh not this again."
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "We would like to offer you and your family the opportunity of a lifetime: front row seats to the restructuring of your world!"
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "You know, not many sentient beings get the chance to witness the rebirth of every ecosystem on their planet, this is a historic moment for your kind!"
+			},
+			{
+				"speaker": "karen",
+				"dialog": "I have had it up to HERE with you two-faced WEIRDOS. Just tell me where your boss is so I can get what I want!"
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "Please, calm down ma’am. We are doing what we can in these difficult times to secure a future for your people."
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "I don’t understand what you mean by “two-faced,” or why you are so frustrated with me, but if you would like to know more please make a right at the next intersection."
+			}
+		]
+	],
+	"encounter_3-1": [
+		[
+			{
+				"speaker": "karen",
+				"dialog": "Ugh, finally! Are you the one in charge here?"
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "More or less. You gave my people quite a rinsing, from what I heard. I am the captain of the HMS Janus."
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "And I am the project overseer behind the terraforming operation."
+			},
+			{
+				"speaker": "karen",
+				"dialog": "You’re the only one I’ve met so far who can hear themselves talk, so you must be a bigshot."
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "It's a blessing"
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "And a curse."
+			},
+			{
+				"speaker": "karen",
+				"dialog": "Don’t care. I’ve been driving so long now, I don’t even remember what I was confused about. I guess I just need to know where the hell I’m supposed to be right now."
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "Well, that’s a complicated question. My colleague here is developing a selective terraforming process that’ll leave humanity intact while repairing much of the damage done to the ecosystems around the world."
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "And this guy is trying to get you humans offworld in a giant space station while Earth is left to heal on its own."
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "We elected to let humanity decide whether they’d prefer staying or leaving, and found that it’s a pretty even split. You’re the last one to show up, so you're the deciding factor here."
+			},
+			{
+				"speaker": "karen",
+				"dialog": "I… this is all a lot to take in at once, I’m a little overwhelmed."
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "Well you get what you ask for. You wanted answers, and this is as simple as it gets. So, make your decision. If you want me to go forward with terraforming Earth, take a right."
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "And if you want me to take your people to space for the foreseeable future, take a left."
+			}
+		]
+	],
+	"encounter_3-2": [
+		[
+			{
+				"speaker": "karen",
+				"dialog": "Ugh, finally! Are you the one in charge here?"
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "More or less. You gave my people quite a rinsing, from what I heard. I am the captain of the HMS Janus."
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "And I am the project overseer behind the terraforming operation."
+			},
+			{
+				"speaker": "karen",
+				"dialog": "You’re the only one I’ve met so far who can hear themselves talk, so you must be a bigshot."
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "It's a blessing"
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "And a curse."
+			},
+			{
+				"speaker": "karen",
+				"dialog": "Don’t care. I’ve been driving so long now, I don’t even remember what I was confused about. How do I get to the space elevator?"
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "I’m glad you asked, just take a left here and you’ll be right there."
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "If you’ve changed your mind and would rather watch the world get terraformed, then you’ll have to turn back around and make your way to the right."
+			},
+			{
+				"speaker": "karen",
+				"dialog": "If I wanted that, I would’ve asked."
+			}
+		]
+	],
+	"encounter_3-3": [
+		[
+			{
+				"speaker": "karen",
+				"dialog": "Ugh, finally! Are you the one in charge here?"
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "More or less. You gave my people quite a rinsing, from what I heard. I am the captain of the HMS Janus."
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "And I am the project overseer behind the terraforming operation."
+			},
+			{
+				"speaker": "karen",
+				"dialog": "You’re the only one I’ve met so far who can hear themselves talk, so you must be a bigshot."
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "It's a blessing"
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "And a curse."
+			},
+			{
+				"speaker": "karen",
+				"dialog": "Don’t care. I’ve been driving so long now, I don’t even remember what I was confused about. How do I get to Billi's so we can wait out the terraforming process?"
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "I’m glad you asked, just take a right here and you’ll be right there."
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "If you’ve changed your mind and would rather watch the world get terraformed, then you’ll have to turn back around and make your way to the left."
+			},
+			{
+				"speaker": "karen",
+				"dialog": "If I wanted that, I would’ve asked."
+			}
+		]
+	],
+	"example": [
+		[
+			{
+				"speaker": "homer",
+				"dialog": "Tell me, O muse, of that ingenious hero who travelled far and wide after he had sacked the famous town of Troy."
+			},
+			{
+				"speaker": "homer",
+				"dialog": "Many cities did he visit, and many were the nations with whose manners and customs he was acquainted."
+			},
+			{
+				"speaker": "homer",
+				"dialog": "Moreover he suffered much by sea while trying to save his own life and bring his men safely home."
+			},
+			{
+				"speaker": "homer",
+				"dialog": "But do what he might he could not save his men, for they perished through their own sheer folly in eating the cattle of the Sun-god Hyperion."
+			},
+			{
+				"speaker": "homer",
+				"dialog": "So the gods prevented them from ever reaching home."
+			},
+			{
+				"speaker": "homer",
+				"dialog": "Tell me, too, about all these things, O daughter of Jove, from whatsoever source you may know them."
+			}
+		],
+		[
+			{
+				"speaker": "karen",
+				"dialog": "See now, how men lay blame upon us gods for what is after all nothing but their own folly."
+			},
+			{
+				"speaker": "karen",
+				"dialog": "Look at Aegisthus; he must needs make love to Agamemnon's wife unrighteously and then kill Agamemnon, though he knew it would be the death of him."
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "Father, son of Saturn, King of kings, it served Aegisthus right, and so it would any one else who does as he did; but Aegisthus is neither here nor there."
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "It is for Ulysses that my heart bleeds, when I think of his sufferings in that lonely sea-girt island, far away, poor man, from all his friends."
+			},
+			{
+				"speaker": "janus_right",
+				"dialog": "My child, what are you talking about? How can I forget Ulysses than whom there is no more capable man on earth, nor more liberal in his offerings to the immortal gods that live in heaven?"
+			},
+			{
+				"speaker": "janus_left",
+				"dialog": "If, then, the gods now mean that Ulysses should get home, we should first send Mercury to the Ogygian island to tell Calypso that we have made up our minds and that he is to return."
+			}
+		]
+	]
+}
