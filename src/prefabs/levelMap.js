@@ -84,18 +84,18 @@ let levelMaps = {
     "Elevator_ending_lvl": {
         carStart: { x: 0, y: 0, angle: -90 },
         backgroundOffset: { longitudeX: 4252985, lattitudeY: -13000062 }, // Only add or subtract increments of 153!!!!!!!!!!!!!
-        gameBounds: { top: -1403, left: -5000, bottom: 100, right: 5000 },
+        gameBounds: { top: -2403, left: -5000, bottom: 100, right: 5000 },
         roadWidth: 90 * 3,
         obstacleLengthwiseSpacing: 35,
         intersections: [
             {
                 x: 0,
-                y: -1000,
+                y: -2000,
                 angle: 0,
                 scaling: 3,
                 textureName: "space_elevator",
                 sceneTransitionTargets: [
-                    { x: 0, y: 60, radius: 400, label: "Elevator_Exit", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
+                    { x: 0, y: 60, radius: 200, label: "Elevator_Exit", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
                 ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)
             },
         ],
@@ -106,18 +106,18 @@ let levelMaps = {
     "Home_ending_lvl": {
         carStart: { x: 0, y: 0, angle: -90 },
         backgroundOffset: { longitudeX: 4252985, lattitudeY: -13000062 }, // Only add or subtract increments of 153!!!!!!!!!!!!!
-        gameBounds: { top: -1403, left: -5000, bottom: 100, right: 5000 },
+        gameBounds: { top: -2403, left: -5000, bottom: 100, right: 5000 },
         roadWidth: 90 * 3,
-        obstacleLengthwiseSpacing: 200,
+        obstacleLengthwiseSpacing: 40,
         intersections: [
             {
                 x: -344,
-                y: -1000,
+                y: -2000,
                 angle: 0,
                 scaling: 0.84,
                 textureName: "highway_house_intersection",
                 sceneTransitionTargets: [
-                    { x: 0, y: -20, radius: 400, label: "House_exit", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
+                    { x: 0, y: -20, radius: 200, label: "House_exit", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
                 ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)
             },
         ],
