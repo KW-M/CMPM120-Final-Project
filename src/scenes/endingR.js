@@ -46,12 +46,12 @@ export default class EndingR extends Phaser.Scene {
     var content = `
     As Karen approaches her home, she feels a pang of frustration. However, for the first time in her life, there isn't really anybody to blame for it.
                                         [color=black].[/color]
-    She considers how absurd the whole escapade was, how she dragged her whole family out just to bring them back home with nothing lost or gained
+    She considers how absurd the whole escapade was, how she dragged her whole family out just to bring them back home without having really understood anything. With nowhere else to go, her frustration begins to dissipate.
 
 
 
                       [color=black].[/color]
-    You burst into the living room where the kids are playing JortFite and you tell them it's time to go. Everybody gets in the car and you drive off towards the highway. You'll get your answers the only way you know how: [color=red] you will speak to their manager. [/color]`;
+    With a sad chuckle, she turns to join her children at the window. They watch together as the desert slowly begins to change, as life returns to the earth.`;
 
     this.text = this.PageTypingText(this, this.cameras.main.width / 2 - 300, this.cameras.main.height / 2 - 300, '', {
         fontSize: '24px',
