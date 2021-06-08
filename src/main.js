@@ -41,10 +41,6 @@ let gameConfig = {
     matter: {
       enableSleeping: true,
       gravity: { y: 0 },
-      debug: {
-        showBody: true,
-        showStaticBody: true
-      }
     }
   },
   plugins: {
