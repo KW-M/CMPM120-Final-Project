@@ -12,7 +12,7 @@ export default class PlayScene extends Phaser.Scene {
 
     constructor() {
         super({ key: "PlayScene" });
-        this.dialogScriptsAlreadyCompleted = {}
+
         this.currentScriptIndex = 0;
     }
     create() {
@@ -49,6 +49,7 @@ export default class PlayScene extends Phaser.Scene {
         this.lvlMap = new LevelMap(this)
         this.lvlMap.resetLevels();
         this.lvlMap.setupLevel("lvl1");
+        this.dialogScriptsAlreadyCompleted = {}
 
         // high score is saved across games played
         this.hScore = localStorage.getItem("score") || 0;
@@ -114,15 +115,26 @@ export default class PlayScene extends Phaser.Scene {
                 this.dialogScriptsAlreadyCompleted[targetDetails.label] = true;
 
             } else if (targetDetails.label === "Alien_Encounter_3") {
-                if (LevelMap.alienStoryLean == 0) {
+                this.dialogScriptsAlreadyCompleted[targetDetails.label] = true;
+                if (this.lvlMap.alienStoryLean == 0) {
                     // play 3-1
                     this.fadeSceneTransition("DialogScene", { scriptName: "encounter_3-1" });
-                } else if (LevelMap.alienStoryLean < 0) {
+                } else if (this.lvlMap.alienStoryLean < 0) {
                     // play 3-2
                     this.fadeSceneTransition("DialogScene", { scriptName: "encounter_3-2" });
                 } else {
                     // play 3-3
                     this.fadeSceneTransition("DialogScene", { scriptName: "encounter_3-3" });
+                }
+            } else if (targetDetails.targetLvl === "lvl3") {
+                console.log(this.lvlMap.alienStoryLean)
+                this.lvlMap
+                if (this.lvlMap.alienStoryLean == 0) {
+                    this.fadeLevelTransition("lvl3_M")
+                } else if (this.lvlMap.alienStoryLean < 0) {
+                    this.fadeLevelTransition("lvl3_L")
+                } else {
+                    this.fadeLevelTransition("lvl3_R")
                 }
             } else if (targetDetails.label === "House_exit") {
                 this.fadeSceneTransition("EndingR", {})

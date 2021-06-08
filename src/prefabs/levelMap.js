@@ -57,7 +57,53 @@ let levelMaps = {
             { x: 0, y: 600, radius: 500, label: "back_to_lvl_1", targetLvl: "lvl1", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: -1 },
         ] // uses global position in map-scaled pixels
     },
-    "lvl3": {
+    "lvl3_L": {
+        carStart: { x: 0, y: 0, angle: -90 },
+        backgroundOffset: { longitudeX: 4252985, lattitudeY: -13000062 }, // Only add or subtract increments of 153!!!!!!!!!!!!!
+        gameBounds: { top: -3173, left: -5000, bottom: 100, right: 5000 },
+        roadWidth: 90 * 3,
+        obstacleLengthwiseSpacing: 40,
+        intersections: [
+            {
+                x: 0,
+                y: -3000,
+                angle: 0,
+                scaling: 1.52,
+                textureName: "highway_t_intersection",
+                sceneTransitionTargets: [
+                    { x: 0, y: 20, radius: 150, label: "Alien_Encounter_3", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
+                    { x: 0, y: -160, radius: 200, label: "Level_4_Toward_Elevator", targetLvl: "Elevator_ending_lvl", alienStoryLeanAdjustment: -1, levelEpisodeAdjustemnt: 1 },
+                ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)
+            },
+        ],
+        sceneTransitionTargets: [
+            { x: 0, y: 600, radius: 500, label: "back_to_lvl_2_a", targetLvl: "lvl2", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: -1 },
+        ] // uses global position in map-scaled pixels
+    },
+    "lvl3_R": {
+        carStart: { x: 0, y: 0, angle: -90 },
+        backgroundOffset: { longitudeX: 4252985, lattitudeY: -13000062 }, // Only add or subtract increments of 153!!!!!!!!!!!!!
+        gameBounds: { top: -3173, left: -5000, bottom: 100, right: 5000 },
+        roadWidth: 90 * 3,
+        obstacleLengthwiseSpacing: 40,
+        intersections: [
+            {
+                x: 0,
+                y: -3000,
+                angle: 0,
+                scaling: 1.52,
+                textureName: "highway_t_intersection",
+                sceneTransitionTargets: [
+                    { x: 0, y: 20, radius: 150, label: "Alien_Encounter_3", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
+                    { x: 0, y: -160, radius: 200, label: "Level_4_Toward_Home", targetLvl: "Home_ending_lvl", alienStoryLeanAdjustment: 1, levelEpisodeAdjustemnt: 1 },
+                ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)
+            },
+        ],
+        sceneTransitionTargets: [
+            { x: 0, y: 600, radius: 500, label: "back_to_lvl_2_b", targetLvl: "lvl2", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: -1 },
+        ] // uses global position in map-scaled pixels
+    },
+    "lvl3_M": {
         carStart: { x: 0, y: 0, angle: -90 },
         backgroundOffset: { longitudeX: 4252985, lattitudeY: -13000062 }, // Only add or subtract increments of 153!!!!!!!!!!!!!
         gameBounds: { top: -3403, left: -5000, bottom: 100, right: 5000 },
@@ -78,13 +124,13 @@ let levelMaps = {
             },
         ],
         sceneTransitionTargets: [
-            { x: 0, y: 600, radius: 500, label: "back_to_lvl_2", targetLvl: "lvl2", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: -1 },
+            { x: 0, y: 600, radius: 500, label: "back_to_lvl_2_c", targetLvl: "lvl2", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: -1 },
         ] // uses global position in map-scaled pixels
     },
     "Elevator_ending_lvl": {
         carStart: { x: 0, y: 0, angle: -90 },
         backgroundOffset: { longitudeX: 4252985, lattitudeY: -13000062 }, // Only add or subtract increments of 153!!!!!!!!!!!!!
-        gameBounds: { top: -2403, left: -5000, bottom: 100, right: 5000 },
+        gameBounds: { top: -2203, left: -5000, bottom: 100, right: 5000 },
         roadWidth: 90 * 3,
         obstacleLengthwiseSpacing: 35,
         intersections: [
@@ -95,7 +141,7 @@ let levelMaps = {
                 scaling: 3,
                 textureName: "space_elevator",
                 sceneTransitionTargets: [
-                    { x: 0, y: 60, radius: 200, label: "Elevator_Exit", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
+                    { x: 0, y: 30, radius: 200, label: "Elevator_Exit", alienStoryLeanAdjustment: 0, levelEpisodeAdjustemnt: 0 },
                 ] // uses position relative to position/rotation of intersection origin in map-scaled pixels (built in)
             },
         ],
@@ -192,6 +238,7 @@ export class LevelMap {
                 lvlConfig.carStart = { x: 0, y: 0, angle: -90 };
             }
         }
+
     }
 
     clearCurrentLevel() {
@@ -228,7 +275,7 @@ export class LevelMap {
         for (const intersection of lvl.intersections) {
             this.addIntersection(intersection.textureName, intersection.x, intersection.y, intersection.scaling, intersection.angle)
         }
-
+        this.drawDebugCircleZones()
         this.checkTargetEntry(this.scene.car.x, this.scene.car.y, false)
 
         return lvl
@@ -254,6 +301,7 @@ export class LevelMap {
                     this.alienStoryLean = this.alienStoryLeanHistory[this.levelEpisodeValue];
                 }
             }
+            console.log("pre", targetDetails, this.alienStoryLean)
             return targetDetails
         } else return null;
     }

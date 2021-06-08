@@ -37,7 +37,7 @@ export class TileLoader {
         this.visibleTiles[tileName] = true;
         if (this.placedTiles[tileName] != undefined) return false;
 
-        // console.log(`loadingTile (Map=${this.tileMapId}) x:${tileNumX} y:${tileNumY} worldx:${gameX} worldy:${gameY} |` + this.tilePxSize + " {}" + this.tileWorldSize)
+        // For Debugging: // console.log(`loadingTile (Map=${this.tileMapId}) x:${tileNumX} y:${tileNumY} worldx:${gameX} worldy:${gameY} |` + this.tilePxSize + " {}" + this.tileWorldSize)
         // texture needs to be loaded to create a placeholder card
         const tile = this.scene.add.image(gameX, gameY, 'tile_loading_icon')
         tile.setScale(this.tileScaleFactor)
