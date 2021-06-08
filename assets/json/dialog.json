@@ -175,7 +175,7 @@
 			},
 			{
 				"speaker": "janus_left",
-				"dialog": "I’m glad you asked, just take a left here and you’ll be right there."
+				"dialog": "I’m glad you asked, both of these roads should take you to the space elevator."
 			},
 			{
 				"speaker": "janus_right",
@@ -215,11 +215,11 @@
 			},
 			{
 				"speaker": "karen",
-				"dialog": "Don’t care. I’ve been driving so long now, I don’t even remember what I was confused about. How do I get to Billi's so we can wait out the terraforming process?"
+				"dialog": "Don’t care. I’ve been driving so long now, I don’t even remember what I was confused about. How do I get back home from here so we can wait out the terraforming process?"
 			},
 			{
 				"speaker": "janus_right",
-				"dialog": "I’m glad you asked, just take a right here and you’ll be right there."
+				"dialog": "I’m glad you asked, both of these roads should take you home."
 			},
 			{
 				"speaker": "janus_left",
