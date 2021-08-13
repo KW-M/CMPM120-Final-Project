@@ -62,6 +62,7 @@ export default class PlayScene extends Phaser.Scene {
             this.mouseTutorialImg.setPosition(this.cameras.main.width / 2, this.cameras.main.height * (3 / 4))
         })
         console.log(this.scale.gameSize.width)
+        this.currentScriptIndex = 0;
 
     }
 
