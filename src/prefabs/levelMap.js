@@ -275,7 +275,7 @@ export class LevelMap {
         for (const intersection of lvl.intersections) {
             this.addIntersection(intersection.textureName, intersection.x, intersection.y, intersection.scaling, intersection.angle)
         }
-        this.drawDebugCircleZones()
+        // this.drawDebugCircleZones()
         this.checkTargetEntry(this.scene.car.x, this.scene.car.y, false)
 
         return lvl

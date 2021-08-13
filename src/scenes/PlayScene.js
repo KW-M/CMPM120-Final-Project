@@ -12,11 +12,9 @@ export default class PlayScene extends Phaser.Scene {
 
     constructor() {
         super({ key: "PlayScene" });
-
-        this.currentScriptIndex = 0;
     }
-    create() {
 
+    create() {
         // define keys
         window.keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         window.keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
@@ -50,6 +48,7 @@ export default class PlayScene extends Phaser.Scene {
         this.lvlMap.resetLevels();
         this.lvlMap.setupLevel("lvl1");
         this.dialogScriptsAlreadyCompleted = {}
+        this.currentScriptIndex = 0;
 
         // high score is saved across games played
         this.hScore = localStorage.getItem("score") || 0;
